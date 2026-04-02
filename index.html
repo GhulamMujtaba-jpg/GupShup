@@ -45,14 +45,14 @@
         .content-area { flex: 1; overflow-y: auto; background: var(--surface); }
         .chat-list-item { display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: var(--bg); border-bottom: 1px solid var(--border); cursor: pointer; transition: 0.2s; }
         .chat-list-item:hover { background: var(--surface); }
-        .avatar { width: 50px; height: 50px; background: var(--secondary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; color: white; font-size: 1.2rem; overflow: hidden; position: relative; }
+        .avatar { width: 50px; height: 50px; background: var(--secondary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; color: white; font-size: 1.2rem; overflow: hidden; position: relative; cursor: pointer; }
         .avatar-img { width: 100%; height: 100%; object-fit: cover; }
         .online-dot { position: absolute; bottom: 2px; right: 2px; width: 12px; height: 12px; background: #25D366; border-radius: 50%; border: 2px solid white; }
         .messages-area { flex: 1; overflow-y: auto; padding: 16px; background: var(--surface); }
         .message { display: flex; margin-bottom: 12px; animation: fadeIn 0.2s; }
         .message.sent { justify-content: flex-end; }
         .message.received { justify-content: flex-start; }
-        .bubble { max-width: 70%; padding: 8px 12px; border-radius: 18px; word-wrap: break-word; position: relative; background: var(--bg); }
+        .bubble { max-width: 70%; padding: 8px 12px; border-radius: 18px; word-wrap: break-word; background: var(--bg); }
         .sent .bubble { background: var(--secondary); color: white; border-bottom-right-radius: 4px; }
         .received .bubble { background: var(--bg); border-bottom-left-radius: 4px; }
         .message-status { font-size: 0.6rem; margin-left: 5px; }
@@ -67,16 +67,17 @@
         .auth-btn { width: 100%; padding: 14px; background: var(--primary); border: none; border-radius: 50px; font-weight: bold; color: white; margin-top: 12px; cursor: pointer; }
         .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.8); z-index: 2000; display: flex; align-items: center; justify-content: center; }
         .modal-content { background: var(--bg); border-radius: 32px; padding: 24px; width: 85%; max-width: 350px; max-height: 80vh; overflow-y: auto; }
-        .follow-btn { background: var(--primary); color: white; border: none; padding: 6px 16px; border-radius: 20px; cursor: pointer; font-size: 0.8rem; }
+        .follow-btn { background: var(--primary); color: white; border: none; padding: 8px 20px; border-radius: 30px; cursor: pointer; font-size: 0.9rem; font-weight: 600; }
+        .follow-btn.following { background: #667781; }
         .status-card { background: var(--bg); margin: 8px 0; padding: 12px; border-radius: 20px; display: flex; gap: 12px; align-items: center; cursor: pointer; border: 1px solid var(--border); }
         .theme-selector { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; padding: 12px; max-height: 300px; overflow-y: auto; }
         .theme-option { padding: 8px; border-radius: 20px; text-align: center; cursor: pointer; background: var(--surface); border: 2px solid transparent; font-size: 0.7rem; }
         .theme-option.active { border-color: var(--primary); }
-        .call-screen { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: var(--primary); z-index: 3000; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; }
+        .profile-header { background: var(--primary); padding: 32px; text-align: center; color: white; }
+        .profile-avatar { width: 100px; height: 100px; margin: 0 auto; cursor: pointer; position: relative; }
+        .profile-avatar:hover::after { content: "📷"; position: absolute; bottom: 5px; right: 5px; background: rgba(0,0,0,0.6); border-radius: 50%; padding: 5px; font-size: 1.2rem; }
+        .file-input { display: none; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .starred { color: gold; }
-        .search-box { padding: 12px; background: var(--bg); border-bottom: 1px solid var(--border); }
-        .search-input { width: 100%; padding: 10px; border-radius: 25px; border: 1px solid var(--border); background: var(--surface); outline: none; }
     </style>
 </head>
 <body>
@@ -85,14 +86,14 @@
 <script>
     // ==================== STORAGE ====================
     const STORAGE = {
-        users: 'gupshup_users_premium',
-        messages: 'gupshup_msgs_premium',
-        groups: 'gupshup_groups_premium',
-        statuses: 'gupshup_statuses_premium',
-        calls: 'gupshup_calls_premium',
-        session: 'gupshup_session_premium',
-        communities: 'gupshup_communities_premium',
-        themes: 'gupshup_theme_premium'
+        users: 'gupshup_users_final_v2',
+        messages: 'gupshup_msgs_final_v2',
+        groups: 'gupshup_groups_final_v2',
+        statuses: 'gupshup_statuses_final_v2',
+        calls: 'gupshup_calls_final_v2',
+        session: 'gupshup_session_final_v2',
+        communities: 'gupshup_communities_final_v2',
+        themes: 'gupshup_theme_final_v2'
     };
     
     let currentUser = null;
@@ -124,11 +125,10 @@
         let counter = 1;
         while (users.some(u => u.handle === handle)) handle = `${baseHandle}${counter++}`;
         const newUser = {
-            id: Date.now() + Math.random(),
-            email, name, handle, avatar: name.charAt(0).toUpperCase(), avatarData: null,
+            id: Date.now() + Math.random(), email, name, handle, avatar: name.charAt(0).toUpperCase(), avatarData: null,
             bio: "Hey there! I'm using GupShup", lastSeen: Date.now(), online: true,
             followers: [], following: [], blocked: [], muted: [], starredMessages: [],
-            settings: { readReceipts: true, lastSeenVisible: true, notifMute: false, appLock: false, appPin: null },
+            settings: { readReceipts: true, lastSeenVisible: true, notifMute: false },
             createdAt: Date.now()
         };
         users.push(newUser);
@@ -144,45 +144,16 @@
     
     // ==================== MESSAGING ====================
     function sendMessage(fromId, toId, text, type = 'text', mediaUrl = null) {
-        let msg = {
-            id: Date.now() + Math.random(), from: fromId, to: toId, text, type, mediaUrl,
-            timestamp: Date.now(), status: 'sent', isDeleted: false, isForwarded: false, replyTo: null, isStarred: false
-        };
+        let msg = { id: Date.now() + Math.random(), from: fromId, to: toId, text, type, mediaUrl, timestamp: Date.now(), status: 'sent', isDeleted: false, isForwarded: false, replyTo: null, isStarred: false };
         messages.push(msg);
         saveData();
         setTimeout(() => { msg.status = 'delivered'; saveData(); renderChatIfOpen(); }, 800);
-        setTimeout(() => {
-            let tu = users.find(u => u.id == toId);
-            if (tu && tu.settings.readReceipts) { msg.status = 'read'; saveData(); renderChatIfOpen(); }
-        }, 2000);
+        setTimeout(() => { let tu = users.find(u => u.id == toId); if (tu && tu.settings.readReceipts) { msg.status = 'read'; saveData(); renderChatIfOpen(); } }, 2000);
         return msg;
     }
     
-    function deleteMessage(messageId, forEveryone = false) {
-        let idx = messages.findIndex(m => m.id == messageId);
-        if (idx !== -1) {
-            if (forEveryone) { messages[idx].isDeleted = true; messages[idx].text = "This message was deleted"; }
-            else messages.splice(idx, 1);
-            saveData(); renderChatIfOpen();
-        }
-    }
-    
-    function starMessage(messageId) {
-        let msg = messages.find(m => m.id == messageId);
-        if (msg) { msg.isStarred = !msg.isStarred; saveData(); renderChatIfOpen(); }
-    }
-    
-    function forwardMessage(messageId, toId) {
-        let original = messages.find(m => m.id == messageId);
-        if (original) {
-            sendMessage(currentUser.id, toId, original.text, original.type, original.mediaUrl);
-            alert("Message forwarded!");
-        }
-    }
-    
     function getChatMessages(u1, u2) {
-        return messages.filter(m => ((m.from === u1 && m.to === u2) || (m.from === u2 && m.to === u1)) && !m.isDeleted)
-            .sort((a, b) => a.timestamp - b.timestamp);
+        return messages.filter(m => ((m.from === u1 && m.to === u2) || (m.from === u2 && m.to === u1)) && !m.isDeleted).sort((a, b) => a.timestamp - b.timestamp);
     }
     
     function getRecentChats(userId) {
@@ -197,11 +168,16 @@
     function getAllUsersExcept(userId) { return users.filter(u => u.id !== userId && !isBlocked(userId, u.id)); }
     
     // ==================== FOLLOW SYSTEM ====================
+    function isFollowing(currentUserId, targetUserId) {
+        let current = users.find(u => u.id == currentUserId);
+        return current?.following?.includes(targetUserId) || false;
+    }
+    
     function followUser(currentUserId, targetUserId) {
         let target = users.find(u => u.id == targetUserId);
+        let current = users.find(u => u.id == currentUserId);
         if (target && !target.followers.includes(currentUserId)) {
             target.followers.push(currentUserId);
-            let current = users.find(u => u.id == currentUserId);
             if (current && !current.following.includes(targetUserId)) current.following.push(targetUserId);
             saveData(); return true;
         }
@@ -210,9 +186,9 @@
     
     function unfollowUser(currentUserId, targetUserId) {
         let target = users.find(u => u.id == targetUserId);
+        let current = users.find(u => u.id == currentUserId);
         if (target) {
             target.followers = target.followers.filter(f => f != currentUserId);
-            let current = users.find(u => u.id == currentUserId);
             if (current) current.following = current.following.filter(f => f != targetUserId);
             saveData(); return true;
         }
@@ -226,28 +202,16 @@
         return statuses.filter(s => followedIds.includes(s.userId) && s.timestamp > Date.now() - 86400000).sort((a,b)=>b.timestamp - a.timestamp);
     }
     
-    // ==================== BLOCK & MUTE ====================
+    // ==================== BLOCK ====================
     function blockUser(blockerId, targetId) {
         let target = users.find(u => u.id == targetId);
         if (target && !target.blocked.includes(blockerId)) target.blocked.push(blockerId);
         saveData();
     }
     
-    function unblockUser(blockerId, targetId) {
-        let target = users.find(u => u.id == targetId);
-        if (target) target.blocked = target.blocked.filter(b => b !== blockerId);
-        saveData();
-    }
-    
     function isBlocked(userId, targetId) {
         let target = users.find(u => u.id == targetId);
         return target?.blocked.includes(userId) || false;
-    }
-    
-    function muteUser(userId, targetId) {
-        let target = users.find(u => u.id == targetId);
-        if (target && !target.muted.includes(userId)) target.muted.push(userId);
-        saveData();
     }
     
     // ==================== COMMUNITY ====================
@@ -268,11 +232,21 @@
         if (comm && !comm.members.includes(userId)) { comm.members.push(userId); saveData(); }
     }
     
-    // ==================== PROFILE ====================
-    function updateProfilePicture(userId, imageDataUrl) {
-        let user = users.find(u => u.id == userId);
-        if (user) { user.avatarData = imageDataUrl; user.avatar = ""; saveData(); return true; }
-        return false;
+    // ==================== PROFILE PICTURE (FILE UPLOAD) ====================
+    function updateProfilePictureFromFile(userId, file) {
+        return new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                let user = users.find(u => u.id == userId);
+                if (user) {
+                    user.avatarData = e.target.result;
+                    user.avatar = "";
+                    saveData();
+                    resolve(true);
+                } else resolve(false);
+            };
+            reader.readAsDataURL(file);
+        });
     }
     
     function updateBio(userId, newBio) {
@@ -290,8 +264,8 @@
     }
     
     // ==================== STATUS ====================
-    function addStatus(userId, content, type = 'text', mediaUrl = null) {
-        let s = { id: Date.now() + Math.random(), userId, content, type, mediaUrl, timestamp: Date.now(), views: [], reactions: [] };
+    function addStatus(userId, content) {
+        let s = { id: Date.now() + Math.random(), userId, content, type: 'text', timestamp: Date.now(), views: [], reactions: [] };
         statuses.push(s);
         saveData();
         return s;
@@ -308,24 +282,6 @@
         groups.push(g);
         saveData();
         return g;
-    }
-    
-    function addMemberToGroup(groupId, memberId) {
-        let g = groups.find(g => g.id == groupId);
-        if (g && !g.members.includes(memberId)) { g.members.push(memberId); saveData(); }
-    }
-    
-    // ==================== CALLS ====================
-    function startCall(callerId, receiverId, type) {
-        let call = { id: Date.now(), caller: callerId, receiver: receiverId, type, status: 'initiated', startTime: Date.now(), duration: 0 };
-        callLogs.push(call);
-        saveData();
-        return call;
-    }
-    
-    function endCall(callId) {
-        let call = callLogs.find(c => c.id == callId);
-        if (call) { call.status = 'ended'; call.duration = Date.now() - call.startTime; saveData(); }
     }
     
     // ==================== HELPERS ====================
@@ -351,9 +307,9 @@
     
     function initDemoData() {
         users = [
-            { id: "u1", email: "zara@example.com", name: "Zara Ahmed", handle: "@zara", avatar: "Z", avatarData: null, bio: "Digital Creator ✨", lastSeen: Date.now(), online: true, followers: [], following: [], blocked: [], muted: [], starredMessages: [], settings: { readReceipts: true, lastSeenVisible: true, notifMute: false, appLock: false, appPin: null }, createdAt: Date.now() },
-            { id: "u2", email: "ali@example.com", name: "Ali Raza", handle: "@ali", avatar: "A", avatarData: null, bio: "Tech Enthusiast 💻", lastSeen: Date.now(), online: false, followers: [], following: [], blocked: [], muted: [], starredMessages: [], settings: { readReceipts: true, lastSeenVisible: true, notifMute: false, appLock: false, appPin: null }, createdAt: Date.now() },
-            { id: "u3", email: "sana@example.com", name: "Sana Khan", handle: "@sana", avatar: "S", avatarData: null, bio: "Artist 🎨", lastSeen: Date.now(), online: true, followers: [], following: [], blocked: [], muted: [], starredMessages: [], settings: { readReceipts: true, lastSeenVisible: true, notifMute: false, appLock: false, appPin: null }, createdAt: Date.now() }
+            { id: "u1", email: "zara@example.com", name: "Zara Ahmed", handle: "@zara", avatar: "Z", avatarData: null, bio: "Digital Creator ✨", lastSeen: Date.now(), online: true, followers: [], following: [], blocked: [], muted: [], starredMessages: [], settings: { readReceipts: true, lastSeenVisible: true, notifMute: false }, createdAt: Date.now() },
+            { id: "u2", email: "ali@example.com", name: "Ali Raza", handle: "@ali", avatar: "A", avatarData: null, bio: "Tech Enthusiast 💻", lastSeen: Date.now(), online: false, followers: [], following: [], blocked: [], muted: [], starredMessages: [], settings: { readReceipts: true, lastSeenVisible: true, notifMute: false }, createdAt: Date.now() },
+            { id: "u3", email: "sana@example.com", name: "Sana Khan", handle: "@sana", avatar: "S", avatarData: null, bio: "Artist 🎨", lastSeen: Date.now(), online: true, followers: [], following: [], blocked: [], muted: [], starredMessages: [], settings: { readReceipts: true, lastSeenVisible: true, notifMute: false }, createdAt: Date.now() }
         ];
         messages = [{ id: "m1", from: "u1", to: "u2", text: "Hey Ali! Welcome to GupShup Premium! 🎉", type: "text", timestamp: Date.now() - 3600000, status: "read", isDeleted: false, isForwarded: false, replyTo: null, isStarred: false }];
         saveData();
@@ -394,7 +350,7 @@
         
         document.querySelectorAll('.nav-tab').forEach(tab => { tab.onclick = () => { currentTab = tab.dataset.tab; render(); }; });
         document.getElementById('logoutBtn').onclick = () => { updateUserOnlineStatus(currentUser.id, false); currentUser = null; localStorage.removeItem(STORAGE.session); render(); };
-        document.getElementById('settingsBtn').onclick = () => showSettings();
+        document.getElementById('settingsBtn').onclick = () => alert("⚙️ GupShup Premium\n✅ Auto-Login Active\n✅ File Upload for Profile Pic\n✅ Follow/Unfollow on Profile\n✅ Like Facebook Style");
         document.getElementById('searchBtn').onclick = () => searchUsers();
         document.getElementById('themeBtn').onclick = () => showThemeSelector();
         
@@ -438,35 +394,44 @@
             document.querySelectorAll('[data-addgroup]').forEach(btn => { btn.onclick = () => { let commId = prompt("Enter Community ID from list above:"); if(commId) addGroupToCommunity(commId, btn.dataset.addgroup); render(); }; });
         }
         else if (currentTab === 'profile') {
-            container.innerHTML = `<div style="background:var(--primary); padding:32px; text-align:center;"><div class="avatar" style="margin:0 auto; width:80px; height:80px; font-size:2rem; cursor:pointer;" id="uploadPic">${currentUser.avatarData ? `<img src="${currentUser.avatarData}" class="avatar-img">` : currentUser.avatar}</div><h3 style="color:white; margin-top:12px;">${currentUser.name}</h3><p style="color:rgba(255,255,255,0.9);">${currentUser.handle}</p><p style="color:white; margin-top:8px;">${currentUser.bio}</p><p style="color:rgba(255,255,255,0.7); font-size:0.8rem;">${currentUser.email}</p></div><div style="padding:16px;"><div class="chat-list-item" id="editBioBtn"><i class="fas fa-pen"></i> Edit Bio</div><div class="chat-list-item" id="editHandleBtn"><i class="fas fa-at"></i> Change Handle</div><div class="chat-list-item" id="uploadPicBtn"><i class="fas fa-image"></i> Upload Profile Picture</div><div class="chat-list-item" id="followManageBtn"><i class="fas fa-user-plus"></i> Follow / Unfollow Users</div><div class="chat-list-item" id="showFollowers"><i class="fas fa-users"></i> Followers: ${currentUser.followers?.length || 0} | Following: ${currentUser.following?.length || 0}</div><div class="chat-list-item" id="blockedUsersBtn"><i class="fas fa-ban"></i> Blocked Users</div><div class="chat-list-item" id="privacySettingsBtn"><i class="fas fa-lock"></i> Privacy Settings</div><div class="chat-list-item" id="starredMessagesBtn"><i class="fas fa-star"></i> Starred Messages</div></div>`;
-            document.getElementById('uploadPic').onclick = () => { let url = prompt("Enter image URL for profile picture:"); if(url) { updateProfilePicture(currentUser.id, url); render(); } };
-            document.getElementById('uploadPicBtn').onclick = () => { let url = prompt("Enter image URL for profile picture:"); if(url) { updateProfilePicture(currentUser.id, url); render(); } };
+            container.innerHTML = `<div class="profile-header"><div class="profile-avatar" id="uploadPicTrigger"><div class="avatar" style="width:100px; height:100px; margin:0 auto; font-size:3rem;">${currentUser.avatarData ? `<img src="${currentUser.avatarData}" class="avatar-img">` : currentUser.avatar}</div><input type="file" id="profilePicInput" accept="image/*" style="display:none;"></div><h3 style="margin-top:12px;">${currentUser.name}</h3><p style="opacity:0.9;">${currentUser.handle}</p><p style="margin-top:8px;">${currentUser.bio}</p><p style="font-size:0.8rem; opacity:0.7;">${currentUser.email}</p></div><div style="padding:16px;"><div class="chat-list-item" id="editBioBtn"><i class="fas fa-pen"></i> Edit Bio</div><div class="chat-list-item" id="editHandleBtn"><i class="fas fa-at"></i> Change Handle</div><div class="chat-list-item" id="showFollowers"><i class="fas fa-users"></i> Followers: ${currentUser.followers?.length || 0} | Following: ${currentUser.following?.length || 0}</div><div class="chat-list-item" id="blockedUsersBtn"><i class="fas fa-ban"></i> Blocked Users</div><div class="chat-list-item" id="privacySettingsBtn"><i class="fas fa-lock"></i> Privacy Settings</div></div>`;
+            
+            const fileInput = document.getElementById('profilePicInput');
+            document.getElementById('uploadPicTrigger').onclick = () => fileInput.click();
+            fileInput.onchange = async (e) => {
+                if (e.target.files && e.target.files[0]) {
+                    await updateProfilePictureFromFile(currentUser.id, e.target.files[0]);
+                    render();
+                }
+            };
             document.getElementById('editBioBtn').onclick = () => { let newBio = prompt("Enter new bio:", currentUser.bio); if(newBio) updateBio(currentUser.id, newBio); render(); };
             document.getElementById('editHandleBtn').onclick = () => { let newHandle = prompt("Enter unique handle (start with @):", currentUser.handle); if(newHandle && updateHandle(currentUser.id, newHandle)) alert("Handle updated!"); else alert("Handle taken or invalid"); render(); };
-            document.getElementById('followManageBtn').onclick = () => showFollowManager();
             document.getElementById('showFollowers').onclick = () => alert(`👥 Followers: ${currentUser.followers.map(id=>users.find(u=>u.id==id)?.name).join(', ') || 'None'}\n\n✅ Following: ${currentUser.following.map(id=>users.find(u=>u.id==id)?.name).join(', ') || 'None'}`);
-            document.getElementById('blockedUsersBtn').onclick = () => showBlockedUsers();
+            document.getElementById('blockedUsersBtn').onclick = () => { let blockedUsers = users.filter(u => currentUser.blocked?.includes(u.id)); alert(`🚫 Blocked Users:\n${blockedUsers.map(u => u.name).join('\n') || 'None'}`); };
             document.getElementById('privacySettingsBtn').onclick = () => showPrivacySettings();
-            document.getElementById('starredMessagesBtn').onclick = () => showStarredMessages();
         }
         applyTheme(currentTheme);
     }
     
-    function showFollowManager() {
-        const allUsersList = getAllUsersExcept(currentUser.id);
+    // ==================== VIEW OTHER USER PROFILE (Like Facebook) ====================
+    function viewUserProfile(user) {
+        const isFollow = isFollowing(currentUser.id, user.id);
         let modalDiv = document.createElement('div'); modalDiv.className = 'modal-overlay';
-        modalDiv.innerHTML = `<div class="modal-content"><h3 style="margin-bottom:16px;">👥 Follow Users</h3><div id="userFollowList" style="max-height:400px; overflow-y:auto;"></div><button id="closeFollowBtn" class="auth-btn" style="margin-top:16px;">Close</button></div>`;
+        modalDiv.innerHTML = `<div class="modal-content" style="text-align:center;"><div class="avatar" style="width:100px; height:100px; margin:0 auto 16px;">${user.avatarData ? `<img src="${user.avatarData}" class="avatar-img">` : user.avatar}</div><h3>${user.name}</h3><p style="color:var(--text-light);">${user.handle}</p><p style="margin:12px 0;">${user.bio}</p><p style="font-size:0.8rem; color:var(--text-light);">📧 ${user.email}</p><div style="margin:16px 0;"><button id="followUnfollowBtn" class="follow-btn ${isFollow ? 'following' : ''}" style="width:80%;">${isFollow ? 'Unfollow' : 'Follow'}</button></div><button id="messageBtn" class="auth-btn" style="background:var(--primary);">💬 Send Message</button><button id="closeProfileBtn" class="auth-btn" style="margin-top:8px; background:#667781;">Close</button></div>`;
         document.body.appendChild(modalDiv);
-        const listDiv = document.getElementById('userFollowList');
-        if (allUsersList.length === 0) listDiv.innerHTML = '<div style="padding:20px; text-align:center;">No other users found</div>';
-        else listDiv.innerHTML = allUsersList.map(u => { let isFollowing = currentUser.following.includes(u.id); return `<div class="chat-list-item" style="justify-content:space-between;"><div style="display:flex; gap:12px; align-items:center;"><div class="avatar" style="width:40px; height:40px;">${u.avatarData?`<img src="${u.avatarData}" style="width:40px;height:40px;border-radius:50%;">`:u.avatar}</div><div><b>${u.name}</b><br><span style="font-size:0.7rem;">${u.handle}</span></div></div><button class="follow-btn" data-follow="${u.id}" data-action="${isFollowing ? 'unfollow' : 'follow'}">${isFollowing ? 'Unfollow' : 'Follow'}</button></div>`; }).join('');
-        document.querySelectorAll('[data-follow]').forEach(btn => { btn.onclick = () => { let targetId = btn.dataset.follow; let action = btn.dataset.action; if(action === 'follow') { followUser(currentUser.id, targetId); alert("Followed!"); } else { unfollowUser(currentUser.id, targetId); alert("Unfollowed!"); } showFollowManager(); render(); }; });
-        document.getElementById('closeFollowBtn').onclick = () => modalDiv.remove();
-    }
-    
-    function showBlockedUsers() {
-        let blockedUsers = users.filter(u => currentUser.blocked?.includes(u.id));
-        alert(`🚫 Blocked Users:\n${blockedUsers.map(u => u.name).join('\n') || 'None'}\n\nTo unblock, go to Privacy Settings.`);
+        
+        document.getElementById('followUnfollowBtn').onclick = () => {
+            if (isFollowing(currentUser.id, user.id)) {
+                unfollowUser(currentUser.id, user.id);
+                alert(`Unfollowed ${user.name}`);
+            } else {
+                followUser(currentUser.id, user.id);
+                alert(`Now following ${user.name}`);
+            }
+            modalDiv.remove();
+        };
+        document.getElementById('messageBtn').onclick = () => { modalDiv.remove(); openChat(user); };
+        document.getElementById('closeProfileBtn').onclick = () => modalDiv.remove();
     }
     
     function showPrivacySettings() {
@@ -483,16 +448,18 @@
         document.getElementById('closePrivacyBtn').onclick = () => modalDiv.remove();
     }
     
-    function showStarredMessages() {
-        let starred = messages.filter(m => m.isStarred && (m.from === currentUser.id || m.to === currentUser.id));
-        alert(`⭐ Starred Messages:\n${starred.map(m => m.text).join('\n') || 'No starred messages'}`);
-    }
-    
     function searchUsers() {
-        let query = prompt("Search by handle or name:");
+        let query = prompt("Search by name or handle:");
         if (query) {
             let results = users.filter(u => u.id !== currentUser.id && (u.name.toLowerCase().includes(query.toLowerCase()) || u.handle.toLowerCase().includes(query.toLowerCase())));
-            alert(`🔍 Search Results:\n${results.map(u => `${u.name} (${u.handle})`).join('\n') || 'No users found'}`);
+            if (results.length === 0) alert("No users found");
+            else {
+                let resultList = results.map(u => `${u.name} (${u.handle})`).join('\n');
+                let selected = prompt(`Select user by number:\n${results.map((u,i) => `${i+1}. ${u.name} (${u.handle})`).join('\n')}\n\nEnter number:`);
+                if (selected && !isNaN(selected) && results[parseInt(selected)-1]) {
+                    viewUserProfile(results[parseInt(selected)-1]);
+                }
+            }
         }
     }
     
@@ -507,15 +474,12 @@
         document.getElementById('closeThemeBtn').onclick = () => modal.remove();
     }
     
-    function showSettings() {
-        alert(`⚙️ GupShup Premium Settings\n\n✅ Email Login Active\n✅ Follow/Unfollow System\n✅ 20+ Themes\n✅ Communities with Groups\n✅ Profile Picture & Bio\n✅ Unique Handle\n✅ Read Receipts\n✅ Voice/Video Calls\n✅ Media Sharing\n✅ Starred Messages\n✅ Block/Mute Users\n✅ Typing Indicators`);
-    }
-    
     function openChat(user, skipRender = false) {
         currentChatUser = user;
         const msgs = getChatMessages(currentUser.id, user.id);
         if (!skipRender) {
-            root.innerHTML = `<div class="app-container ${currentTheme}"><div class="app-header" style="background:var(--primary);"><button id="backBtn" style="background:none;border:none;color:white;font-size:1.2rem;"><i class="fas fa-arrow-left"></i></button><div class="avatar" style="width:40px;height:40px; position:relative;">${user.avatarData?`<img src="${user.avatarData}" style="width:40px;height:40px;border-radius:50%;">`:user.avatar}${user.online ? '<span class="online-dot" style="width:10px;height:10px;"></span>' : ''}</div><div style="flex:1; margin-left:12px;"><div style="font-weight:600;">${user.name}</div><div id="chatOnlineStatus" style="font-size:0.7rem;">${user.online ? '🟢 Online' : `Last seen ${new Date(user.lastSeen).toLocaleTimeString()}`}</div></div><i class="fas fa-phone" id="voiceCallBtn" style="margin:0 12px; cursor:pointer;"></i><i class="fas fa-video" id="videoCallBtn" style="cursor:pointer;"></i><i class="fas fa-ellipsis-v" id="chatMenuBtn" style="margin-left:12px; cursor:pointer;"></i></div><div id="typingIndicator" class="typing-indicator"></div><div class="messages-area" id="messagesArea"></div><div class="chat-input-area"><button class="icon-btn" id="emojiBtn">😊</button><button class="icon-btn" id="attachBtn"><i class="fas fa-paperclip"></i></button><input type="text" id="messageInput" class="chat-input" placeholder="Type a message..."><button class="icon-btn" id="voiceNoteBtn"><i class="fas fa-microphone"></i></button><button class="send-btn" id="sendBtn"><i class="fas fa-paper-plane"></i></button></div></div>`;
+            root.innerHTML = `<div class="app-container ${currentTheme}"><div class="app-header" style="background:var(--primary);"><button id="backBtn" style="background:none;border:none;color:white;font-size:1.2rem;"><i class="fas fa-arrow-left"></i></button><div class="avatar" style="width:40px;height:40px; position:relative; cursor:pointer;" id="profileViewBtn">${user.avatarData?`<img src="${user.avatarData}" style="width:40px;height:40px;border-radius:50%;">`:user.avatar}${user.online ? '<span class="online-dot" style="width:10px;height:10px;"></span>' : ''}</div><div style="flex:1; margin-left:12px;"><div style="font-weight:600;">${user.name}</div><div id="chatOnlineStatus" style="font-size:0.7rem;">${user.online ? '🟢 Online' : `Last seen ${new Date(user.lastSeen).toLocaleTimeString()}`}</div></div><i class="fas fa-phone" id="voiceCallBtn" style="margin:0 12px; cursor:pointer;"></i><i class="fas fa-video" id="videoCallBtn" style="cursor:pointer;"></i></div><div id="typingIndicator" class="typing-indicator"></div><div class="messages-area" id="messagesArea"></div><div class="chat-input-area"><button class="icon-btn" id="emojiBtn">😊</button><button class="icon-btn" id="attachBtn"><i class="fas fa-paperclip"></i></button><input type="text" id="messageInput" class="chat-input" placeholder="Type a message..."><button class="icon-btn" id="voiceNoteBtn"><i class="fas fa-microphone"></i></button><button class="send-btn" id="sendBtn"><i class="fas fa-paper-plane"></i></button></div></div>`;
+            document.getElementById('profileViewBtn').onclick = () => viewUserProfile(user);
         }
         
         const msgArea = document.getElementById('messagesArea');
@@ -523,17 +487,7 @@
         
         function renderMessages() {
             let updated = getChatMessages(currentUser.id, user.id);
-            msgArea.innerHTML = updated.map(m => `
-                <div class="message ${m.from === currentUser.id ? 'sent' : 'received'}" data-msg="${m.id}">
-                    <div class="bubble">
-                        ${m.type === 'text' ? m.text : m.type === 'image' ? '📷 Image' : m.type === 'video' ? '🎥 Video' : m.type === 'voice' ? '🎤 Voice note' : m.type === 'location' ? '📍 Location' : '📎 File'}
-                        <span class="message-status">
-                            ${m.from === currentUser.id ? (m.status === 'sent' ? '✓' : m.status === 'delivered' ? '✓✓' : m.status === 'read' ? '<span class="blue-tick">✓✓</span>' : '') : ''}
-                        </span>
-                        ${m.isStarred ? '<i class="fas fa-star starred" style="margin-left:5px; font-size:0.6rem;"></i>' : ''}
-                    </div>
-                </div>
-            `).join('');
+            msgArea.innerHTML = updated.map(m => `<div class="message ${m.from === currentUser.id ? 'sent' : 'received'}"><div class="bubble">${m.text}<span class="message-status">${m.from === currentUser.id ? (m.status === 'sent' ? '✓' : m.status === 'delivered' ? '✓✓' : m.status === 'read' ? '<span class="blue-tick">✓✓</span>' : '') : ''}</span></div></div>`).join('');
             msgArea.scrollTop = msgArea.scrollHeight;
         }
         
@@ -544,70 +498,20 @@
         
         const sendMessageFunc = () => {
             let text = input.value.trim();
-            if (text) {
-                sendMessage(currentUser.id, user.id, text);
-                input.value = '';
-                renderMessages();
-                if (typingTimeouts[user.id]) clearTimeout(typingTimeouts[user.id]);
-                typingIndicator.innerHTML = '';
-            }
+            if (text) { sendMessage(currentUser.id, user.id, text); input.value = ''; renderMessages(); if (typingTimeouts[user.id]) clearTimeout(typingTimeouts[user.id]); typingIndicator.innerHTML = ''; }
         };
         
         sendBtn.onclick = sendMessageFunc;
-        input.onkeypress = (e) => {
-            if (e.key === 'Enter') sendMessageFunc();
-            else {
-                typingIndicator.innerHTML = `${currentUser.name} is typing...`;
-                if (typingTimeouts[user.id]) clearTimeout(typingTimeouts[user.id]);
-                typingTimeouts[user.id] = setTimeout(() => { typingIndicator.innerHTML = ''; }, 1500);
-            }
-        };
+        input.onkeypress = (e) => { if (e.key === 'Enter') sendMessageFunc(); else { typingIndicator.innerHTML = `${currentUser.name} is typing...`; if (typingTimeouts[user.id]) clearTimeout(typingTimeouts[user.id]); typingTimeouts[user.id] = setTimeout(() => { typingIndicator.innerHTML = ''; }, 1500); } };
         
-        document.getElementById('emojiBtn').onclick = () => {
-            let emojis = ['😀', '😂', '🥰', '😎', '🔥', '✨', '💯', '🎉', '❤️', '👍', '😢', '😡', '😱', '🥳', '🤔'];
-            let randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
-            input.value += randomEmoji;
-        };
-        
-        document.getElementById('attachBtn').onclick = () => {
-            let type = prompt("Send:\n1-Image\n2-Video\n3-Document\n4-Location\n5-Contact");
-            if (type === '1') sendMessage(currentUser.id, user.id, "📷 Image shared", "image");
-            else if (type === '2') sendMessage(currentUser.id, user.id, "🎥 Video shared", "video");
-            else if (type === '3') sendMessage(currentUser.id, user.id, "📄 Document shared", "document");
-            else if (type === '4') sendMessage(currentUser.id, user.id, "📍 Location: 23.5° N, 77.5° E", "location");
-            else if (type === '5') sendMessage(currentUser.id, user.id, `👤 Contact: ${currentUser.name} (${currentUser.email})`, "contact");
-            renderMessages();
-        };
-        
-        document.getElementById('voiceNoteBtn').onclick = () => {
-            alert("🎙️ Recording voice note... (simulated)");
-            setTimeout(() => {
-                sendMessage(currentUser.id, user.id, "🎤 Voice note (3 seconds)", "voice");
-                renderMessages();
-            }, 2000);
-        };
-        
-        document.getElementById('voiceCallBtn').onclick = () => initiateCall(user);
-        document.getElementById('videoCallBtn').onclick = () => initiateCall(user, 'video');
-        document.getElementById('chatMenuBtn').onclick = () => {
-            let action = prompt("Options:\n1-Mute User\n2-Block User\n3-Clear Chat\n4-View Starred");
-            if (action === '1') { muteUser(currentUser.id, user.id); alert("User muted!"); }
-            else if (action === '2') { blockUser(currentUser.id, user.id); alert("User blocked!"); render(); }
-            else if (action === '3') { messages = messages.filter(m => !((m.from === currentUser.id && m.to === user.id) || (m.from === user.id && m.to === currentUser.id))); saveData(); renderMessages(); }
-            else if (action === '4') { let starred = messages.filter(m => m.isStarred && (m.from === user.id || m.to === user.id)); alert(`⭐ Starred:\n${starred.map(m => m.text).join('\n') || 'None'}`); }
-        };
+        document.getElementById('emojiBtn').onclick = () => { let emojis = ['😀', '😂', '🥰', '😎', '🔥', '✨', '💯', '🎉', '❤️', '👍']; input.value += emojis[Math.floor(Math.random() * emojis.length)]; };
+        document.getElementById('attachBtn').onclick = () => { let type = prompt("Send:\n1-Image\n2-Video\n3-Document\n4-Location"); if (type === '1') sendMessage(currentUser.id, user.id, "📷 Image shared", "image"); else if (type === '2') sendMessage(currentUser.id, user.id, "🎥 Video shared", "video"); else if (type === '3') sendMessage(currentUser.id, user.id, "📄 Document shared", "document"); else if (type === '4') sendMessage(currentUser.id, user.id, "📍 Location shared", "location"); renderMessages(); };
+        document.getElementById('voiceNoteBtn').onclick = () => { alert("🎙️ Recording..."); setTimeout(() => { sendMessage(currentUser.id, user.id, "🎤 Voice note", "voice"); renderMessages(); }, 2000); };
+        document.getElementById('voiceCallBtn').onclick = () => alert(`📞 Calling ${user.name}... (simulated)`);
+        document.getElementById('videoCallBtn').onclick = () => alert(`📹 Video call to ${user.name}... (simulated)`);
         document.getElementById('backBtn').onclick = () => { currentChatUser = null; render(); };
         
         applyTheme(currentTheme);
-    }
-    
-    function initiateCall(user, type = 'voice') {
-        let call = startCall(currentUser.id, user.id, type);
-        let modal = document.createElement('div'); modal.className = 'modal-overlay';
-        modal.innerHTML = `<div class="modal-content" style="text-align:center;"><div class="avatar" style="margin:0 auto 20px; width:80px; height:80px;">${user.avatar}</div><h3>${type === 'voice' ? '📞 Voice Call' : '📹 Video Call'}</h3><p>Calling ${user.name}...</p><button id="endCallBtn" class="auth-btn" style="background:#ff4444;">End Call</button></div>`;
-        document.body.appendChild(modal);
-        document.getElementById('endCallBtn').onclick = () => { endCall(call.id); modal.remove(); alert("Call ended"); };
-        setTimeout(() => { if (modal.parentNode) modal.remove(); alert("Call ended (simulated)"); }, 5000);
     }
     
     loadData();
