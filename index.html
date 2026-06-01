@@ -2,697 +2,515 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>GM Store | Pakistan's Largest Marketplace</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>GupShup Messenger | Premium Chat & Status</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-        :root { --primary: #ff6b6b; --secondary: #a29bfe; --gradient: linear-gradient(135deg, #ff6b6b, #a29bfe); }
-        body.theme-blue { --primary: #4facfe; --secondary: #00f2fe; --gradient: linear-gradient(135deg, #4facfe, #00f2fe); }
-        body.theme-green { --primary: #43e97b; --secondary: #38f9d7; --gradient: linear-gradient(135deg, #43e97b, #38f9d7); }
-        body.theme-purple { --primary: #a18cd1; --secondary: #fbc2eb; --gradient: linear-gradient(135deg, #a18cd1, #fbc2eb); }
-        body.theme-orange { --primary: #ff9a44; --secondary: #fcb69f; --gradient: linear-gradient(135deg, #ff9a44, #fcb69f); }
-        body.theme-dark { --primary: #6c5ce7; --secondary: #a8a4e6; --gradient: linear-gradient(135deg, #6c5ce7, #a8a4e6); background: #0f0f1a; }
-        body { background: linear-gradient(135deg, #f5f7fa, #c3cfe2); min-height: 100vh; padding-bottom: 85px; transition: all 0.3s; }
-        body.theme-dark .product-card, body.theme-dark .cat-item, body.theme-dark .sidebar, body.theme-dark .modal-content, body.theme-dark .header, body.theme-dark .status-card { background: #1e1e2e; color: #fff; }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background: #0a0a0a; min-height: 100vh; display: flex; justify-content: center; align-items: center; }
         
-        /* Status Bar Styles */
-        .status-bar { background: white; border-radius: 20px; padding: 15px 20px; margin-bottom: 20px; display: flex; gap: 20px; overflow-x: auto; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
-        .status-item { text-align: center; cursor: pointer; min-width: 70px; }
-        .status-ring { width: 65px; height: 65px; border-radius: 50%; background: linear-gradient(145deg, var(--primary), var(--secondary)); display: flex; align-items: center; justify-content: center; margin-bottom: 8px; }
-        .status-ring-inner { width: 58px; height: 58px; border-radius: 50%; background: white; display: flex; align-items: center; justify-content: center; overflow: hidden; }
-        body.theme-dark .status-ring-inner { background: #1e1e2e; }
-        .status-ring-inner img, .status-ring-inner video { width: 100%; height: 100%; object-fit: cover; }
-        .status-ring-inner i { font-size: 28px; color: var(--primary); }
-        .status-name { font-size: 12px; font-weight: 600; }
-        .add-status { background: var(--gradient); color: white; }
-        .add-status .status-ring-inner { background: var(--gradient); }
-        .add-status .status-ring-inner i { color: white; }
-        
-        /* Status View Modal */
-        .status-view-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: black; z-index: 2000; justify-content: center; align-items: center; }
-        .status-view-content { max-width: 400px; width: 90%; height: 85vh; background: #000; border-radius: 20px; position: relative; overflow: hidden; }
-        .status-media { width: 100%; height: 100%; object-fit: contain; }
-        .status-header { position: absolute; top: 0; left: 0; right: 0; padding: 15px; background: linear-gradient(to bottom, rgba(0,0,0,0.7), transparent); color: white; display: flex; justify-content: space-between; z-index: 10; }
-        .status-time { position: absolute; bottom: 20px; left: 0; right: 0; text-align: center; color: white; background: rgba(0,0,0,0.5); padding: 5px; font-size: 12px; }
-        .status-progress-bar { position: absolute; top: 0; left: 0; right: 0; height: 3px; background: rgba(255,255,255,0.3); z-index: 10; }
-        .status-progress { height: 100%; background: white; width: 0%; transition: width 0.1s linear; }
-        .status-nav { position: absolute; top: 0; bottom: 0; width: 50%; cursor: pointer; z-index: 20; }
-        .status-prev { left: 0; }
-        .status-next { right: 0; }
-        .close-status { cursor: pointer; font-size: 24px; }
-        
-        .header { background: rgba(255,255,255,0.95); backdrop-filter: blur(15px); padding: 14px 24px; position: sticky; top: 0; z-index: 100; }
-        .header-content { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; }
-        .logo { display: flex; align-items: center; gap: 12px; }
-        .logo-icon { width: 45px; height: 45px; background: var(--gradient); border-radius: 15px; display: flex; align-items: center; justify-content: center; }
-        .logo-icon i { font-size: 24px; color: white; }
-        .logo h1 { font-size: 26px; font-weight: 800; background: var(--gradient); -webkit-background-clip: text; background-clip: text; color: transparent; }
-        .menu-btn { background: var(--gradient); border: none; padding: 8px 20px; border-radius: 40px; color: white; font-weight: 600; cursor: pointer; }
-        .theme-selector { display: flex; gap: 8px; background: rgba(0,0,0,0.05); padding: 5px 12px; border-radius: 40px; }
-        .theme-dot { width: 28px; height: 28px; border-radius: 50%; cursor: pointer; border: 2px solid white; }
-        .container { max-width: 1400px; margin: 0 auto; padding: 0 20px; }
-        .cover-img { width: 100%; height: 220px; object-fit: cover; border-radius: 32px; margin: 20px 0; }
-        .hero { background: var(--gradient); border-radius: 32px; padding: 40px 30px; margin-bottom: 30px; color: white; text-align: center; }
-        .hero h1 { font-size: 36px; margin-bottom: 10px; }
-        .price-note { background: rgba(255,255,255,0.2); display: inline-block; padding: 5px 15px; border-radius: 30px; margin-top: 10px; }
-        .cat-scroll { display: flex; gap: 15px; overflow-x: auto; padding-bottom: 10px; margin-bottom: 20px; }
-        .cat-item { background: white; padding: 10px 22px; border-radius: 60px; display: flex; align-items: center; gap: 8px; cursor: pointer; white-space: nowrap; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
-        .product-section { margin-bottom: 40px; background: rgba(255,255,255,0.5); border-radius: 28px; padding: 20px; }
-        .product-section h2 { margin-bottom: 20px; font-size: 24px; }
-        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px; }
-        .product-card { background: white; border-radius: 24px; overflow: hidden; transition: 0.3s; box-shadow: 0 8px 20px rgba(0,0,0,0.08); cursor: pointer; }
-        .product-card:hover { transform: translateY(-5px); }
-        .product-img { width: 100%; height: 190px; object-fit: cover; }
-        .product-body { padding: 16px; }
-        .product-price-pkr { font-size: 22px; font-weight: 800; color: var(--primary); margin: 8px 0; }
-        .old-price { font-size: 14px; text-decoration: line-through; color: #999; margin-left: 8px; }
-        .btn-whatsapp, .btn-place-order { width: 100%; padding: 10px; border-radius: 40px; border: none; font-weight: 600; cursor: pointer; margin-top: 8px; }
-        .btn-whatsapp { background: #25D366; color: white; }
-        .btn-place-order { background: var(--gradient); color: white; }
-        .btn-view-details { background: #6c5ce7; color: white; width: 100%; padding: 10px; border-radius: 40px; border: none; font-weight: 600; cursor: pointer; margin-top: 8px; }
-        .bottom-bar { position: fixed; bottom: 0; left: 0; right: 0; background: white; display: flex; justify-content: space-around; padding: 12px; z-index: 99; }
-        .tab-icon { text-align: center; cursor: pointer; opacity: 0.5; }
-        .tab-icon.active { opacity: 1; color: var(--primary); }
-        .page { display: none; }
-        .page.active-page { display: block; }
-        .sidebar { position: fixed; right: -400px; top: 70px; width: 380px; height: calc(100vh - 80px); background: rgba(255,255,255,0.98); border-radius: 28px 0 0 28px; box-shadow: -5px 5px 30px rgba(0,0,0,0.15); z-index: 200; transition: right 0.3s; display: flex; flex-direction: column; overflow: hidden; }
-        .sidebar.open { right: 0; }
-        .sidebar-header { background: var(--gradient); padding: 18px; color: white; display: flex; justify-content: space-between; }
-        .sidebar-tabs { display: flex; border-bottom: 1px solid #eee; }
-        .sidebar-tab { flex: 1; padding: 14px; text-align: center; cursor: pointer; font-weight: 600; }
-        .sidebar-tab.active { color: var(--primary); border-bottom: 3px solid var(--primary); }
-        .sidebar-content { flex: 1; overflow-y: auto; padding: 16px; }
-        .chat-messages { height: 300px; overflow-y: auto; margin-bottom: 12px; }
-        .message-bubble { margin-bottom: 12px; position: relative; }
-        .client-msg { display: flex; justify-content: flex-end; }
-        .client-msg .bubble { background: var(--gradient); color: white; border-radius: 20px 20px 5px 20px; }
-        .admin-msg .bubble { background: #f0f0f0; border-radius: 20px 20px 20px 5px; }
-        .bubble { padding: 10px 14px; max-width: 85%; font-size: 13px; word-break: break-word; }
-        .delete-msg-chat { position: absolute; bottom: -8px; right: 5px; background: rgba(0,0,0,0.5); color: white; border-radius: 50%; width: 18px; height: 18px; display: flex; align-items: center; justify-content: center; font-size: 9px; cursor: pointer; opacity: 0; }
-        .message-bubble:hover .delete-msg-chat { opacity: 1; }
-        .chat-input-area { display: flex; gap: 10px; margin-top: 10px; }
-        .chat-input-area input { flex: 1; padding: 12px; border: 1px solid #ddd; border-radius: 40px; }
-        .request-form input, .request-form textarea, .request-form select { width: 100%; padding: 12px; margin-bottom: 10px; border-radius: 16px; border: 1px solid #ddd; }
-        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.3); z-index: 150; display: none; }
-        .overlay.active { display: block; }
-        
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 1000; justify-content: center; align-items: center; backdrop-filter: blur(5px); }
-        .modal-content { background: white; border-radius: 32px; max-width: 650px; width: 90%; max-height: 85vh; overflow-y: auto; padding: 25px; animation: modalFadeIn 0.3s ease; }
-        .modal-gallery { display: flex; gap: 12px; overflow-x: auto; margin: 20px 0; padding: 10px; background: #f8f9fa; border-radius: 20px; }
-        .gallery-img { width: 100px; height: 100px; border-radius: 16px; object-fit: cover; cursor: pointer; }
-        .download-btn { background: var(--gradient); border: none; padding: 12px 20px; border-radius: 40px; color: white; font-weight: 600; cursor: pointer; width: 100%; margin-top: 15px; }
-        .close-modal { float: right; font-size: 28px; cursor: pointer; color: #999; }
-        
-        .order-form-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1001; justify-content: center; align-items: center; }
-        .order-form-content { background: white; border-radius: 32px; max-width: 500px; width: 90%; max-height: 85vh; overflow-y: auto; padding: 25px; }
-        .order-form-content input, .order-form-content select, .order-form-content textarea { width: 100%; padding: 12px; margin-bottom: 12px; border-radius: 16px; border: 1px solid #ddd; }
-        
-        /* Post Status Modal */
-        .post-status-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1002; justify-content: center; align-items: center; }
-        .post-status-content { background: white; border-radius: 32px; max-width: 450px; width: 90%; padding: 25px; }
-        .post-status-content textarea { width: 100%; padding: 15px; border-radius: 20px; border: 2px solid #eee; font-size: 16px; resize: none; margin-bottom: 15px; }
-        .media-preview { margin: 15px 0; text-align: center; }
-        .media-preview img, .media-preview video { max-width: 100%; max-height: 200px; border-radius: 16px; }
-        .status-type-buttons { display: flex; gap: 15px; margin-bottom: 15px; }
-        .status-type-btn { flex: 1; padding: 10px; border-radius: 40px; border: 2px solid #eee; background: white; cursor: pointer; font-weight: 600; }
-        .status-type-btn.active { background: var(--gradient); color: white; border-color: transparent; }
-        @media (max-width: 680px) { .sidebar { width: 320px; } .hero h1 { font-size: 28px; } }
+        /* 20+ Premium Themes */
+        .theme-default { --primary: #075E54; --primary-dark: #054a3f; --secondary: #25D366; --bg: #ffffff; --surface: #f0f2f5; --text: #111111; --text-light: #667781; --border: #e9ecef; --status-bg: rgba(0,0,0,0.05); }
+        .theme-dark { --primary: #1a1a2e; --primary-dark: #0f0f1a; --secondary: #e94560; --bg: #16213e; --surface: #0f3460; --text: #ffffff; --text-light: #a0a0a0; --border: #2a3a5a; --status-bg: rgba(255,255,255,0.1); }
+        .theme-forest { --primary: #2E7D32; --primary-dark: #1B5E20; --secondary: #81C784; --bg: #F1F8E9; --surface: #DCEDC8; --text: #1B5E20; --text-light: #558B2F; --border: #C5E1A5; --status-bg: rgba(0,0,0,0.05); }
+        .theme-ocean { --primary: #0277BD; --primary-dark: #01579B; --secondary: #4FC3F7; --bg: #E1F5FE; --surface: #B3E5FC; --text: #01579B; --text-light: #0288D1; --border: #81D4FA; --status-bg: rgba(0,0,0,0.05); }
+        .theme-sunset { --primary: #D84315; --primary-dark: #BF360C; --secondary: #FF8A65; --bg: #FBE9E7; --surface: #FFCCBC; --text: #BF360C; --text-light: #E64A19; --border: #FFAB91; --status-bg: rgba(0,0,0,0.05); }
+        .theme-lavender { --primary: #6A1B9A; --primary-dark: #4A148C; --secondary: #CE93D8; --bg: #F3E5F5; --surface: #E1BEE7; --text: #4A148C; --text-light: #8E24AA; --border: #CE93D8; --status-bg: rgba(0,0,0,0.05); }
+        .theme-mint { --primary: #00897B; --primary-dark: #00695C; --secondary: #80CBC4; --bg: #E0F2F1; --surface: #B2DFDB; --text: #004D40; --text-light: #00796B; --border: #80CBC4; --status-bg: rgba(0,0,0,0.05); }
+        .theme-crimson { --primary: #C62828; --primary-dark: #B71C1C; --secondary: #EF9A9A; --bg: #FFEBEE; --surface: #FFCDD2; --text: #B71C1C; --text-light: #E53935; --border: #EF9A9A; --status-bg: rgba(0,0,0,0.05); }
+        .theme-coffee { --primary: #5D4037; --primary-dark: #4E342E; --secondary: #BCAAA4; --bg: #EFEBE9; --surface: #D7CCC8; --text: #3E2723; --text-light: #795548; --border: #BCAAA4; --status-bg: rgba(0,0,0,0.05); }
+        .theme-midnight { --primary: #1A237E; --primary-dark: #0D47A1; --secondary: #9FA8DA; --bg: #E8EAF6; --surface: #C5CAE9; --text: #1A237E; --text-light: #3F51B5; --border: #9FA8DA; --status-bg: rgba(0,0,0,0.05); }
+        .theme-rose { --primary: #AD1457; --primary-dark: #880E4F; --secondary: #F48FB1; --bg: #FCE4EC; --surface: #F8BBD0; --text: #880E4F; --text-light: #C2185B; --border: #F48FB1; --status-bg: rgba(0,0,0,0.05); }
+        .theme-gold { --primary: #F57F17; --primary-dark: #E65100; --secondary: #FFB74D; --bg: #FFF8E1; --surface: #FFECB3; --text: #E65100; --text-light: #FF8F00; --border: #FFD54F; --status-bg: rgba(0,0,0,0.05); }
+        .theme-teal { --primary: #00695C; --primary-dark: #004D40; --secondary: #4DB6AC; --bg: #E0F2F1; --surface: #B2DFDB; --text: #004D40; --text-light: #00796B; --border: #80CBC4; --status-bg: rgba(0,0,0,0.05); }
+        .theme-grape { --primary: #7B1FA2; --primary-dark: #4A148C; --secondary: #CE93D8; --bg: #F3E5F5; --surface: #E1BEE7; --text: #4A148C; --text-light: #8E24AA; --border: #CE93D8; --status-bg: rgba(0,0,0,0.05); }
+        .theme-lime { --primary: #827717; --primary-dark: #9E9D24; --secondary: #DCE775; --bg: #F9FBE7; --surface: #F0F4C3; --text: #827717; --text-light: #C0CA33; --border: #E6EE9C; --status-bg: rgba(0,0,0,0.05); }
+        .theme-inky { --primary: #263238; --primary-dark: #1a2329; --secondary: #78909C; --bg: #ECEFF1; --surface: #CFD8DC; --text: #263238; --text-light: #546E7A; --border: #B0BEC5; --status-bg: rgba(0,0,0,0.05); }
+        .theme-peach { --primary: #F4511E; --primary-dark: #D84315; --secondary: #FFAB91; --bg: #FBE9E7; --surface: #FFCCBC; --text: #BF360C; --text-light: #E64A19; --border: #FFAB91; --status-bg: rgba(0,0,0,0.05); }
+        .theme-azure { --primary: #0288D1; --primary-dark: #0277BD; --secondary: #81D4FA; --bg: #E1F5FE; --surface: #B3E5FC; --text: #01579B; --text-light: #0288D1; --border: #81D4FA; --status-bg: rgba(0,0,0,0.05); }
+        .theme-amber { --primary: #FF8F00; --primary-dark: #FF6F00; --secondary: #FFD54F; --bg: #FFF8E1; --surface: #FFECB3; --text: #E65100; --text-light: #FF8F00; --border: #FFD54F; --status-bg: rgba(0,0,0,0.05); }
+        .theme-slate { --primary: #455A64; --primary-dark: #37474F; --secondary: #90A4AE; --bg: #ECEFF1; --surface: #CFD8DC; --text: #263238; --text-light: #546E7A; --border: #B0BEC5; --status-bg: rgba(0,0,0,0.05); }
+        .theme-cherry { --primary: #D81B60; --primary-dark: #AD1457; --secondary: #F48FB1; --bg: #FCE4EC; --surface: #F8BBD0; --text: #880E4F; --text-light: #C2185B; --border: #F48FB1; --status-bg: rgba(0,0,0,0.05); }
+
+        .app-container { width: 100%; max-width: 500px; height: 100vh; background: var(--bg); overflow: hidden; display: flex; flex-direction: column; position: relative; box-shadow: 0 0 30px rgba(0,0,0,0.2); transition: all 0.3s ease; }
+        .app-header { background: var(--primary); padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; color: white; }
+        .logo h2 { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.5px; }
+        .logo h2 i { margin-right: 8px; }
+        .header-actions { display: flex; gap: 18px; font-size: 1.2rem; cursor: pointer; }
+        .nav-tabs { display: flex; background: var(--primary); padding: 8px 12px; gap: 4px; border-bottom: 1px solid rgba(255,255,255,0.1); flex-wrap: wrap; }
+        .nav-tab { flex: 1; text-align: center; padding: 8px 0; border-radius: 30px; cursor: pointer; font-weight: 600; font-size: 0.7rem; color: rgba(255,255,255,0.7); transition: 0.3s; }
+        .nav-tab i { margin-right: 4px; }
+        .nav-tab.active { background: rgba(255,255,255,0.2); color: white; }
+        .content-area { flex: 1; overflow-y: auto; background: var(--surface); }
+        .chat-list-item { display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: var(--bg); border-bottom: 1px solid var(--border); cursor: pointer; transition: 0.2s; }
+        .chat-list-item:hover { background: var(--surface); transform: scale(0.99); }
+        .avatar { width: 50px; height: 50px; background: var(--secondary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; color: white; font-size: 1.2rem; overflow: hidden; position: relative; cursor: pointer; }
+        .avatar-img { width: 100%; height: 100%; object-fit: cover; }
+        .online-dot { position: absolute; bottom: 2px; right: 2px; width: 12px; height: 12px; background: #25D366; border-radius: 50%; border: 2px solid white; }
+        .messages-area { flex: 1; overflow-y: auto; padding: 16px; background: var(--surface); }
+        .message { display: flex; margin-bottom: 12px; animation: fadeIn 0.2s; }
+        .message.sent { justify-content: flex-end; }
+        .message.received { justify-content: flex-start; }
+        .bubble { max-width: 70%; padding: 8px 12px; border-radius: 18px; word-wrap: break-word; background: var(--bg); box-shadow: 0 1px 1px rgba(0,0,0,0.05); }
+        .sent .bubble { background: var(--secondary); color: white; border-bottom-right-radius: 4px; }
+        .received .bubble { background: var(--bg); border-bottom-left-radius: 4px; }
+        .message-status { font-size: 0.65rem; margin-left: 5px; opacity: 0.7; }
+        .chat-input-area { background: var(--bg); padding: 12px; display: flex; gap: 10px; border-top: 1px solid var(--border); }
+        .chat-input { flex: 1; background: var(--surface); border: none; padding: 12px 16px; border-radius: 30px; outline: none; font-size: 0.95rem; }
+        .icon-btn { background: none; border: none; font-size: 1.3rem; cursor: pointer; width: 44px; color: var(--primary); transition: 0.2s; }
+        .send-btn { background: var(--primary); border: none; width: 48px; border-radius: 50%; color: white; cursor: pointer; transition: 0.2s; }
+        .auth-card { background: var(--bg); border-radius: 32px; padding: 40px 24px; width: 100%; box-shadow: 0 10px 40px rgba(0,0,0,0.1); }
+        .auth-input { width: 100%; padding: 14px 18px; margin: 10px 0; background: var(--surface); border: 1px solid var(--border); border-radius: 50px; font-size: 1rem; outline: none; }
+        .auth-btn { width: 100%; padding: 14px; background: var(--primary); border: none; border-radius: 50px; font-weight: bold; color: white; margin-top: 12px; cursor: pointer; transition: 0.2s; }
+        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.8); z-index: 2000; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(4px); }
+        .modal-content { background: var(--bg); border-radius: 32px; padding: 24px; width: 85%; max-width: 350px; max-height: 80vh; overflow-y: auto; }
+        .follow-btn { background: var(--primary); color: white; border: none; padding: 8px 20px; border-radius: 30px; cursor: pointer; font-weight: 600; }
+        .status-card { background: var(--bg); margin: 8px 0; padding: 12px; border-radius: 20px; display: flex; gap: 12px; align-items: center; cursor: pointer; border: 1px solid var(--border); transition: 0.2s; }
+        .video-status-badge { background: linear-gradient(135deg, #ff416c, #ff4b2b); padding: 4px 8px; border-radius: 20px; font-size: 0.7rem; color: white; margin-left: 8px; }
+        .theme-selector { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; padding: 12px; max-height: 300px; overflow-y: auto; }
+        .theme-option { padding: 8px; border-radius: 20px; text-align: center; cursor: pointer; background: var(--surface); border: 2px solid transparent; font-size: 0.7rem; }
+        .profile-header { background: var(--primary); padding: 32px; text-align: center; color: white; border-radius: 0 0 30px 30px; }
+        .file-input { display: none; }
+        .setting-row { display: flex; justify-content: space-between; padding: 14px; border-bottom: 1px solid var(--border); }
+        .search-result-item { display: flex; align-items: center; gap: 12px; padding: 12px; cursor: pointer; border-bottom: 1px solid var(--border); }
+        .handle-text { font-size: 0.75rem; color: var(--text-light); }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .call-badge { background: var(--primary-dark); padding: 6px 12px; border-radius: 25px; font-size: 0.7rem; }
+        .status-media { width: 100%; max-height: 400px; object-fit: contain; border-radius: 20px; }
     </style>
 </head>
 <body>
-<div class="overlay" id="overlay" onclick="closeSidebar()"></div>
-
-<header class="header">
-    <div class="header-content">
-        <div class="logo"><div class="logo-icon"><i class="fas fa-crown"></i></div><h1>GM Store</h1></div>
-        <div style="display: flex; gap: 15px; align-items: center;">
-            <div class="theme-selector">
-                <div class="theme-dot default" style="background:linear-gradient(135deg,#ff6b6b,#a29bfe)" onclick="setTheme('default')"></div>
-                <div class="theme-dot blue" style="background:linear-gradient(135deg,#4facfe,#00f2fe)" onclick="setTheme('blue')"></div>
-                <div class="theme-dot green" style="background:linear-gradient(135deg,#43e97b,#38f9d7)" onclick="setTheme('green')"></div>
-                <div class="theme-dot purple" style="background:linear-gradient(135deg,#a18cd1,#fbc2eb)" onclick="setTheme('purple')"></div>
-                <div class="theme-dot orange" style="background:linear-gradient(135deg,#ff9a44,#fcb69f)" onclick="setTheme('orange')"></div>
-                <div class="theme-dot dark" style="background:linear-gradient(135deg,#6c5ce7,#a8a4e6)" onclick="setTheme('dark')"></div>
-            </div>
-            <button class="menu-btn" onclick="toggleSidebar()"><i class="fas fa-headset"></i> Support / Sell</button>
-        </div>
-    </div>
-</header>
-
-<div class="container">
-    <img id="coverImage" class="cover-img" src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1200" alt="Cover">
-    <div class="hero">
-        <h1>Welcome to GM Store 🇵🇰</h1>
-        <p>Pakistan's Most Trusted Marketplace</p>
-        <div class="price-note"><i class="fas fa-rupee-sign"></i> All Prices in Pakistani Rupees (PKR)</div>
-    </div>
-    
-    <!-- Status Bar -->
-    <div class="status-bar" id="statusBar"></div>
-    
-    <div id="homePage" class="page active-page">
-        <div class="cat-scroll" id="categoriesList"></div>
-        <div class="product-section"><h2>👑 Official Store</h2><div class="product-grid" id="adminProductsGrid"></div></div>
-        <div class="product-section"><h2>🌟 Community Products</h2><div class="product-grid" id="communityProductsGrid"></div></div>
-    </div>
-    <div id="favoritesPage" class="page"><h2>❤️ My Wishlist</h2><div id="favoritesList"></div></div>
-    <div id="ordersPage" class="page"><h2>📦 My Orders</h2><div id="ordersList"></div></div>
-</div>
-
-<div class="bottom-bar">
-    <div class="tab-icon active" onclick="switchPage('home')"><i class="fas fa-store"></i><span>Shop</span></div>
-    <div class="tab-icon" onclick="switchPage('favorites')"><i class="fas fa-heart"></i><span>Wishlist</span></div>
-    <div class="tab-icon" onclick="switchPage('orders')"><i class="fas fa-list"></i><span>Orders</span></div>
-</div>
-
-<!-- Sidebar -->
-<div class="sidebar" id="sidebar">
-    <div class="sidebar-header"><span><i class="fas fa-headset"></i> Customer Support</span><i class="fas fa-times" onclick="closeSidebar()" style="cursor:pointer"></i></div>
-    <div class="sidebar-tabs"><div class="sidebar-tab active" onclick="switchSidebarTab('chat')">💬 Chat with Admin</div><div class="sidebar-tab" onclick="switchSidebarTab('request')">📦 Sell Product</div><div class="sidebar-tab" onclick="switchSidebarTab('status')">📱 My Status</div></div>
-    <div class="sidebar-content">
-        <div id="chatPanel"><div class="chat-messages" id="sidebarChatMessages"></div><div class="chat-input-area"><input type="text" id="chatInput" placeholder="Type message..."><button class="menu-btn" onclick="sendMessage()" style="padding:8px 16px">Send</button></div></div>
-        <div id="requestPanel" style="display:none"><h4>Request to Add Product (Price in PKR)</h4><div class="request-form"><input type="text" id="reqName" placeholder="Product Name *"><select id="reqCategory"></select><input type="number" id="reqPrice" placeholder="Price (PKR) *"><input type="number" id="reqStock" placeholder="Stock *"><input type="text" id="reqWhatsapp" placeholder="Your WhatsApp *"><input type="text" id="reqSellerName" placeholder="Your Name *"><textarea id="reqDesc" rows="2" placeholder="Description *"></textarea><input type="file" id="reqImages" multiple accept="image/*"><div id="reqImgPreview" style="display:flex; gap:8px; flex-wrap:wrap; margin:8px 0;"></div><button class="menu-btn" onclick="submitProductRequest()" style="width:100%; margin-top:10px">Send Request</button></div></div>
-        <div id="statusPanel" style="display:none"><h4>My Status Updates</h4><div id="myStatusList" style="margin-top:15px;"></div><button class="menu-btn" onclick="openPostStatusModal()" style="width:100%; margin-top:15px"><i class="fas fa-plus-circle"></i> Post New Status</button></div>
-    </div>
-</div>
-
-<!-- Post Status Modal -->
-<div id="postStatusModal" class="post-status-modal">
-    <div class="post-status-content">
-        <i class="fas fa-times" onclick="closePostStatusModal()" style="float:right; font-size:22px; cursor:pointer"></i>
-        <h3 style="margin-bottom:20px"><i class="fas fa-plus-circle"></i> Post Status</h3>
-        <div class="status-type-buttons">
-            <button class="status-type-btn active" onclick="selectStatusType('text')">📝 Text</button>
-            <button class="status-type-btn" onclick="selectStatusType('photo')">📷 Photo</button>
-            <button class="status-type-btn" onclick="selectStatusType('video')">🎥 Video</button>
-        </div>
-        <textarea id="statusText" rows="3" placeholder="What's on your mind?..."></textarea>
-        <input type="file" id="statusMedia" accept="image/*,video/*" style="display:none">
-        <div class="media-preview" id="statusMediaPreview"></div>
-        <button class="btn-place-order" onclick="postStatus()" style="width:100%"><i class="fas fa-paper-plane"></i> Post Status</button>
-    </div>
-</div>
-
-<!-- Status View Modal -->
-<div id="statusViewModal" class="status-view-modal">
-    <div class="status-view-content">
-        <div class="status-progress-bar"><div class="status-progress" id="statusProgress"></div></div>
-        <div class="status-header"><span id="statusUserName"></span><i class="fas fa-times close-status" onclick="closeStatusView()"></i></div>
-        <div id="statusMediaContainer"></div>
-        <div class="status-time" id="statusTime"></div>
-        <div class="status-nav status-prev" onclick="prevStatus()"></div>
-        <div class="status-nav status-next" onclick="nextStatus()"></div>
-    </div>
-</div>
-
-<!-- Order Form Modal -->
-<div id="orderFormModal" class="order-form-modal">
-    <div class="order-form-content">
-        <i class="fas fa-times" onclick="closeOrderFormModal()" style="float:right; font-size:22px; cursor:pointer"></i>
-        <h3 style="margin-bottom:20px"><i class="fas fa-shopping-cart"></i> Complete Your Order</h3>
-        <div id="orderProductInfo" style="background:#f5f5f5; padding:12px; border-radius:16px; margin-bottom:15px;"></div>
-        <input type="text" id="orderCustomerName" placeholder="Full Name *" required>
-        <input type="text" id="orderCity" placeholder="City *" required>
-        <textarea id="orderAddress" rows="2" placeholder="Full Address *" required></textarea>
-        <input type="text" id="orderLandmark" placeholder="Famous Landmark / Area *" required>
-        <input type="tel" id="orderMobile" placeholder="Mobile Number *" required>
-        <input type="tel" id="orderAltMobile" placeholder="Alternate Number (Optional)">
-        <select id="orderProvince" required>
-            <option value="">Select Province *</option>
-            <option value="Punjab">Punjab</option>
-            <option value="Sindh">Sindh</option>
-            <option value="Khyber Pakhtunkhwa">Khyber Pakhtunkhwa (KPK)</option>
-            <option value="Balochistan">Balochistan</option>
-            <option value="Gilgit Baltistan">Gilgit Baltistan</option>
-            <option value="Azad Kashmir">Azad Kashmir</option>
-            <option value="Islamabad">Islamabad Capital Territory</option>
-        </select>
-        <button class="btn-place-order" onclick="submitOrderToFormspree()" style="width:100%; margin-top:10px"><i class="fas fa-paper-plane"></i> Submit Order</button>
-    </div>
-</div>
-
-<!-- Product View Modal -->
-<div id="productModal" class="modal">
-    <div class="modal-content">
-        <i class="fas fa-times close-modal" onclick="closeProductModal()"></i>
-        <h2 id="modalTitle" style="margin-top: 0; padding-right: 30px;"></h2>
-        <div id="modalGallery" class="modal-gallery"></div>
-        <div class="modal-details">
-            <p><strong><i class="fas fa-tag"></i> Price:</strong> Rs. <span id="modalPrice"></span></p>
-            <p><strong><i class="fas fa-percent"></i> Discount:</strong> <span id="modalDiscount"></span>%</p>
-            <p><strong><i class="fas fa-rupee-sign"></i> Final Price:</strong> Rs. <span id="modalFinalPrice"></span></p>
-            <p><strong><i class="fas fa-store"></i> Seller:</strong> <span id="modalSeller"></span></p>
-            <p><strong><i class="fas fa-info-circle"></i> Description:</strong> <span id="modalDesc"></span></p>
-        </div>
-        <button id="modalOrderBtn" class="btn-place-order" style="margin-top:15px; width:100%">Place Order</button>
-        <button class="download-btn" onclick="downloadProductImages()"><i class="fas fa-download"></i> Download All Images</button>
-    </div>
-</div>
+<div class="app-container" id="appRoot"></div>
 
 <script>
-    // ========== DATA ==========
-    let adminProducts = JSON.parse(localStorage.getItem('gm_admin_products')) || [];
-    let categories = JSON.parse(localStorage.getItem('gm_categories')) || {};
-    let clientRequests = JSON.parse(localStorage.getItem('gm_client_requests')) || [];
-    let clientChats = JSON.parse(localStorage.getItem('gm_client_chats')) || {};
-    let favorites = JSON.parse(localStorage.getItem('gm_favorites')) || [];
-    let orders = JSON.parse(localStorage.getItem('gm_orders')) || [];
-    let statuses = JSON.parse(localStorage.getItem('gm_statuses')) || [];
-    let currentViewProduct = null;
-    let currentViewProductType = null;
-    let currentStatusType = 'text';
-    let currentStatusMedia = null;
-    let currentStatusList = [];
-    let currentStatusIndex = 0;
-    let statusInterval = null;
-
-    if (Object.keys(categories).length === 0) categories = { "Electronics": "https://cdn-icons-png.flaticon.com/512/3659/3659898.png", "Fashion": "https://cdn-icons-png.flaticon.com/512/6174/6174039.png", "Home Decor": "https://cdn-icons-png.flaticon.com/512/2543/2543366.png" };
-
-    // Clean old statuses (older than 24 hours)
-    function cleanOldStatuses() {
-        const now = Date.now();
-        const twentyFourHours = 24 * 60 * 60 * 1000;
-        statuses = statuses.filter(s => (now - s.timestamp) < twentyFourHours);
-        localStorage.setItem('gm_statuses', JSON.stringify(statuses));
-    }
-    cleanOldStatuses();
-    setInterval(cleanOldStatuses, 60 * 60 * 1000); // Clean every hour
-
-    function getApprovedCommunityProducts() { 
-        return clientRequests.filter(r => r.status === 'approved').map(r => ({ 
-            id: r.id, name: r.product.name, price: r.product.price, discount: 0, stock: r.product.stock, 
-            whatsapp: r.seller.whatsapp, category: r.product.category, images: r.product.images, 
-            description: r.product.description, addedBy: "client", sellerName: r.seller.name 
-        })); 
+    // ==================== STORAGE KEYS ====================
+    const STORAGE = {
+        users: 'gupshup_users_v4',
+        messages: 'gupshup_msgs_v4',
+        statuses: 'gupshup_statuses_v4',
+        calls: 'gupshup_calls_v4',
+        session: 'gupshup_session_v4',
+        themes: 'gupshup_theme_v4'
+    };
+    
+    let currentUser = null;
+    let users = [];
+    let messages = [];
+    let statuses = [];
+    let callLogs = [];
+    let currentTab = 'chats';
+    let currentTheme = localStorage.getItem(STORAGE.themes) || 'theme-default';
+    
+    function applyTheme(themeName) {
+        const container = document.querySelector('.app-container');
+        if (container) container.className = `app-container ${themeName}`;
+        currentTheme = themeName;
+        localStorage.setItem(STORAGE.themes, themeName);
     }
     
-    function saveAll() { 
-        localStorage.setItem('gm_client_requests', JSON.stringify(clientRequests)); 
-        localStorage.setItem('gm_client_chats', JSON.stringify(clientChats)); 
-        localStorage.setItem('gm_favorites', JSON.stringify(favorites)); 
-        localStorage.setItem('gm_orders', JSON.stringify(orders)); 
-        localStorage.setItem('gm_statuses', JSON.stringify(statuses));
+    // ==================== AUTH SYSTEM (Email Based) ====================
+    function generateOTP() { return Math.floor(100000 + Math.random() * 900000).toString(); }
+    
+    function registerUser(email, name) {
+        if (users.find(u => u.email === email)) return null;
+        let baseHandle = `@${name.toLowerCase().replace(/\s/g, '')}`;
+        let handle = baseHandle;
+        let counter = 1;
+        while (users.some(u => u.handle === handle)) handle = `${baseHandle}${counter++}`;
+        const newUser = {
+            id: Date.now() + Math.random(), email, name, handle, avatar: name.charAt(0).toUpperCase(), avatarData: null,
+            bio: "✨ Living in the moment • GupShup User", lastSeen: Date.now(), online: true,
+            followers: [], following: [], blocked: [], muted: [],
+            settings: { readReceipts: true, lastSeenVisible: true, videoStatusDuration: 30 },
+            createdAt: Date.now()
+        };
+        users.push(newUser);
+        saveData();
+        return newUser;
     }
-
-    // ========== STATUS FUNCTIONS ==========
-    function renderStatusBar() {
-        let container = document.getElementById('statusBar');
-        let usersStatus = new Map();
-        
-        statuses.forEach(status => {
-            if(!usersStatus.has(status.userId)) {
-                usersStatus.set(status.userId, { name: status.userName, lastStatus: status });
-            }
+    
+    function loginUser(email) { return users.find(u => u.email === email); }
+    
+    function searchByHandle(query) {
+        query = query.toLowerCase().trim();
+        if (query.startsWith('@')) query = query.substring(1);
+        return users.filter(u => u.id !== currentUser.id && (u.handle.toLowerCase().includes(query) || u.name.toLowerCase().includes(query)));
+    }
+    
+    function updateOnlineStatus(userId, isOnline) {
+        let u = users.find(u => u.id == userId);
+        if (u) { u.online = isOnline; u.lastSeen = Date.now(); saveData(); }
+    }
+    
+    // ==================== MESSAGING ====================
+    function sendMessage(fromId, toId, text, type = 'text') {
+        let msg = { id: Date.now() + Math.random(), from: fromId, to: toId, text, type, timestamp: Date.now(), status: 'sent' };
+        messages.push(msg);
+        saveData();
+        setTimeout(() => { msg.status = 'delivered'; saveData(); renderChatIfOpen(); }, 800);
+        setTimeout(() => { msg.status = 'read'; saveData(); renderChatIfOpen(); }, 2000);
+        return msg;
+    }
+    
+    function getChatMessages(u1, u2) {
+        return messages.filter(m => ((m.from === u1 && m.to === u2) || (m.from === u2 && m.to === u1))).sort((a, b) => a.timestamp - b.timestamp);
+    }
+    
+    function getRecentChats(userId) {
+        let chatUsers = new Set();
+        messages.forEach(m => {
+            if (m.from === userId) chatUsers.add(m.to);
+            if (m.to === userId) chatUsers.add(m.from);
         });
-        
-        let html = `<div class="status-item add-status" onclick="openPostStatusModal()">
-            <div class="status-ring"><div class="status-ring-inner"><i class="fas fa-plus"></i></div></div>
-            <div class="status-name">Add Status</div>
-        </div>`;
-        
-        usersStatus.forEach((user, userId) => {
-            let timeAgo = getTimeAgo(user.lastStatus.timestamp);
-            html += `<div class="status-item" onclick="viewUserStatuses('${userId}', '${escapeHtml(user.name)}')">
-                <div class="status-ring"><div class="status-ring-inner"><i class="fas fa-circle-user"></i></div></div>
-                <div class="status-name">${escapeHtml(user.name)}</div>
-                <div style="font-size:10px; color:#888">${timeAgo}</div>
-            </div>`;
-        });
-        container.innerHTML = html;
+        return Array.from(chatUsers).map(id => users.find(u => u.id == id)).filter(u => u);
     }
     
-    function getTimeAgo(timestamp) {
-        let seconds = Math.floor((Date.now() - timestamp) / 1000);
-        if(seconds < 60) return `${seconds}s ago`;
-        let minutes = Math.floor(seconds / 60);
-        if(minutes < 60) return `${minutes}m ago`;
-        let hours = Math.floor(minutes / 60);
-        if(hours < 24) return `${hours}h ago`;
-        return `${Math.floor(hours / 24)}d ago`;
+    // ==================== STATUS (Text, Photo, Video - WhatsApp Style) ====================
+    function addTextStatus(userId, text) {
+        let newStatus = {
+            id: Date.now() + Math.random(),
+            userId: userId,
+            type: 'text',
+            content: text,
+            timestamp: Date.now(),
+            views: [],
+            expiresAt: Date.now() + 86400000
+        };
+        statuses.push(newStatus);
+        saveData();
+        return newStatus;
     }
     
-    function viewUserStatuses(userId, userName) {
-        currentStatusList = statuses.filter(s => s.userId === userId).sort((a,b) => a.timestamp - b.timestamp);
-        currentStatusIndex = 0;
-        document.getElementById('statusUserName').innerText = userName;
-        if(currentStatusList.length > 0) {
-            showStatusAtIndex(currentStatusIndex);
-            document.getElementById('statusViewModal').style.display = 'flex';
-            startStatusProgress();
+    function addPhotoStatus(userId, photoData, caption = "") {
+        let newStatus = {
+            id: Date.now() + Math.random(),
+            userId: userId,
+            type: 'photo',
+            content: photoData,
+            caption: caption,
+            timestamp: Date.now(),
+            views: [],
+            expiresAt: Date.now() + 86400000
+        };
+        statuses.push(newStatus);
+        saveData();
+        return newStatus;
+    }
+    
+    function addVideoStatus(userId, videoUrl, caption = "") {
+        let newStatus = {
+            id: Date.now() + Math.random(),
+            userId: userId,
+            type: 'video',
+            content: videoUrl,
+            caption: caption,
+            duration: 30,
+            timestamp: Date.now(),
+            views: [],
+            expiresAt: Date.now() + 86400000
+        };
+        statuses.push(newStatus);
+        saveData();
+        return newStatus;
+    }
+    
+    function getFollowedStatuses(currentUserId) {
+        let current = users.find(u => u.id == currentUserId);
+        if (!current) return [];
+        let followedIds = current.following || [];
+        return statuses.filter(s => followedIds.includes(s.userId) && s.expiresAt > Date.now()).sort((a,b)=>b.timestamp - a.timestamp);
+    }
+    
+    function getMyStatuses(currentUserId) {
+        return statuses.filter(s => s.userId === currentUserId && s.expiresAt > Date.now()).sort((a,b)=>b.timestamp - a.timestamp);
+    }
+    
+    function viewStatus(statusId, viewerId) {
+        let s = statuses.find(s => s.id == statusId);
+        if (s && !s.views.includes(viewerId)) { s.views.push(viewerId); saveData(); }
+    }
+    
+    function deleteStatus(statusId) {
+        statuses = statuses.filter(s => s.id !== statusId);
+        saveData();
+    }
+    
+    // ==================== FOLLOW SYSTEM ====================
+    function followUser(currentUserId, targetUserId) {
+        let target = users.find(u => u.id == targetUserId);
+        let current = users.find(u => u.id == currentUserId);
+        if (target && !target.followers.includes(currentUserId)) {
+            target.followers.push(currentUserId);
+            if (current && !current.following.includes(targetUserId)) current.following.push(targetUserId);
+            saveData(); return true;
         }
+        return false;
     }
     
-    function showStatusAtIndex(index) {
-        if(index >= currentStatusList.length) {
-            closeStatusView();
-            return;
+    function unfollowUser(currentUserId, targetUserId) {
+        let target = users.find(u => u.id == targetUserId);
+        let current = users.find(u => u.id == currentUserId);
+        if (target) {
+            target.followers = target.followers.filter(f => f != currentUserId);
+            if (current) current.following = current.following.filter(f => f != targetUserId);
+            saveData(); return true;
         }
-        let status = currentStatusList[index];
-        let container = document.getElementById('statusMediaContainer');
-        let timeAgo = getTimeAgo(status.timestamp);
-        document.getElementById('statusTime').innerText = timeAgo;
-        
-        if(status.type === 'text') {
-            container.innerHTML = `<div style="display:flex; align-items:center; justify-content:center; height:100%; background: linear-gradient(135deg, #667eea, #764ba2); color:white; padding:20px; text-align:center; font-size:24px;">${escapeHtml(status.content)}</div>`;
-        } else if(status.type === 'photo') {
-            container.innerHTML = `<img src="${status.media}" class="status-media" alt="Status">`;
-        } else if(status.type === 'video') {
-            container.innerHTML = `<video src="${status.media}" class="status-media" autoplay muted controls></video>`;
-        }
-        
-        // Mark as viewed
-        if(!status.viewedBy) status.viewedBy = [];
-        let clientName = localStorage.getItem('gm_client_name') || "Customer";
-        if(!status.viewedBy.includes(clientName)) {
-            status.viewedBy.push(clientName);
-            saveAll();
-        }
+        return false;
     }
     
-    function startStatusProgress() {
-        if(statusInterval) clearInterval(statusInterval);
-        let progress = 0;
-        let progressBar = document.getElementById('statusProgress');
-        progressBar.style.width = '0%';
-        statusInterval = setInterval(() => {
-            progress += 2;
-            progressBar.style.width = progress + '%';
-            if(progress >= 100) {
-                clearInterval(statusInterval);
-                nextStatus();
-            }
-        }, 50);
+    function isFollowing(currentUserId, targetUserId) {
+        let current = users.find(u => u.id == currentUserId);
+        return current?.following?.includes(targetUserId) || false;
     }
     
-    function nextStatus() {
-        if(statusInterval) clearInterval(statusInterval);
-        currentStatusIndex++;
-        if(currentStatusIndex < currentStatusList.length) {
-            showStatusAtIndex(currentStatusIndex);
-            startStatusProgress();
-        } else {
-            closeStatusView();
-        }
+    // ==================== CALLS ====================
+    function addCallLog(fromId, toId, type, duration = 0) {
+        let call = { id: Date.now(), from: fromId, to: toId, type, duration, timestamp: Date.now(), status: 'completed' };
+        callLogs.push(call);
+        saveData();
+        return call;
     }
     
-    function prevStatus() {
-        if(statusInterval) clearInterval(statusInterval);
-        if(currentStatusIndex > 0) {
-            currentStatusIndex--;
-            showStatusAtIndex(currentStatusIndex);
-            startStatusProgress();
-        }
+    function getCallHistory(userId) {
+        return callLogs.filter(c => c.from === userId || c.to === userId).sort((a,b)=>b.timestamp - a.timestamp);
     }
     
-    function closeStatusView() {
-        if(statusInterval) clearInterval(statusInterval);
-        document.getElementById('statusViewModal').style.display = 'none';
-    }
-    
-    function selectStatusType(type) {
-        currentStatusType = type;
-        document.querySelectorAll('.status-type-btn').forEach(btn => btn.classList.remove('active'));
-        event.target.classList.add('active');
-        document.getElementById('statusText').style.display = type === 'text' ? 'block' : 'none';
-        if(type !== 'text') {
-            document.getElementById('statusMedia').click();
-        }
-    }
-    
-    document.getElementById('statusMedia')?.addEventListener('change', function(e) {
-        let file = e.target.files[0];
-        if(file) {
-            let reader = new FileReader();
-            reader.onload = ev => {
-                currentStatusMedia = ev.target.result;
-                let preview = document.getElementById('statusMediaPreview');
-                if(currentStatusType === 'photo') {
-                    preview.innerHTML = `<img src="${currentStatusMedia}" style="max-width:100%; max-height:200px; border-radius:16px;">`;
-                } else if(currentStatusType === 'video') {
-                    preview.innerHTML = `<video src="${currentStatusMedia}" style="max-width:100%; max-height:200px; border-radius:16px;" controls></video>`;
-                }
+    // ==================== PROFILE ====================
+    function updateProfilePicture(userId, file) {
+        return new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                let user = users.find(u => u.id == userId);
+                if (user) { user.avatarData = e.target.result; saveData(); resolve(true); }
+                else resolve(false);
             };
             reader.readAsDataURL(file);
-        }
-    });
-    
-    function openPostStatusModal() {
-        document.getElementById('postStatusModal').style.display = 'flex';
-        document.getElementById('statusText').value = '';
-        document.getElementById('statusMediaPreview').innerHTML = '';
-        currentStatusMedia = null;
-        document.getElementById('statusMedia').value = '';
-    }
-    
-    function closePostStatusModal() {
-        document.getElementById('postStatusModal').style.display = 'none';
-    }
-    
-    function postStatus() {
-        let clientName = localStorage.getItem('gm_client_name') || "Customer";
-        let content = document.getElementById('statusText').value.trim();
-        
-        if(currentStatusType === 'text' && !content) {
-            Swal.fire('Error', 'Please enter some text', 'error');
-            return;
-        }
-        if(currentStatusType !== 'text' && !currentStatusMedia) {
-            Swal.fire('Error', 'Please select a media file', 'error');
-            return;
-        }
-        
-        let newStatus = {
-            id: Date.now(),
-            userId: clientName,
-            userName: clientName,
-            type: currentStatusType,
-            content: content,
-            media: currentStatusMedia || null,
-            timestamp: Date.now(),
-            viewedBy: []
-        };
-        
-        statuses.push(newStatus);
-        localStorage.setItem('gm_statuses', JSON.stringify(statuses));
-        Swal.fire('Success!', 'Status posted successfully', 'success');
-        closePostStatusModal();
-        renderStatusBar();
-        renderMyStatuses();
-    }
-    
-    function renderMyStatuses() {
-        let container = document.getElementById('myStatusList');
-        let clientName = localStorage.getItem('gm_client_name') || "Customer";
-        let myStatuses = statuses.filter(s => s.userId === clientName).sort((a,b) => b.timestamp - a.timestamp);
-        
-        if(myStatuses.length === 0) {
-            container.innerHTML = '<p style="text-align:center; color:#999">No status posted yet</p>';
-            return;
-        }
-        
-        container.innerHTML = myStatuses.map(s => `
-            <div style="background:#f0f0f0; border-radius:16px; padding:12px; margin-bottom:12px; display:flex; justify-content:space-between; align-items:center;">
-                <div style="flex:1">
-                    ${s.type === 'text' ? `<i class="fas fa-comment"></i> ${escapeHtml(s.content.substring(0,50))}` : 
-                      s.type === 'photo' ? `<i class="fas fa-image"></i> Photo` : `<i class="fas fa-video"></i> Video`}
-                    <div style="font-size:11px; color:#888">${getTimeAgo(s.timestamp)} • ${s.viewedBy?.length || 0} views</div>
-                </div>
-                <button onclick="deleteStatus(${s.id})" style="background:#f44336; border:none; color:white; width:30px; height:30px; border-radius:50%; cursor:pointer"><i class="fas fa-trash"></i></button>
-            </div>
-        `).join('');
-    }
-    
-    function deleteStatus(id) {
-        Swal.fire({ title: 'Delete Status?', icon: 'warning', showCancelButton: true }).then(res => {
-            if(res.isConfirmed) {
-                statuses = statuses.filter(s => s.id !== id);
-                localStorage.setItem('gm_statuses', JSON.stringify(statuses));
-                renderMyStatuses();
-                renderStatusBar();
-                Swal.fire('Deleted!', '', 'success');
-            }
         });
     }
-
-    // ========== EXISTING FUNCTIONS ==========
-    function setTheme(theme) { document.body.className = theme === 'default' ? '' : 'theme-' + theme; localStorage.setItem('gm_client_theme', theme); }
-    let savedTheme = localStorage.getItem('gm_client_theme'); if(savedTheme && savedTheme !== 'default') setTheme(savedTheme);
-    let cover = localStorage.getItem('gm_store_cover'); if(cover) document.getElementById('coverImage').src = cover;
-
-    function renderCategories() {
-        let container = document.getElementById('categoriesList');
-        container.innerHTML = `<div class="cat-item" onclick="filterProducts('all')">All</div>` + Object.keys(categories).map(c => `<div class="cat-item" onclick="filterProducts('${c}')"><img src="${categories[c]}" width="20">${c}</div>`).join('');
-        document.getElementById('reqCategory').innerHTML = Object.keys(categories).map(c => `<option value="${c}">${c}</option>`).join('');
+    
+    function updateBio(userId, newBio) {
+        let user = users.find(u => u.id == userId);
+        if (user) { user.bio = newBio; saveData(); return true; }
+        return false;
     }
-
-    let currentFilter = 'all';
-    function filterProducts(cat) { currentFilter = cat; renderStore(); }
-
-    function renderStore() {
-        let adminFiltered = adminProducts.filter(p => currentFilter === 'all' ? true : p.category === currentFilter);
-        let communityFiltered = getApprovedCommunityProducts().filter(p => currentFilter === 'all' ? true : p.category === currentFilter);
-        document.getElementById('adminProductsGrid').innerHTML = adminFiltered.map(p => productCard(p, 'admin')).join('');
-        document.getElementById('communityProductsGrid').innerHTML = communityFiltered.map(p => productCard(p, 'community')).join('');
+    
+    // ==================== HELPERS ====================
+    function saveData() {
+        localStorage.setItem(STORAGE.users, JSON.stringify(users));
+        localStorage.setItem(STORAGE.messages, JSON.stringify(messages));
+        localStorage.setItem(STORAGE.statuses, JSON.stringify(statuses));
+        localStorage.setItem(STORAGE.calls, JSON.stringify(callLogs));
+        if (currentUser) localStorage.setItem(STORAGE.session, JSON.stringify({ userId: currentUser.id }));
     }
-
-    function productCard(p, type) {
-        let finalPrice = p.price - (p.price * (p.discount||0)/100);
-        let orderButton = type === 'admin' ? 
-            `<button class="btn-place-order" onclick="event.stopPropagation(); openOrderFormModal('${escapeHtml(p.name)}', ${finalPrice})"><i class="fas fa-truck"></i> Place Order</button>` :
-            `<div style="margin-top:8px; padding:8px; background:#f0f0f0; border-radius:30px; text-align:center; font-size:12px;"><i class="fab fa-whatsapp"></i> Seller WhatsApp: ${p.whatsapp}</div>`;
-        return `<div class="product-card"><img src="${p.images[0]}" class="product-img" onclick='event.stopPropagation(); viewProduct(${JSON.stringify(p).replace(/'/g, "&#39;")}, "${type}")'><div class="product-body"><div class="product-price-pkr"><i class="fas fa-rupee-sign"></i> ${finalPrice.toLocaleString()} ${p.discount ? `<span class="old-price"><i class="fas fa-rupee-sign"></i> ${p.price.toLocaleString()}</span> <span style="font-size:12px;">${p.discount}% OFF</span>` : ''}</div><button class="btn-view-details" onclick='event.stopPropagation(); viewProduct(${JSON.stringify(p).replace(/'/g, "&#39;")}, "${type}")'><i class="fas fa-eye"></i> View Details</button>${orderButton}</div></div>`;
+    
+    function loadData() {
+        let u = localStorage.getItem(STORAGE.users); let m = localStorage.getItem(STORAGE.messages);
+        let s = localStorage.getItem(STORAGE.statuses); let c = localStorage.getItem(STORAGE.calls);
+        let session = localStorage.getItem(STORAGE.session);
+        if (u) users = JSON.parse(u); if (m) messages = JSON.parse(m);
+        if (s) statuses = JSON.parse(s); if (c) callLogs = JSON.parse(c);
+        if (users.length === 0) initDemoData();
+        if (session) { let { userId } = JSON.parse(session); currentUser = users.find(u => u.id == userId); }
     }
-
-    function viewProduct(p, type) {
-        currentViewProduct = p;
-        currentViewProductType = type;
-        let finalPrice = p.price - (p.price * (p.discount||0)/100);
-        document.getElementById('modalTitle').innerText = p.name;
-        document.getElementById('modalDesc').innerText = p.description || "No description available";
-        document.getElementById('modalGallery').innerHTML = p.images.map((img, idx) => `<img src="${img}" class="gallery-img" onclick="event.stopPropagation(); window.open(this.src)">`).join('');
-        document.getElementById('modalPrice').innerText = p.price.toLocaleString();
-        document.getElementById('modalDiscount').innerText = p.discount || 0;
-        document.getElementById('modalFinalPrice').innerText = finalPrice.toLocaleString();
-        document.getElementById('modalSeller').innerText = type === 'admin' ? 'GM Official Store' : p.sellerName;
+    
+    function initDemoData() {
+        users = [
+            { id: "u1", email: "zara@demo.com", name: "Zara Ahmed", handle: "@zara", avatar: "Z", avatarData: null, bio: "Digital Creator ✨", lastSeen: Date.now(), online: true, followers: [], following: [], blocked: [], muted: [], settings: { readReceipts: true, lastSeenVisible: true, videoStatusDuration: 30 }, createdAt: Date.now() },
+            { id: "u2", email: "ali@demo.com", name: "Ali Raza", handle: "@ali", avatar: "A", avatarData: null, bio: "Tech Enthusiast 💻", lastSeen: Date.now(), online: false, followers: [], following: [], blocked: [], muted: [], settings: { readReceipts: true, lastSeenVisible: true, videoStatusDuration: 30 }, createdAt: Date.now() },
+            { id: "u3", email: "sana@demo.com", name: "Sana Khan", handle: "@sana", avatar: "S", avatarData: null, bio: "Artist 🎨", lastSeen: Date.now(), online: true, followers: [], following: [], blocked: [], muted: [], settings: { readReceipts: true, lastSeenVisible: true, videoStatusDuration: 30 }, createdAt: Date.now() }
+        ];
+        messages = [{ id: "m1", from: "u1", to: "u2", text: "Hey! Welcome to GupShup Premium 🚀", type: "text", timestamp: Date.now() - 3600000, status: "read" }];
+        saveData();
+    }
+    
+    let currentChatUser = null;
+    function renderChatIfOpen() { if (currentChatUser) openChat(currentChatUser, true); }
+    
+    // ==================== RENDER ENGINE ====================
+    const root = document.getElementById('appRoot');
+    function render() { if (!currentUser) renderAuth(); else { updateOnlineStatus(currentUser.id, true); renderMainApp(); } }
+    
+    function renderAuth() {
+        root.innerHTML = `<div class="app-container ${currentTheme}"><div class="app-header" style="background:var(--primary);"><div class="logo"><h2><i class="fas fa-comment-dots"></i> GupShup</h2></div></div><div class="content-area"><div style="padding:40px 20px;"><div class="auth-card"><h3 style="text-align:center; color:var(--primary);">✨ Premium Messenger</h3><input type="email" id="emailInput" class="auth-input" placeholder="Email Address"><input type="text" id="nameInput" class="auth-input" placeholder="Full Name (for signup)"><input type="text" id="otpInput" class="auth-input" placeholder="Enter OTP"><button id="requestOtpBtn" class="auth-btn">📧 Request OTP</button><button id="loginBtn" class="auth-btn">🔓 Login / Signup</button></div></div></div></div>`;
+        let requestedOtp = null;
+        document.getElementById('requestOtpBtn').onclick = () => { let email = document.getElementById('emailInput').value.trim(); if(email){ requestedOtp = generateOTP(); alert(`Demo OTP: ${requestedOtp}`); } else alert("Enter email"); };
+        document.getElementById('loginBtn').onclick = () => {
+            let email = document.getElementById('emailInput').value.trim();
+            let name = document.getElementById('nameInput').value.trim();
+            let otp = document.getElementById('otpInput').value.trim();
+            let user = loginUser(email);
+            if (!user && name && otp === requestedOtp) { user = registerUser(email, name); if(user) { currentUser = user; saveData(); render(); } else alert("Registration failed"); }
+            else if (user && otp === requestedOtp) { currentUser = user; saveData(); render(); }
+            else alert("Invalid OTP or user not found");
+        };
+        applyTheme(currentTheme);
+    }
+    
+    function renderMainApp() {
+        const recentChats = getRecentChats(currentUser.id);
+        const followedStatuses = getFollowedStatuses(currentUser.id);
+        const myStatuses = getMyStatuses(currentUser.id);
+        const callHistory = getCallHistory(currentUser.id);
         
-        let orderBtn = document.getElementById('modalOrderBtn');
-        if(type === 'admin') {
-            orderBtn.innerHTML = '<i class="fas fa-truck"></i> Place Order';
-            orderBtn.onclick = () => openOrderFormModal(p.name, finalPrice);
-        } else {
-            orderBtn.innerHTML = `<i class="fab fa-whatsapp"></i> Contact Seller: ${p.whatsapp}`;
-            orderBtn.onclick = () => buyWhatsApp(p.name, finalPrice, p.whatsapp);
+        root.innerHTML = `<div class="app-container ${currentTheme}"><div class="app-header"><div class="logo"><h2><i class="fas fa-comment-dots"></i> GupShup</h2></div><div class="header-actions"><i class="fas fa-palette" id="themeBtn"></i><i class="fas fa-search" id="searchBtn"></i><i class="fas fa-cog" id="settingsBtn"></i><i class="fas fa-sign-out-alt" id="logoutBtn"></i></div></div><div class="nav-tabs"><div class="nav-tab ${currentTab === 'chats' ? 'active' : ''}" data-tab="chats"><i class="fas fa-comment"></i> Chats</div><div class="nav-tab ${currentTab === 'status' ? 'active' : ''}" data-tab="status"><i class="fas fa-circle"></i> Status</div><div class="nav-tab ${currentTab === 'calls' ? 'active' : ''}" data-tab="calls"><i class="fas fa-phone"></i> Calls</div><div class="nav-tab ${currentTab === 'profile' ? 'active' : ''}" data-tab="profile"><i class="fas fa-user"></i> Profile</div></div><div class="content-area" id="dynamicContent"></div></div>`;
+        
+        document.querySelectorAll('.nav-tab').forEach(tab => { tab.onclick = () => { currentTab = tab.dataset.tab; render(); }; });
+        document.getElementById('logoutBtn').onclick = () => { updateOnlineStatus(currentUser.id, false); currentUser = null; localStorage.removeItem(STORAGE.session); render(); };
+        document.getElementById('settingsBtn').onclick = () => showProfessionalSettings();
+        document.getElementById('searchBtn').onclick = () => showSearchModal();
+        document.getElementById('themeBtn').onclick = () => showThemeSelector();
+        
+        const container = document.getElementById('dynamicContent');
+        
+        if (currentTab === 'chats') {
+            container.innerHTML = `<div id="chatsList"></div>`;
+            const chatsDiv = document.getElementById('chatsList');
+            if (recentChats.length === 0) chatsDiv.innerHTML = '<div style="text-align:center; padding:40px; color:var(--text-light);">💬 No chats. Search users using 🔍!</div>';
+            else chatsDiv.innerHTML = recentChats.map(user => `<div class="chat-list-item" data-user="${user.id}"><div class="avatar" style="position:relative;">${user.avatarData ? `<img src="${user.avatarData}" class="avatar-img">` : user.avatar}${user.online ? '<span class="online-dot"></span>' : ''}</div><div class="chat-info" style="flex:1;"><div class="chat-name">${user.name}</div><div class="chat-last-msg" style="font-size:0.75rem; color:var(--text-light);">${user.online ? '🟢 Online' : '📅 Last seen recently'}</div><div class="handle-text">${user.handle}</div></div></div>`).join('');
+            document.querySelectorAll('[data-user]').forEach(el => { el.onclick = () => openChat(users.find(u => u.id == el.dataset.user)); });
         }
-        document.getElementById('productModal').style.display = 'flex';
+        else if (currentTab === 'status') {
+            container.innerHTML = `<div style="padding:16px;"><button id="addTextStatusBtn" style="width:32%; background:var(--primary); color:white; border:none; padding:12px; border-radius:30px; margin-right:2%;"><i class="fas fa-text-height"></i> Text</button><button id="addPhotoStatusBtn" style="width:32%; background:var(--primary-dark); color:white; border:none; padding:12px; border-radius:30px; margin-right:2%;"><i class="fas fa-camera"></i> Photo</button><button id="addVideoStatusBtn" style="width:32%; background:var(--primary-dark); color:white; border:none; padding:12px; border-radius:30px;"><i class="fas fa-video"></i> Video</button></div><div id="statusList"></div>`;
+            
+            document.getElementById('addTextStatusBtn').onclick = () => { let txt = prompt("What's happening?"); if(txt) addTextStatus(currentUser.id, txt); render(); };
+            document.getElementById('addPhotoStatusBtn').onclick = () => {
+                let input = document.createElement('input'); input.type = 'file'; input.accept = 'image/*';
+                input.onchange = (e) => {
+                    let file = e.target.files[0];
+                    if(file) {
+                        let reader = new FileReader();
+                        reader.onload = (ev) => { let caption = prompt("Caption (optional):"); addPhotoStatus(currentUser.id, ev.target.result, caption); render(); };
+                        reader.readAsDataURL(file);
+                    }
+                };
+                input.click();
+            };
+            document.getElementById('addVideoStatusBtn').onclick = () => {
+                let videoUrl = prompt("🎥 Enter video URL:", "https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4");
+                if(videoUrl) { let caption = prompt("Caption (optional):"); addVideoStatus(currentUser.id, videoUrl, caption); render(); }
+            };
+            
+            const statusDiv = document.getElementById('statusList');
+            if (myStatuses.length) {
+                statusDiv.innerHTML += `<h4 style="padding:12px;">📱 My Status (${myStatuses.length})</h4>`;
+                statusDiv.innerHTML += myStatuses.map(s => `<div class="status-card"><div class="avatar">${currentUser.avatarData ? `<img src="${currentUser.avatarData}" class="avatar-img">` : currentUser.avatar}</div><div style="flex:1;"><b>${currentUser.name}</b><br><small>${s.type === 'video' ? '🎥 Video: ' + (s.caption || '') : s.type === 'photo' ? '📷 Photo' : s.content.substring(0,40)}</small><br><small>👁️ ${s.views.length} views • ${new Date(s.timestamp).toLocaleTimeString()}</small></div><button onclick="event.stopPropagation(); deleteStatus('${s.id}'); render();" style="background:#f44336; color:white; border:none; border-radius:50%; width:30px; height:30px; cursor:pointer;"><i class="fas fa-trash"></i></button></div>`).join('');
+            }
+            if (followedStatuses.length) {
+                statusDiv.innerHTML += `<h4 style="padding:12px;">👥 Status Updates (Following)</h4>`;
+                statusDiv.innerHTML += followedStatuses.map(s => { let u = users.find(u=>u.id==s.userId); return `<div class="status-card" data-status="${s.id}" data-type="${s.type}" data-content="${s.content.replace(/"/g, '&quot;')}" data-caption="${s.caption || ''}"><div class="avatar">${u?.avatarData ? `<img src="${u?.avatarData}" class="avatar-img">` : u?.avatar}</div><div><b>${u?.name}</b><br><small>${s.type === 'video' ? '🎥 30s Video' : s.type === 'photo' ? '📷 Photo' : s.content.substring(0,40)}</small><span class="video-status-badge">${s.type === 'video' ? '30s' : s.type === 'photo' ? '📷' : ''}</span><br><small>👁️ ${s.views.length} views</small></div></div>`; }).join('');
+            }
+            if (followedStatuses.length === 0 && myStatuses.length === 0) statusDiv.innerHTML += `<div style="padding:40px; text-align:center; color:var(--text-light);">👤 Follow users using search to see their status!</div>`;
+            
+            document.querySelectorAll('[data-status]').forEach(el => { el.onclick = () => { viewStatus(el.dataset.status, currentUser.id); showStatusViewer(el.dataset.type, el.dataset.content, el.dataset.caption); }; });
+        }
+        else if (currentTab === 'calls') {
+            container.innerHTML = `<div style="padding:16px;"><div class="setting-row"><span><i class="fas fa-phone-alt"></i> Recent Calls</span><span class="call-badge">Audio/Video</span></div></div><div id="callsList"></div>`;
+            const callsDiv = document.getElementById('callsList');
+            if (callHistory.length === 0) callsDiv.innerHTML = '<div style="text-align:center; padding:40px; color:var(--text-light);">📞 No calls yet. Tap call button in chat!</div>';
+            else callsDiv.innerHTML = callHistory.map(c => { let other = users.find(u => u.id == (c.from === currentUser.id ? c.to : c.from)); return `<div class="chat-list-item"><div class="avatar"><i class="fas ${c.type === 'audio' ? 'fa-phone' : 'fa-video'}"></i></div><div><b>${other?.name}</b><br><small>${c.type === 'audio' ? '📞 Audio Call' : '🎥 Video Call'} • ${new Date(c.timestamp).toLocaleTimeString()}</small></div></div>`; }).join('');
+        }
+        else if (currentTab === 'profile') {
+            container.innerHTML = `<div class="profile-header"><div class="avatar" style="width:100px; height:100px; margin:0 auto; font-size:3rem; cursor:pointer;" id="uploadPicTrigger">${currentUser.avatarData ? `<img src="${currentUser.avatarData}" class="avatar-img">` : currentUser.avatar}<input type="file" id="profilePicInput" accept="image/*" style="display:none;"></div><h3 style="margin-top:12px;">${currentUser.name}</h3><p style="opacity:0.9;">${currentUser.handle}</p><p style="margin-top:8px;">${currentUser.bio}</p><p style="font-size:0.8rem;">${currentUser.email}</p></div><div style="padding:16px;"><div class="chat-list-item" id="editBioBtn"><i class="fas fa-pen"></i> Edit Bio</div><div class="chat-list-item" id="showStats"><i class="fas fa-chart-line"></i> Followers: ${currentUser.followers?.length || 0} | Following: ${currentUser.following?.length || 0}</div><div class="chat-list-item" id="privacyBtn"><i class="fas fa-lock"></i> Privacy & Settings</div><div class="chat-list-item" id="myStatusHistoryBtn"><i class="fas fa-history"></i> My Status History (${getMyStatuses(currentUser.id).length})</div></div>`;
+            document.getElementById('uploadPicTrigger').onclick = () => document.getElementById('profilePicInput').click();
+            document.getElementById('profilePicInput').onchange = async (e) => { if(e.target.files[0]){ await updateProfilePicture(currentUser.id, e.target.files[0]); render(); } };
+            document.getElementById('editBioBtn').onclick = () => { let newBio = prompt("Bio:", currentUser.bio); if(newBio) updateBio(currentUser.id, newBio); render(); };
+            document.getElementById('showStats').onclick = () => alert(`👥 Followers: ${currentUser.followers.length}\n✅ Following: ${currentUser.following.length}`);
+            document.getElementById('privacyBtn').onclick = () => showProfessionalSettings();
+            document.getElementById('myStatusHistoryBtn').onclick = () => { let ms = getMyStatuses(currentUser.id); if(ms.length) alert(ms.map(s=>`${s.type}: ${s.type==='text'?s.content.substring(0,30):'Media'} (${s.views.length} views)`).join('\n')); else alert('No status history'); };
+        }
+        applyTheme(currentTheme);
     }
     
-    function closeProductModal() { document.getElementById('productModal').style.display = 'none'; }
+    function showStatusViewer(type, content, caption) {
+        let modal = document.createElement('div'); modal.className = 'modal-overlay';
+        if(type === 'text') {
+            modal.innerHTML = `<div class="modal-content" style="text-align:center;"><div style="background:var(--primary); color:white; padding:40px; border-radius:20px;"><i class="fas fa-quote-left fa-2x"></i><p style="margin-top:20px; font-size:1.2rem;">${escapeHtml(content)}</p>${caption ? `<p style="margin-top:15px; opacity:0.8;">${escapeHtml(caption)}</p>` : ''}</div><button class="auth-btn" style="margin-top:15px;" onclick="this.parentElement.parentElement.remove()">Close</button></div>`;
+        } else if(type === 'photo') {
+            modal.innerHTML = `<div class="modal-content" style="text-align:center;"><img src="${content}" style="max-width:100%; max-height:60vh; border-radius:20px;">${caption ? `<p style="margin-top:10px;">${escapeHtml(caption)}</p>` : ''}<button class="auth-btn" style="margin-top:15px;" onclick="this.parentElement.parentElement.remove()">Close</button></div>`;
+        } else if(type === 'video') {
+            modal.innerHTML = `<div class="modal-content" style="text-align:center;"><video src="${content}" style="max-width:100%; max-height:60vh; border-radius:20px;" controls autoplay muted></video>${caption ? `<p style="margin-top:10px;">${escapeHtml(caption)}</p>` : ''}<button class="auth-btn" style="margin-top:15px;" onclick="this.parentElement.parentElement.remove()">Close</button></div>`;
+        }
+        document.body.appendChild(modal);
+    }
     
-    function downloadProductImages() { 
-        if(currentViewProduct && currentViewProduct.images.length > 0) {
-            Swal.fire({ title: 'Download Images', text: `${currentViewProduct.images.length} images will be downloaded.`, icon: 'info', showCancelButton: true, confirmButtonText: 'Download All' }).then(res => {
-                if(res.isConfirmed) {
-                    currentViewProduct.images.forEach((img, i) => { let a = document.createElement('a'); a.href = img; a.download = `${currentViewProduct.name.replace(/[^a-z0-9]/gi, '_')}_${i+1}.jpg`; a.click(); }); 
-                    Swal.fire('Download Started!', 'Your images are being downloaded.', 'success');
-                }
+    function showSearchModal() {
+        let modal = document.createElement('div'); modal.className = 'modal-overlay';
+        modal.innerHTML = `<div class="modal-content"><h3>🔍 Search Users</h3><input type="text" id="searchHandleInput" class="auth-input" placeholder="Search by @handle or name"><div id="searchResults"></div><button id="closeSearchBtn" class="auth-btn">Close</button></div>`;
+        document.body.appendChild(modal);
+        
+        const searchInput = document.getElementById('searchHandleInput');
+        const resultsDiv = document.getElementById('searchResults');
+        
+        const performSearch = () => {
+            let query = searchInput.value.trim();
+            if(query.length < 2) { resultsDiv.innerHTML = '<p style="text-align:center; padding:20px; color:#999;">Type at least 2 characters</p>'; return; }
+            let results = searchByHandle(query);
+            if(results.length === 0) resultsDiv.innerHTML = '<p style="text-align:center; padding:20px; color:#999;">No users found</p>';
+            else resultsDiv.innerHTML = results.map(u => `<div class="search-result-item" data-user='${JSON.stringify(u)}'><div class="avatar">${u.avatarData ? `<img src="${u.avatarData}" class="avatar-img">` : u.avatar}</div><div><b>${u.name}</b><div class="handle-text">${u.handle}</div><div style="font-size:0.7rem;">${u.bio?.substring(0,30)}</div></div><button class="follow-btn" style="padding:4px 12px;">${isFollowing(currentUser.id, u.id) ? 'Following' : 'Follow'}</button></div>`).join('');
+            document.querySelectorAll('.search-result-item').forEach(el => {
+                let user = JSON.parse(el.dataset.user);
+                el.onclick = (e) => { if(e.target.tagName !== 'BUTTON') { modal.remove(); openChat(user); } };
+                el.querySelector('.follow-btn').onclick = (e) => { e.stopPropagation(); if(isFollowing(currentUser.id, user.id)) unfollowUser(currentUser.id, user.id); else followUser(currentUser.id, user.id); performSearch(); };
             });
-        } else {
-            Swal.fire('Error', 'No images to download', 'error');
+        };
+        searchInput.oninput = performSearch;
+        document.getElementById('closeSearchBtn').onclick = () => modal.remove();
+        performSearch();
+    }
+    
+    function showProfessionalSettings() {
+        let modal = document.createElement('div'); modal.className = 'modal-overlay';
+        modal.innerHTML = `<div class="modal-content"><h3>⚙️ Privacy Settings</h3><div class="setting-row"><span>Read Receipts</span><input type="checkbox" id="readReceiptsToggle" ${currentUser.settings.readReceipts ? 'checked' : ''}></div><div class="setting-row"><span>Show Last Seen</span><input type="checkbox" id="lastSeenToggle" ${currentUser.settings.lastSeenVisible ? 'checked' : ''}></div><div class="setting-row"><span>Video Status Duration</span><span>30 seconds (Fixed)</span></div><button id="saveSettingsBtn" class="auth-btn">Save Changes</button><button id="closeSettingsBtn" class="auth-btn" style="margin-top:8px;">Close</button></div>`;
+        document.body.appendChild(modal);
+        document.getElementById('saveSettingsBtn').onclick = () => {
+            currentUser.settings.readReceipts = document.getElementById('readReceiptsToggle').checked;
+            currentUser.settings.lastSeenVisible = document.getElementById('lastSeenToggle').checked;
+            saveData(); alert("Settings updated!"); modal.remove();
+        };
+        document.getElementById('closeSettingsBtn').onclick = () => modal.remove();
+    }
+    
+    function showThemeSelector() {
+        const themes = ['theme-default','theme-dark','theme-forest','theme-ocean','theme-sunset','theme-lavender','theme-mint','theme-crimson','theme-coffee','theme-midnight','theme-rose','theme-gold','theme-teal','theme-grape','theme-lime','theme-inky','theme-peach','theme-azure','theme-amber','theme-slate','theme-cherry'];
+        let modal = document.createElement('div'); modal.className = 'modal-overlay';
+        modal.innerHTML = `<div class="modal-content"><h3>🎨 20+ Premium Themes</h3><div class="theme-selector" id="themeGrid"></div><button id="closeThemeBtn" class="auth-btn">Close</button></div>`;
+        document.body.appendChild(modal);
+        const grid = document.getElementById('themeGrid');
+        grid.innerHTML = themes.map(t => `<div class="theme-option ${currentTheme===t?'active':''}" data-theme="${t}" style="background:var(--surface);">${t.replace('theme-','')}</div>`).join('');
+        document.querySelectorAll('[data-theme]').forEach(opt => { opt.onclick = () => { applyTheme(opt.dataset.theme); render(); modal.remove(); }; });
+        document.getElementById('closeThemeBtn').onclick = () => modal.remove();
+    }
+    
+    function openChat(user, skipRender = false) {
+        currentChatUser = user;
+        const msgs = getChatMessages(currentUser.id, user.id);
+        if (!skipRender) {
+            root.innerHTML = `<div class="app-container ${currentTheme}"><div class="app-header" style="background:var(--primary);"><button id="backBtn" style="background:none;border:none;color:white;font-size:1.2rem;"><i class="fas fa-arrow-left"></i></button><div class="avatar" style="width:40px;height:40px;">${user.avatarData?`<img src="${user.avatarData}" style="width:40px;height:40px;border-radius:50%;">`:user.avatar}</div><div style="flex:1; margin-left:12px;"><div style="font-weight:600;">${user.name}</div><div style="font-size:0.7rem;">${user.handle} • ${user.online ? 'Online' : 'Offline'}</div></div><i class="fas fa-phone" id="audioCallBtn" style="margin:0 12px; cursor:pointer;"></i><i class="fas fa-video" id="videoCallBtn" style="cursor:pointer;"></i></div><div class="messages-area" id="messagesArea"></div><div class="chat-input-area"><input type="text" id="messageInput" class="chat-input" placeholder="Type a message..."><button class="send-btn" id="sendBtn"><i class="fas fa-paper-plane"></i></button></div></div>`;
+            document.getElementById('backBtn').onclick = () => { currentChatUser = null; render(); };
+            document.getElementById('audioCallBtn').onclick = () => { addCallLog(currentUser.id, user.id, 'audio', 45); alert(`📞 Audio call to ${user.name} (demo)`); render(); };
+            document.getElementById('videoCallBtn').onclick = () => { addCallLog(currentUser.id, user.id, 'video', 120); alert(`📹 Video call to ${user.name} (demo)`); render(); };
         }
-    }
-
-    function buyWhatsApp(name, price, whatsapp) { 
-        let cleanNumber = whatsapp.toString().replace(/[^0-9]/g, ''); 
-        if(cleanNumber.startsWith('0')) cleanNumber = '92' + cleanNumber.substring(1); 
-        if(!cleanNumber.startsWith('92')) cleanNumber = '92' + cleanNumber; 
-        window.open(`https://wa.me/${cleanNumber}?text=Hi%2C%20I%20want%20to%20buy%20${encodeURIComponent(name)}%20for%20Rs.${price}`, '_blank'); 
-    }
-
-    let currentOrderProduct = { name: '', price: 0 };
-    function openOrderFormModal(name, price) {
-        currentOrderProduct = { name, price };
-        document.getElementById('orderProductInfo').innerHTML = `<strong>${name}</strong><br>Total Amount: <strong>Rs. ${price.toLocaleString()}</strong>`;
-        document.getElementById('orderFormModal').style.display = 'flex';
-        closeProductModal();
+        const msgArea = document.getElementById('messagesArea');
+        function renderMessages() { 
+            let updated = getChatMessages(currentUser.id, user.id); 
+            msgArea.innerHTML = updated.map(m => `<div class="message ${m.from === currentUser.id ? 'sent' : 'received'}"><div class="bubble">${escapeHtml(m.text)}<span class="message-status">${m.from === currentUser.id ? (m.status === 'sent' ? '✓' : m.status === 'delivered' ? '✓✓' : m.status === 'read' ? '✓✓' : '') : ''}</span></div></div>`).join(''); 
+            msgArea.scrollTop = msgArea.scrollHeight; 
+        }
+        renderMessages();
+        const input = document.getElementById('messageInput');
+        const send = () => { let txt = input.value.trim(); if(txt){ sendMessage(currentUser.id, user.id, txt); input.value = ''; renderMessages(); } };
+        document.getElementById('sendBtn').onclick = send;
+        input.onkeypress = (e) => { if(e.key === 'Enter') send(); };
+        applyTheme(currentTheme);
     }
     
-    function closeOrderFormModal() {
-        document.getElementById('orderFormModal').style.display = 'none';
-        document.getElementById('orderCustomerName').value = '';
-        document.getElementById('orderCity').value = '';
-        document.getElementById('orderAddress').value = '';
-        document.getElementById('orderLandmark').value = '';
-        document.getElementById('orderMobile').value = '';
-        document.getElementById('orderAltMobile').value = '';
-        document.getElementById('orderProvince').value = '';
-    }
-    
-    function submitOrderToFormspree() {
-        let name = document.getElementById('orderCustomerName').value.trim();
-        let city = document.getElementById('orderCity').value.trim();
-        let address = document.getElementById('orderAddress').value.trim();
-        let landmark = document.getElementById('orderLandmark').value.trim();
-        let mobile = document.getElementById('orderMobile').value.trim();
-        let altMobile = document.getElementById('orderAltMobile').value.trim();
-        let province = document.getElementById('orderProvince').value;
-        if(!name || !city || !address || !landmark || !mobile || !province) { Swal.fire('Error', 'Please fill all required fields', 'error'); return; }
-        let formData = new FormData();
-        formData.append('product', currentOrderProduct.name); formData.append('price', currentOrderProduct.price);
-        formData.append('name', name); formData.append('city', city); formData.append('address', address);
-        formData.append('landmark', landmark); formData.append('mobile', mobile); formData.append('alt_mobile', altMobile); formData.append('province', province);
-        fetch('https://formspree.io/f/xkoqnkze', { method: 'POST', body: formData, headers: { 'Accept': 'application/json' } })
-        .then(res => { if(res.ok) { Swal.fire({ icon: 'success', title: 'Order Submitted!', text: 'Admin will contact you soon.', timer: 3000 }); let order = { id: Date.now(), productName: currentOrderProduct.name, price: currentOrderProduct.price, status: 'Pending', date: new Date().toLocaleString() }; orders.unshift(order); saveAll(); renderOrders(); closeOrderFormModal(); } else { Swal.fire('Error', 'Submission failed', 'error'); } })
-        .catch(() => Swal.fire('Error', 'Network error', 'error'));
-    }
-
-    let clientName = localStorage.getItem('gm_client_name');
-    if(!clientName) { clientName = prompt("Enter your name for chat:", "Customer") || "Customer"; localStorage.setItem('gm_client_name', clientName); }
-    
-    function sendMessage() {
-        let msg = document.getElementById('chatInput').value.trim();
-        if(!msg) return;
-        let chats = clientChats[clientName] || [];
-        chats.push({ sender: 'client', senderName: clientName, message: msg, time: new Date().toLocaleString() });
-        clientChats[clientName] = chats;
-        saveAll();
-        renderChat();
-        document.getElementById('chatInput').value = '';
-    }
-    function deleteChatMessage(idx) { let chats = clientChats[clientName] || []; if(chats[idx]) { chats.splice(idx, 1); clientChats[clientName] = chats; saveAll(); renderChat(); } }
-    function renderChat() {
-        let container = document.getElementById('sidebarChatMessages');
-        let chats = clientChats[clientName] || [];
-        container.innerHTML = chats.slice(-50).map((m, idx) => `<div class="message-bubble ${m.sender === 'client' ? 'client-msg' : 'admin-msg'}"><div class="bubble"><strong>${m.sender === 'client' ? clientName : 'Admin'}:</strong> ${escapeHtml(m.message)}<br><small>${m.time}</small></div><span class="delete-msg-chat" onclick="deleteChatMessage(${idx})"><i class="fas fa-trash"></i></span></div>`).join('');
-        container.scrollTop = container.scrollHeight;
-    }
-
-    let requestImages = [];
-    document.getElementById('reqImages')?.addEventListener('change', function(e) {
-        let files = Array.from(e.target.files);
-        if(files.length > 5) { Swal.fire('Error', 'Max 5 images', 'error'); this.value=''; return; }
-        requestImages = [];
-        let container = document.getElementById('reqImgPreview');
-        container.innerHTML = '';
-        files.forEach(file => { let reader = new FileReader(); reader.onload = ev => { requestImages.push(ev.target.result); let img = document.createElement('img'); img.src = ev.target.result; img.style.width = '60px'; img.style.height = '60px'; img.style.borderRadius = '12px'; img.style.objectFit = 'cover'; container.appendChild(img); }; reader.readAsDataURL(file); });
-    });
-
-    function submitProductRequest() {
-        let name = document.getElementById('reqName').value.trim();
-        let category = document.getElementById('reqCategory').value;
-        let price = parseFloat(document.getElementById('reqPrice').value);
-        let stock = parseInt(document.getElementById('reqStock').value);
-        let whatsapp = document.getElementById('reqWhatsapp').value.trim();
-        let sellerName = document.getElementById('reqSellerName').value.trim();
-        let desc = document.getElementById('reqDesc').value.trim();
-        if(!name || !category || !price || !stock || !whatsapp || !sellerName || !desc || requestImages.length === 0) { Swal.fire('Error', 'Fill all fields and upload image', 'error'); return; }
-        clientRequests.push({ id: Date.now(), product: { name, category, price, stock, description: desc, images: [...requestImages] }, seller: { name: sellerName, whatsapp }, status: 'pending', time: new Date().toLocaleString() });
-        saveAll();
-        Swal.fire('Request Sent!', 'Admin will review', 'success');
-        document.getElementById('reqName').value = ''; document.getElementById('reqPrice').value = ''; document.getElementById('reqStock').value = ''; document.getElementById('reqWhatsapp').value = ''; document.getElementById('reqSellerName').value = ''; document.getElementById('reqDesc').value = ''; document.getElementById('reqImages').value = ''; document.getElementById('reqImgPreview').innerHTML = ''; requestImages = [];
-        closeSidebar();
-    }
-
-    function renderFav() { let container = document.getElementById('favoritesList'); if(favorites.length===0) container.innerHTML='<p style="padding:40px;text-align:center">No favorites yet</p>'; else container.innerHTML = favorites.map(p => `<div style="background:white; border-radius:20px; padding:15px; margin-bottom:10px"><h4>${p.name}</h4><p>Rs. ${(p.price - (p.price*(p.discount||0)/100)).toLocaleString()}</p></div>`).join(''); }
-    function renderOrders() { let container = document.getElementById('ordersList'); if(orders.length===0) container.innerHTML='<p style="padding:40px;text-align:center">No orders yet</p>'; else container.innerHTML = orders.map(o => `<div style="background:white; border-radius:20px; padding:15px; margin-bottom:10px"><h4>${o.productName}</h4><p>Rs. ${o.price.toLocaleString()}</p><span style="background:#e0e0e0; padding:2px 12px; border-radius:20px">${o.status}</span><br><small>${o.date || ''}</small></div>`).join(''); }
-
-    function switchPage(page) { document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page')); document.getElementById(page + 'Page').classList.add('active-page'); document.querySelectorAll('.tab-icon').forEach((t,i) => { t.classList.toggle('active', (page==='home' && i===0) || (page==='favorites' && i===1) || (page==='orders' && i===2)); }); if(page === 'favorites') renderFav(); if(page === 'orders') renderOrders(); if(page === 'home') renderStore(); }
-    function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); document.getElementById('overlay').classList.toggle('active'); renderChat(); }
-    function closeSidebar() { document.getElementById('sidebar').classList.remove('open'); document.getElementById('overlay').classList.remove('active'); }
-    function switchSidebarTab(tab) { 
-        document.getElementById('chatPanel').style.display = tab === 'chat' ? 'block' : 'none'; 
-        document.getElementById('requestPanel').style.display = tab === 'request' ? 'block' : 'none';
-        document.getElementById('statusPanel').style.display = tab === 'status' ? 'block' : 'none';
-        document.querySelectorAll('.sidebar-tab').forEach((t,i) => { t.classList.toggle('active', (tab === 'chat' && i===0) || (tab === 'request' && i===1) || (tab === 'status' && i===2)); });
-        if(tab === 'status') renderMyStatuses();
-    }
     function escapeHtml(str) { if(!str) return ''; let d=document.createElement('div'); d.textContent=str; return d.innerHTML; }
-
-    setInterval(() => { adminProducts = JSON.parse(localStorage.getItem('gm_admin_products')) || []; clientRequests = JSON.parse(localStorage.getItem('gm_client_requests')) || []; categories = JSON.parse(localStorage.getItem('gm_categories')) || {}; statuses = JSON.parse(localStorage.getItem('gm_statuses')) || []; cleanOldStatuses(); renderStore(); renderCategories(); renderStatusBar(); }, 5000);
     
-    renderCategories(); renderStore(); renderFav(); renderOrders(); renderStatusBar();
+    loadData();
+    render();
+    setInterval(() => { if (currentUser) updateOnlineStatus(currentUser.id, true); }, 30000);
+    window.onbeforeunload = () => { if (currentUser) updateOnlineStatus(currentUser.id, false); };
 </script>
 </body>
 </html>
