@@ -3,35 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
-    <title>GupShup Messenger | Premium Chat & Status</title>
+    <title>Connectify | Premium Messenger with Groups</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background: #0a0a0a; min-height: 100vh; display: flex; justify-content: center; align-items: center; }
         
-        /* 20+ Premium Themes */
-        .theme-default { --primary: #075E54; --primary-dark: #054a3f; --secondary: #25D366; --bg: #ffffff; --surface: #f0f2f5; --text: #111111; --text-light: #667781; --border: #e9ecef; --status-bg: rgba(0,0,0,0.05); }
+        :root { --primary: #075E54; --primary-dark: #054a3f; --secondary: #25D366; --bg: #ffffff; --surface: #f0f2f5; --text: #111111; --text-light: #667781; --border: #e9ecef; --status-bg: rgba(0,0,0,0.05); }
         .theme-dark { --primary: #1a1a2e; --primary-dark: #0f0f1a; --secondary: #e94560; --bg: #16213e; --surface: #0f3460; --text: #ffffff; --text-light: #a0a0a0; --border: #2a3a5a; --status-bg: rgba(255,255,255,0.1); }
-        .theme-forest { --primary: #2E7D32; --primary-dark: #1B5E20; --secondary: #81C784; --bg: #F1F8E9; --surface: #DCEDC8; --text: #1B5E20; --text-light: #558B2F; --border: #C5E1A5; --status-bg: rgba(0,0,0,0.05); }
-        .theme-ocean { --primary: #0277BD; --primary-dark: #01579B; --secondary: #4FC3F7; --bg: #E1F5FE; --surface: #B3E5FC; --text: #01579B; --text-light: #0288D1; --border: #81D4FA; --status-bg: rgba(0,0,0,0.05); }
-        .theme-sunset { --primary: #D84315; --primary-dark: #BF360C; --secondary: #FF8A65; --bg: #FBE9E7; --surface: #FFCCBC; --text: #BF360C; --text-light: #E64A19; --border: #FFAB91; --status-bg: rgba(0,0,0,0.05); }
-        .theme-lavender { --primary: #6A1B9A; --primary-dark: #4A148C; --secondary: #CE93D8; --bg: #F3E5F5; --surface: #E1BEE7; --text: #4A148C; --text-light: #8E24AA; --border: #CE93D8; --status-bg: rgba(0,0,0,0.05); }
-        .theme-mint { --primary: #00897B; --primary-dark: #00695C; --secondary: #80CBC4; --bg: #E0F2F1; --surface: #B2DFDB; --text: #004D40; --text-light: #00796B; --border: #80CBC4; --status-bg: rgba(0,0,0,0.05); }
-        .theme-crimson { --primary: #C62828; --primary-dark: #B71C1C; --secondary: #EF9A9A; --bg: #FFEBEE; --surface: #FFCDD2; --text: #B71C1C; --text-light: #E53935; --border: #EF9A9A; --status-bg: rgba(0,0,0,0.05); }
-        .theme-coffee { --primary: #5D4037; --primary-dark: #4E342E; --secondary: #BCAAA4; --bg: #EFEBE9; --surface: #D7CCC8; --text: #3E2723; --text-light: #795548; --border: #BCAAA4; --status-bg: rgba(0,0,0,0.05); }
-        .theme-midnight { --primary: #1A237E; --primary-dark: #0D47A1; --secondary: #9FA8DA; --bg: #E8EAF6; --surface: #C5CAE9; --text: #1A237E; --text-light: #3F51B5; --border: #9FA8DA; --status-bg: rgba(0,0,0,0.05); }
-        .theme-rose { --primary: #AD1457; --primary-dark: #880E4F; --secondary: #F48FB1; --bg: #FCE4EC; --surface: #F8BBD0; --text: #880E4F; --text-light: #C2185B; --border: #F48FB1; --status-bg: rgba(0,0,0,0.05); }
-        .theme-gold { --primary: #F57F17; --primary-dark: #E65100; --secondary: #FFB74D; --bg: #FFF8E1; --surface: #FFECB3; --text: #E65100; --text-light: #FF8F00; --border: #FFD54F; --status-bg: rgba(0,0,0,0.05); }
-        .theme-teal { --primary: #00695C; --primary-dark: #004D40; --secondary: #4DB6AC; --bg: #E0F2F1; --surface: #B2DFDB; --text: #004D40; --text-light: #00796B; --border: #80CBC4; --status-bg: rgba(0,0,0,0.05); }
-        .theme-grape { --primary: #7B1FA2; --primary-dark: #4A148C; --secondary: #CE93D8; --bg: #F3E5F5; --surface: #E1BEE7; --text: #4A148C; --text-light: #8E24AA; --border: #CE93D8; --status-bg: rgba(0,0,0,0.05); }
-        .theme-lime { --primary: #827717; --primary-dark: #9E9D24; --secondary: #DCE775; --bg: #F9FBE7; --surface: #F0F4C3; --text: #827717; --text-light: #C0CA33; --border: #E6EE9C; --status-bg: rgba(0,0,0,0.05); }
-        .theme-inky { --primary: #263238; --primary-dark: #1a2329; --secondary: #78909C; --bg: #ECEFF1; --surface: #CFD8DC; --text: #263238; --text-light: #546E7A; --border: #B0BEC5; --status-bg: rgba(0,0,0,0.05); }
-        .theme-peach { --primary: #F4511E; --primary-dark: #D84315; --secondary: #FFAB91; --bg: #FBE9E7; --surface: #FFCCBC; --text: #BF360C; --text-light: #E64A19; --border: #FFAB91; --status-bg: rgba(0,0,0,0.05); }
-        .theme-azure { --primary: #0288D1; --primary-dark: #0277BD; --secondary: #81D4FA; --bg: #E1F5FE; --surface: #B3E5FC; --text: #01579B; --text-light: #0288D1; --border: #81D4FA; --status-bg: rgba(0,0,0,0.05); }
-        .theme-amber { --primary: #FF8F00; --primary-dark: #FF6F00; --secondary: #FFD54F; --bg: #FFF8E1; --surface: #FFECB3; --text: #E65100; --text-light: #FF8F00; --border: #FFD54F; --status-bg: rgba(0,0,0,0.05); }
-        .theme-slate { --primary: #455A64; --primary-dark: #37474F; --secondary: #90A4AE; --bg: #ECEFF1; --surface: #CFD8DC; --text: #263238; --text-light: #546E7A; --border: #B0BEC5; --status-bg: rgba(0,0,0,0.05); }
-        .theme-cherry { --primary: #D81B60; --primary-dark: #AD1457; --secondary: #F48FB1; --bg: #FCE4EC; --surface: #F8BBD0; --text: #880E4F; --text-light: #C2185B; --border: #F48FB1; --status-bg: rgba(0,0,0,0.05); }
 
         .app-container { width: 100%; max-width: 500px; height: 100vh; background: var(--bg); overflow: hidden; display: flex; flex-direction: column; position: relative; box-shadow: 0 0 30px rgba(0,0,0,0.2); transition: all 0.3s ease; }
         .app-header { background: var(--primary); padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; color: white; }
@@ -43,41 +23,69 @@
         .nav-tab i { margin-right: 4px; }
         .nav-tab.active { background: rgba(255,255,255,0.2); color: white; }
         .content-area { flex: 1; overflow-y: auto; background: var(--surface); }
+        
+        /* Chat List Styles */
         .chat-list-item { display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: var(--bg); border-bottom: 1px solid var(--border); cursor: pointer; transition: 0.2s; }
         .chat-list-item:hover { background: var(--surface); transform: scale(0.99); }
-        .avatar { width: 50px; height: 50px; background: var(--secondary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; color: white; font-size: 1.2rem; overflow: hidden; position: relative; cursor: pointer; }
+        .avatar { width: 50px; height: 50px; background: var(--secondary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; color: white; font-size: 1.2rem; overflow: hidden; position: relative; flex-shrink: 0; }
         .avatar-img { width: 100%; height: 100%; object-fit: cover; }
+        .group-avatar { background: linear-gradient(135deg, var(--primary), var(--secondary)); }
         .online-dot { position: absolute; bottom: 2px; right: 2px; width: 12px; height: 12px; background: #25D366; border-radius: 50%; border: 2px solid white; }
+        .chat-info { flex: 1; min-width: 0; }
+        .chat-name { font-weight: 600; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+        .group-badge { font-size: 0.6rem; background: var(--primary); color: white; padding: 2px 6px; border-radius: 20px; }
+        .chat-last-msg { font-size: 0.75rem; color: var(--text-light); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .handle-text { font-size: 0.7rem; color: var(--text-light); }
+        
+        /* Messages Area */
         .messages-area { flex: 1; overflow-y: auto; padding: 16px; background: var(--surface); }
         .message { display: flex; margin-bottom: 12px; animation: fadeIn 0.2s; }
         .message.sent { justify-content: flex-end; }
         .message.received { justify-content: flex-start; }
-        .bubble { max-width: 70%; padding: 8px 12px; border-radius: 18px; word-wrap: break-word; background: var(--bg); box-shadow: 0 1px 1px rgba(0,0,0,0.05); }
+        .bubble { max-width: 75%; padding: 10px 14px; border-radius: 18px; word-wrap: break-word; background: var(--bg); box-shadow: 0 1px 1px rgba(0,0,0,0.05); }
         .sent .bubble { background: var(--secondary); color: white; border-bottom-right-radius: 4px; }
         .received .bubble { background: var(--bg); border-bottom-left-radius: 4px; }
+        .message-media { max-width: 200px; max-height: 200px; border-radius: 12px; margin-top: 5px; cursor: pointer; }
+        .voice-note { display: flex; align-items: center; gap: 10px; background: rgba(0,0,0,0.1); padding: 8px 12px; border-radius: 30px; }
         .message-status { font-size: 0.65rem; margin-left: 5px; opacity: 0.7; }
-        .chat-input-area { background: var(--bg); padding: 12px; display: flex; gap: 10px; border-top: 1px solid var(--border); }
+        .message-time { font-size: 0.6rem; margin-top: 3px; opacity: 0.6; }
+        
+        /* Chat Input Area with Plus Button */
+        .chat-input-area { background: var(--bg); padding: 12px; display: flex; gap: 8px; border-top: 1px solid var(--border); align-items: center; }
+        .plus-btn { width: 44px; height: 44px; background: var(--primary); border: none; border-radius: 50%; color: white; font-size: 1.2rem; cursor: pointer; transition: 0.2s; display: flex; align-items: center; justify-content: center; }
+        .plus-btn:hover { transform: scale(1.05); }
         .chat-input { flex: 1; background: var(--surface); border: none; padding: 12px 16px; border-radius: 30px; outline: none; font-size: 0.95rem; }
-        .icon-btn { background: none; border: none; font-size: 1.3rem; cursor: pointer; width: 44px; color: var(--primary); transition: 0.2s; }
-        .send-btn { background: var(--primary); border: none; width: 48px; border-radius: 50%; color: white; cursor: pointer; transition: 0.2s; }
-        .auth-card { background: var(--bg); border-radius: 32px; padding: 40px 24px; width: 100%; box-shadow: 0 10px 40px rgba(0,0,0,0.1); }
-        .auth-input { width: 100%; padding: 14px 18px; margin: 10px 0; background: var(--surface); border: 1px solid var(--border); border-radius: 50px; font-size: 1rem; outline: none; }
-        .auth-btn { width: 100%; padding: 14px; background: var(--primary); border: none; border-radius: 50px; font-weight: bold; color: white; margin-top: 12px; cursor: pointer; transition: 0.2s; }
-        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.8); z-index: 2000; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(4px); }
+        .send-btn { background: var(--primary); border: none; width: 44px; height: 44px; border-radius: 50%; color: white; cursor: pointer; transition: 0.2s; display: flex; align-items: center; justify-content: center; }
+        
+        /* Plus Menu Modal */
+        .plus-menu { position: fixed; bottom: 80px; left: 20px; right: 20px; background: var(--bg); border-radius: 28px; padding: 16px; z-index: 300; box-shadow: 0 10px 40px rgba(0,0,0,0.2); animation: slideUp 0.2s ease; display: none; flex-wrap: wrap; gap: 12px; }
+        .plus-menu.show { display: flex; }
+        .plus-menu-item { flex: 1; min-width: 80px; text-align: center; padding: 12px; border-radius: 20px; background: var(--surface); cursor: pointer; transition: 0.2s; }
+        .plus-menu-item i { font-size: 1.5rem; display: block; margin-bottom: 6px; color: var(--primary); }
+        .plus-menu-item span { font-size: 0.7rem; }
+        .plus-menu-item:hover { transform: scale(1.05); background: var(--primary); color: white; }
+        .plus-menu-item:hover i { color: white; }
+        
+        /* Overlay */
+        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); z-index: 200; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(4px); }
         .modal-content { background: var(--bg); border-radius: 32px; padding: 24px; width: 85%; max-width: 350px; max-height: 80vh; overflow-y: auto; }
-        .follow-btn { background: var(--primary); color: white; border: none; padding: 8px 20px; border-radius: 30px; cursor: pointer; font-weight: 600; }
-        .status-card { background: var(--bg); margin: 8px 0; padding: 12px; border-radius: 20px; display: flex; gap: 12px; align-items: center; cursor: pointer; border: 1px solid var(--border); transition: 0.2s; }
-        .video-status-badge { background: linear-gradient(135deg, #ff416c, #ff4b2b); padding: 4px 8px; border-radius: 20px; font-size: 0.7rem; color: white; margin-left: 8px; }
-        .theme-selector { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; padding: 12px; max-height: 300px; overflow-y: auto; }
-        .theme-option { padding: 8px; border-radius: 20px; text-align: center; cursor: pointer; background: var(--surface); border: 2px solid transparent; font-size: 0.7rem; }
-        .profile-header { background: var(--primary); padding: 32px; text-align: center; color: white; border-radius: 0 0 30px 30px; }
-        .file-input { display: none; }
-        .setting-row { display: flex; justify-content: space-between; padding: 14px; border-bottom: 1px solid var(--border); }
-        .search-result-item { display: flex; align-items: center; gap: 12px; padding: 12px; cursor: pointer; border-bottom: 1px solid var(--border); }
-        .handle-text { font-size: 0.75rem; color: var(--text-light); }
+        
+        /* Group Member List */
+        .member-item { display: flex; align-items: center; gap: 12px; padding: 10px; border-bottom: 1px solid var(--border); }
+        .admin-badge { background: gold; color: #333; font-size: 0.6rem; padding: 2px 6px; border-radius: 20px; margin-left: 8px; }
+        
+        /* Animations */
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .call-badge { background: var(--primary-dark); padding: 6px 12px; border-radius: 25px; font-size: 0.7rem; }
-        .status-media { width: 100%; max-height: 400px; object-fit: contain; border-radius: 20px; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .auth-card { background: var(--bg); border-radius: 32px; padding: 40px 24px; width: 100%; }
+        .auth-input { width: 100%; padding: 14px 18px; margin: 10px 0; background: var(--surface); border: 1px solid var(--border); border-radius: 50px; font-size: 1rem; outline: none; }
+        .auth-btn { width: 100%; padding: 14px; background: var(--primary); border: none; border-radius: 50px; font-weight: bold; color: white; margin-top: 12px; cursor: pointer; }
+        .search-result-item { display: flex; align-items: center; gap: 12px; padding: 12px; cursor: pointer; border-bottom: 1px solid var(--border); }
+        .follow-btn { background: var(--primary); color: white; border: none; padding: 6px 16px; border-radius: 30px; cursor: pointer; font-size: 0.8rem; }
+        .setting-row { display: flex; justify-content: space-between; padding: 14px; border-bottom: 1px solid var(--border); }
+        .group-card { background: var(--bg); margin: 8px 0; padding: 12px; border-radius: 20px; display: flex; gap: 12px; align-items: center; cursor: pointer; border: 1px solid var(--border); }
+        .file-input { display: none; }
     </style>
 </head>
 <body>
@@ -86,31 +94,30 @@
 <script>
     // ==================== STORAGE KEYS ====================
     const STORAGE = {
-        users: 'gupshup_users_v4',
-        messages: 'gupshup_msgs_v4',
-        statuses: 'gupshup_statuses_v4',
-        calls: 'gupshup_calls_v4',
-        session: 'gupshup_session_v4',
-        themes: 'gupshup_theme_v4'
+        users: 'connectify_users_v5',
+        messages: 'connectify_msgs_v5',
+        groups: 'connectify_groups_v5',
+        calls: 'connectify_calls_v5',
+        session: 'connectify_session_v5'
     };
     
     let currentUser = null;
     let users = [];
     let messages = [];
-    let statuses = [];
+    let groups = [];
     let callLogs = [];
     let currentTab = 'chats';
-    let currentTheme = localStorage.getItem(STORAGE.themes) || 'theme-default';
+    let currentTheme = localStorage.getItem('connectify_theme') || 'default';
     
     function applyTheme(themeName) {
         const container = document.querySelector('.app-container');
-        if (container) container.className = `app-container ${themeName}`;
+        if (container) container.className = `app-container ${themeName === 'dark' ? 'theme-dark' : ''}`;
         currentTheme = themeName;
-        localStorage.setItem(STORAGE.themes, themeName);
+        localStorage.setItem('connectify_theme', themeName);
     }
     
-    // ==================== AUTH SYSTEM (Email Based) ====================
-    function generateOTP() { return Math.floor(100000 + Math.random() * 900000).toString(); }
+    // ==================== AUTH ====================
+    function generateOTP() { return "123456"; } // Demo OTP
     
     function registerUser(email, name) {
         if (users.find(u => u.email === email)) return null;
@@ -120,9 +127,9 @@
         while (users.some(u => u.handle === handle)) handle = `${baseHandle}${counter++}`;
         const newUser = {
             id: Date.now() + Math.random(), email, name, handle, avatar: name.charAt(0).toUpperCase(), avatarData: null,
-            bio: "✨ Living in the moment • GupShup User", lastSeen: Date.now(), online: true,
-            followers: [], following: [], blocked: [], muted: [],
-            settings: { readReceipts: true, lastSeenVisible: true, videoStatusDuration: 30 },
+            bio: "✨ Living in the moment • Connectify User", lastSeen: Date.now(), online: true,
+            friends: [], groups: [], blocked: [],
+            settings: { readReceipts: true, lastSeenVisible: true },
             createdAt: Date.now()
         };
         users.push(newUser);
@@ -131,208 +138,213 @@
     }
     
     function loginUser(email) { return users.find(u => u.email === email); }
-    
-    function searchByHandle(query) {
+    function searchUsers(query) {
         query = query.toLowerCase().trim();
         if (query.startsWith('@')) query = query.substring(1);
-        return users.filter(u => u.id !== currentUser.id && (u.handle.toLowerCase().includes(query) || u.name.toLowerCase().includes(query)));
+        return users.filter(u => u.id !== currentUser?.id && (u.handle.toLowerCase().includes(query) || u.name.toLowerCase().includes(query)));
     }
     
-    function updateOnlineStatus(userId, isOnline) {
-        let u = users.find(u => u.id == userId);
-        if (u) { u.online = isOnline; u.lastSeen = Date.now(); saveData(); }
+    // ==================== GROUPS ====================
+    function createGroup(name, createdBy, memberIds) {
+        let groupId = Date.now() + Math.random();
+        let group = {
+            id: groupId,
+            name: name,
+            avatar: name.charAt(0).toUpperCase(),
+            avatarData: null,
+            createdBy: createdBy,
+            members: [createdBy, ...memberIds],
+            admins: [createdBy],
+            createdAt: Date.now(),
+            messages: []
+        };
+        groups.push(group);
+        
+        // Add group to members' groups list
+        group.members.forEach(memberId => {
+            let user = users.find(u => u.id == memberId);
+            if (user && !user.groups.includes(groupId)) user.groups.push(groupId);
+        });
+        saveData();
+        return group;
+    }
+    
+    function getGroupsForUser(userId) {
+        let user = users.find(u => u.id == userId);
+        if (!user) return [];
+        return groups.filter(g => g.members.includes(userId));
+    }
+    
+    function addMemberToGroup(groupId, memberId, addedBy) {
+        let group = groups.find(g => g.id == groupId);
+        if (group && !group.members.includes(memberId) && group.admins.includes(addedBy)) {
+            group.members.push(memberId);
+            let user = users.find(u => u.id == memberId);
+            if (user && !user.groups.includes(groupId)) user.groups.push(groupId);
+            saveData();
+            return true;
+        }
+        return false;
+    }
+    
+    function removeMemberFromGroup(groupId, memberId, removedBy) {
+        let group = groups.find(g => g.id == groupId);
+        if (group && group.admins.includes(removedBy) && memberId !== group.createdBy) {
+            group.members = group.members.filter(m => m != memberId);
+            let user = users.find(u => u.id == memberId);
+            if (user) user.groups = user.groups.filter(g => g != groupId);
+            saveData();
+            return true;
+        }
+        return false;
+    }
+    
+    function makeAdmin(groupId, memberId, madeBy) {
+        let group = groups.find(g => g.id == groupId);
+        if (group && group.admins.includes(madeBy) && !group.admins.includes(memberId)) {
+            group.admins.push(memberId);
+            saveData();
+            return true;
+        }
+        return false;
     }
     
     // ==================== MESSAGING ====================
-    function sendMessage(fromId, toId, text, type = 'text') {
-        let msg = { id: Date.now() + Math.random(), from: fromId, to: toId, text, type, timestamp: Date.now(), status: 'sent' };
-        messages.push(msg);
+    function sendMessage(toId, text, type = 'text', mediaData = null, isGroup = false, groupId = null) {
+        let msg = {
+            id: Date.now() + Math.random(),
+            from: currentUser.id,
+            to: toId,
+            text: text,
+            type: type,
+            media: mediaData,
+            timestamp: Date.now(),
+            status: 'sent',
+            isGroup: isGroup,
+            groupId: groupId
+        };
+        
+        if (isGroup && groupId) {
+            let group = groups.find(g => g.id == groupId);
+            if (group) {
+                if (!group.messages) group.messages = [];
+                group.messages.push(msg);
+            }
+        } else {
+            messages.push(msg);
+        }
+        
         saveData();
         setTimeout(() => { msg.status = 'delivered'; saveData(); renderChatIfOpen(); }, 800);
         setTimeout(() => { msg.status = 'read'; saveData(); renderChatIfOpen(); }, 2000);
         return msg;
     }
     
-    function getChatMessages(u1, u2) {
-        return messages.filter(m => ((m.from === u1 && m.to === u2) || (m.from === u2 && m.to === u1))).sort((a, b) => a.timestamp - b.timestamp);
+    function getChatMessages(userId) {
+        return messages.filter(m => (m.from === currentUser.id && m.to === userId) || (m.from === userId && m.to === currentUser.id)).sort((a, b) => a.timestamp - b.timestamp);
     }
     
-    function getRecentChats(userId) {
+    function getGroupMessages(groupId) {
+        let group = groups.find(g => g.id == groupId);
+        if (group && group.messages) return group.messages.sort((a, b) => a.timestamp - b.timestamp);
+        return [];
+    }
+    
+    function getRecentChats() {
         let chatUsers = new Set();
         messages.forEach(m => {
-            if (m.from === userId) chatUsers.add(m.to);
-            if (m.to === userId) chatUsers.add(m.from);
+            if (m.from === currentUser.id) chatUsers.add(m.to);
+            if (m.to === currentUser.id) chatUsers.add(m.from);
         });
-        return Array.from(chatUsers).map(id => users.find(u => u.id == id)).filter(u => u);
-    }
-    
-    // ==================== STATUS (Text, Photo, Video - WhatsApp Style) ====================
-    function addTextStatus(userId, text) {
-        let newStatus = {
-            id: Date.now() + Math.random(),
-            userId: userId,
-            type: 'text',
-            content: text,
-            timestamp: Date.now(),
-            views: [],
-            expiresAt: Date.now() + 86400000
-        };
-        statuses.push(newStatus);
-        saveData();
-        return newStatus;
-    }
-    
-    function addPhotoStatus(userId, photoData, caption = "") {
-        let newStatus = {
-            id: Date.now() + Math.random(),
-            userId: userId,
-            type: 'photo',
-            content: photoData,
-            caption: caption,
-            timestamp: Date.now(),
-            views: [],
-            expiresAt: Date.now() + 86400000
-        };
-        statuses.push(newStatus);
-        saveData();
-        return newStatus;
-    }
-    
-    function addVideoStatus(userId, videoUrl, caption = "") {
-        let newStatus = {
-            id: Date.now() + Math.random(),
-            userId: userId,
-            type: 'video',
-            content: videoUrl,
-            caption: caption,
-            duration: 30,
-            timestamp: Date.now(),
-            views: [],
-            expiresAt: Date.now() + 86400000
-        };
-        statuses.push(newStatus);
-        saveData();
-        return newStatus;
-    }
-    
-    function getFollowedStatuses(currentUserId) {
-        let current = users.find(u => u.id == currentUserId);
-        if (!current) return [];
-        let followedIds = current.following || [];
-        return statuses.filter(s => followedIds.includes(s.userId) && s.expiresAt > Date.now()).sort((a,b)=>b.timestamp - a.timestamp);
-    }
-    
-    function getMyStatuses(currentUserId) {
-        return statuses.filter(s => s.userId === currentUserId && s.expiresAt > Date.now()).sort((a,b)=>b.timestamp - a.timestamp);
-    }
-    
-    function viewStatus(statusId, viewerId) {
-        let s = statuses.find(s => s.id == statusId);
-        if (s && !s.views.includes(viewerId)) { s.views.push(viewerId); saveData(); }
-    }
-    
-    function deleteStatus(statusId) {
-        statuses = statuses.filter(s => s.id !== statusId);
-        saveData();
-    }
-    
-    // ==================== FOLLOW SYSTEM ====================
-    function followUser(currentUserId, targetUserId) {
-        let target = users.find(u => u.id == targetUserId);
-        let current = users.find(u => u.id == currentUserId);
-        if (target && !target.followers.includes(currentUserId)) {
-            target.followers.push(currentUserId);
-            if (current && !current.following.includes(targetUserId)) current.following.push(targetUserId);
-            saveData(); return true;
-        }
-        return false;
-    }
-    
-    function unfollowUser(currentUserId, targetUserId) {
-        let target = users.find(u => u.id == targetUserId);
-        let current = users.find(u => u.id == currentUserId);
-        if (target) {
-            target.followers = target.followers.filter(f => f != currentUserId);
-            if (current) current.following = current.following.filter(f => f != targetUserId);
-            saveData(); return true;
-        }
-        return false;
-    }
-    
-    function isFollowing(currentUserId, targetUserId) {
-        let current = users.find(u => u.id == currentUserId);
-        return current?.following?.includes(targetUserId) || false;
+        let userChats = Array.from(chatUsers).map(id => ({ type: 'user', data: users.find(u => u.id == id) })).filter(u => u.data);
+        let groupChats = getGroupsForUser(currentUser.id).map(g => ({ type: 'group', data: g }));
+        return [...userChats, ...groupChats].sort((a, b) => (b.data.lastMsgTime || 0) - (a.data.lastMsgTime || 0));
     }
     
     // ==================== CALLS ====================
-    function addCallLog(fromId, toId, type, duration = 0) {
-        let call = { id: Date.now(), from: fromId, to: toId, type, duration, timestamp: Date.now(), status: 'completed' };
+    function addCallLog(toId, type, duration = 0) {
+        let call = { id: Date.now(), from: currentUser.id, to: toId, type, duration, timestamp: Date.now(), status: 'completed' };
         callLogs.push(call);
         saveData();
         return call;
     }
     
-    function getCallHistory(userId) {
-        return callLogs.filter(c => c.from === userId || c.to === userId).sort((a,b)=>b.timestamp - a.timestamp);
-    }
-    
     // ==================== PROFILE ====================
-    function updateProfilePicture(userId, file) {
+    function updateProfilePicture(file) {
         return new Promise((resolve) => {
             const reader = new FileReader();
             reader.onload = function(e) {
-                let user = users.find(u => u.id == userId);
-                if (user) { user.avatarData = e.target.result; saveData(); resolve(true); }
-                else resolve(false);
+                currentUser.avatarData = e.target.result;
+                saveData();
+                resolve(true);
             };
             reader.readAsDataURL(file);
         });
     }
     
-    function updateBio(userId, newBio) {
-        let user = users.find(u => u.id == userId);
-        if (user) { user.bio = newBio; saveData(); return true; }
-        return false;
-    }
+    function updateBio(newBio) { currentUser.bio = newBio; saveData(); }
+    function addFriend(userId) { if (!currentUser.friends.includes(userId)) { currentUser.friends.push(userId); saveData(); } }
+    function removeFriend(userId) { currentUser.friends = currentUser.friends.filter(f => f != userId); saveData(); }
+    function isFriend(userId) { return currentUser.friends.includes(userId); }
     
     // ==================== HELPERS ====================
     function saveData() {
         localStorage.setItem(STORAGE.users, JSON.stringify(users));
         localStorage.setItem(STORAGE.messages, JSON.stringify(messages));
-        localStorage.setItem(STORAGE.statuses, JSON.stringify(statuses));
+        localStorage.setItem(STORAGE.groups, JSON.stringify(groups));
         localStorage.setItem(STORAGE.calls, JSON.stringify(callLogs));
         if (currentUser) localStorage.setItem(STORAGE.session, JSON.stringify({ userId: currentUser.id }));
     }
     
     function loadData() {
         let u = localStorage.getItem(STORAGE.users); let m = localStorage.getItem(STORAGE.messages);
-        let s = localStorage.getItem(STORAGE.statuses); let c = localStorage.getItem(STORAGE.calls);
+        let g = localStorage.getItem(STORAGE.groups); let c = localStorage.getItem(STORAGE.calls);
         let session = localStorage.getItem(STORAGE.session);
         if (u) users = JSON.parse(u); if (m) messages = JSON.parse(m);
-        if (s) statuses = JSON.parse(s); if (c) callLogs = JSON.parse(c);
+        if (g) groups = JSON.parse(g); if (c) callLogs = JSON.parse(c);
         if (users.length === 0) initDemoData();
         if (session) { let { userId } = JSON.parse(session); currentUser = users.find(u => u.id == userId); }
     }
     
     function initDemoData() {
         users = [
-            { id: "u1", email: "zara@demo.com", name: "Zara Ahmed", handle: "@zara", avatar: "Z", avatarData: null, bio: "Digital Creator ✨", lastSeen: Date.now(), online: true, followers: [], following: [], blocked: [], muted: [], settings: { readReceipts: true, lastSeenVisible: true, videoStatusDuration: 30 }, createdAt: Date.now() },
-            { id: "u2", email: "ali@demo.com", name: "Ali Raza", handle: "@ali", avatar: "A", avatarData: null, bio: "Tech Enthusiast 💻", lastSeen: Date.now(), online: false, followers: [], following: [], blocked: [], muted: [], settings: { readReceipts: true, lastSeenVisible: true, videoStatusDuration: 30 }, createdAt: Date.now() },
-            { id: "u3", email: "sana@demo.com", name: "Sana Khan", handle: "@sana", avatar: "S", avatarData: null, bio: "Artist 🎨", lastSeen: Date.now(), online: true, followers: [], following: [], blocked: [], muted: [], settings: { readReceipts: true, lastSeenVisible: true, videoStatusDuration: 30 }, createdAt: Date.now() }
+            { id: "u1", email: "zara@demo.com", name: "Zara Ahmed", handle: "@zara", avatar: "Z", avatarData: null, bio: "Digital Creator ✨", lastSeen: Date.now(), online: true, friends: [], groups: [], blocked: [], settings: { readReceipts: true, lastSeenVisible: true }, createdAt: Date.now() },
+            { id: "u2", email: "ali@demo.com", name: "Ali Raza", handle: "@ali", avatar: "A", avatarData: null, bio: "Tech Enthusiast 💻", lastSeen: Date.now(), online: false, friends: [], groups: [], blocked: [], settings: { readReceipts: true, lastSeenVisible: true }, createdAt: Date.now() },
+            { id: "u3", email: "sana@demo.com", name: "Sana Khan", handle: "@sana", avatar: "S", avatarData: null, bio: "Artist 🎨", lastSeen: Date.now(), online: true, friends: [], groups: [], blocked: [], settings: { readReceipts: true, lastSeenVisible: true }, createdAt: Date.now() }
         ];
-        messages = [{ id: "m1", from: "u1", to: "u2", text: "Hey! Welcome to GupShup Premium 🚀", type: "text", timestamp: Date.now() - 3600000, status: "read" }];
+        messages = [];
+        groups = [];
+        callLogs = [];
         saveData();
     }
     
     let currentChatUser = null;
-    function renderChatIfOpen() { if (currentChatUser) openChat(currentChatUser, true); }
+    let currentGroup = null;
+    let plusMenuOpen = false;
+    let mediaRecorder = null;
+    let audioChunks = [];
+    
+    function renderChatIfOpen() { if (currentChatUser) openChat(currentChatUser, true); if (currentGroup) openGroupChat(currentGroup, true); }
+    
+    function closePlusMenu() {
+        document.querySelectorAll('.plus-menu').forEach(m => m.classList.remove('show'));
+        plusMenuOpen = false;
+    }
+    
+    function togglePlusMenu() {
+        let menu = document.getElementById('plusMenu');
+        if (menu) {
+            menu.classList.toggle('show');
+            plusMenuOpen = menu.classList.contains('show');
+        }
+    }
     
     // ==================== RENDER ENGINE ====================
     const root = document.getElementById('appRoot');
-    function render() { if (!currentUser) renderAuth(); else { updateOnlineStatus(currentUser.id, true); renderMainApp(); } }
+    function render() { if (!currentUser) renderAuth(); else renderMainApp(); }
     
     function renderAuth() {
-        root.innerHTML = `<div class="app-container ${currentTheme}"><div class="app-header" style="background:var(--primary);"><div class="logo"><h2><i class="fas fa-comment-dots"></i> GupShup</h2></div></div><div class="content-area"><div style="padding:40px 20px;"><div class="auth-card"><h3 style="text-align:center; color:var(--primary);">✨ Premium Messenger</h3><input type="email" id="emailInput" class="auth-input" placeholder="Email Address"><input type="text" id="nameInput" class="auth-input" placeholder="Full Name (for signup)"><input type="text" id="otpInput" class="auth-input" placeholder="Enter OTP"><button id="requestOtpBtn" class="auth-btn">📧 Request OTP</button><button id="loginBtn" class="auth-btn">🔓 Login / Signup</button></div></div></div></div>`;
+        root.innerHTML = `<div class="app-container"><div class="app-header" style="background:var(--primary);"><div class="logo"><h2><i class="fas fa-comment-dots"></i> Connectify</h2></div></div><div class="content-area"><div style="padding:40px 20px;"><div class="auth-card"><h3 style="text-align:center; color:var(--primary);">✨ Premium Messenger</h3><input type="email" id="emailInput" class="auth-input" placeholder="Email Address"><input type="text" id="nameInput" class="auth-input" placeholder="Full Name (for signup)"><input type="text" id="otpInput" class="auth-input" placeholder="Enter OTP"><button id="requestOtpBtn" class="auth-btn">📧 Request OTP</button><button id="loginBtn" class="auth-btn">🔓 Login / Signup</button></div></div></div></div>`;
         let requestedOtp = null;
         document.getElementById('requestOtpBtn').onclick = () => { let email = document.getElementById('emailInput').value.trim(); if(email){ requestedOtp = generateOTP(); alert(`Demo OTP: ${requestedOtp}`); } else alert("Enter email"); };
         document.getElementById('loginBtn').onclick = () => {
@@ -348,110 +360,113 @@
     }
     
     function renderMainApp() {
-        const recentChats = getRecentChats(currentUser.id);
-        const followedStatuses = getFollowedStatuses(currentUser.id);
-        const myStatuses = getMyStatuses(currentUser.id);
-        const callHistory = getCallHistory(currentUser.id);
+        const recentChats = getRecentChats();
+        const userGroups = getGroupsForUser(currentUser.id);
         
-        root.innerHTML = `<div class="app-container ${currentTheme}"><div class="app-header"><div class="logo"><h2><i class="fas fa-comment-dots"></i> GupShup</h2></div><div class="header-actions"><i class="fas fa-palette" id="themeBtn"></i><i class="fas fa-search" id="searchBtn"></i><i class="fas fa-cog" id="settingsBtn"></i><i class="fas fa-sign-out-alt" id="logoutBtn"></i></div></div><div class="nav-tabs"><div class="nav-tab ${currentTab === 'chats' ? 'active' : ''}" data-tab="chats"><i class="fas fa-comment"></i> Chats</div><div class="nav-tab ${currentTab === 'status' ? 'active' : ''}" data-tab="status"><i class="fas fa-circle"></i> Status</div><div class="nav-tab ${currentTab === 'calls' ? 'active' : ''}" data-tab="calls"><i class="fas fa-phone"></i> Calls</div><div class="nav-tab ${currentTab === 'profile' ? 'active' : ''}" data-tab="profile"><i class="fas fa-user"></i> Profile</div></div><div class="content-area" id="dynamicContent"></div></div>`;
+        root.innerHTML = `<div class="app-container ${currentTheme === 'dark' ? 'theme-dark' : ''}"><div class="app-header"><div class="logo"><h2><i class="fas fa-comment-dots"></i> Connectify</h2></div><div class="header-actions"><i class="fas fa-search" id="searchBtn"></i><i class="fas fa-user-plus" id="newGroupBtn"></i><i class="fas fa-cog" id="settingsBtn"></i><i class="fas fa-sign-out-alt" id="logoutBtn"></i></div></div><div class="nav-tabs"><div class="nav-tab ${currentTab === 'chats' ? 'active' : ''}" data-tab="chats"><i class="fas fa-comment"></i> Chats</div><div class="nav-tab ${currentTab === 'groups' ? 'active' : ''}" data-tab="groups"><i class="fas fa-users"></i> Groups</div><div class="nav-tab ${currentTab === 'calls' ? 'active' : ''}" data-tab="calls"><i class="fas fa-phone"></i> Calls</div><div class="nav-tab ${currentTab === 'profile' ? 'active' : ''}" data-tab="profile"><i class="fas fa-user"></i> Profile</div></div><div class="content-area" id="dynamicContent"></div></div>`;
         
         document.querySelectorAll('.nav-tab').forEach(tab => { tab.onclick = () => { currentTab = tab.dataset.tab; render(); }; });
-        document.getElementById('logoutBtn').onclick = () => { updateOnlineStatus(currentUser.id, false); currentUser = null; localStorage.removeItem(STORAGE.session); render(); };
-        document.getElementById('settingsBtn').onclick = () => showProfessionalSettings();
+        document.getElementById('logoutBtn').onclick = () => { currentUser = null; localStorage.removeItem(STORAGE.session); render(); };
+        document.getElementById('settingsBtn').onclick = () => showSettings();
         document.getElementById('searchBtn').onclick = () => showSearchModal();
-        document.getElementById('themeBtn').onclick = () => showThemeSelector();
+        document.getElementById('newGroupBtn').onclick = () => showCreateGroupModal();
         
         const container = document.getElementById('dynamicContent');
         
         if (currentTab === 'chats') {
             container.innerHTML = `<div id="chatsList"></div>`;
             const chatsDiv = document.getElementById('chatsList');
-            if (recentChats.length === 0) chatsDiv.innerHTML = '<div style="text-align:center; padding:40px; color:var(--text-light);">💬 No chats. Search users using 🔍!</div>';
-            else chatsDiv.innerHTML = recentChats.map(user => `<div class="chat-list-item" data-user="${user.id}"><div class="avatar" style="position:relative;">${user.avatarData ? `<img src="${user.avatarData}" class="avatar-img">` : user.avatar}${user.online ? '<span class="online-dot"></span>' : ''}</div><div class="chat-info" style="flex:1;"><div class="chat-name">${user.name}</div><div class="chat-last-msg" style="font-size:0.75rem; color:var(--text-light);">${user.online ? '🟢 Online' : '📅 Last seen recently'}</div><div class="handle-text">${user.handle}</div></div></div>`).join('');
-            document.querySelectorAll('[data-user]').forEach(el => { el.onclick = () => openChat(users.find(u => u.id == el.dataset.user)); });
+            if (recentChats.length === 0) chatsDiv.innerHTML = '<div style="text-align:center; padding:40px; color:var(--text-light);">💬 No chats. Search users or create a group!</div>';
+            else chatsDiv.innerHTML = recentChats.map(chat => {
+                if (chat.type === 'user') {
+                    let u = chat.data;
+                    return `<div class="chat-list-item" data-chat='{"type":"user","id":"${u.id}"}'><div class="avatar" style="position:relative;">${u.avatarData ? `<img src="${u.avatarData}" class="avatar-img">` : u.avatar}${u.online ? '<span class="online-dot"></span>' : ''}</div><div class="chat-info"><div class="chat-name">${escapeHtml(u.name)}</div><div class="handle-text">${u.handle}</div><div class="chat-last-msg">${u.online ? '🟢 Online' : '📅 Offline'}</div></div></div>`;
+                } else {
+                    let g = chat.data;
+                    return `<div class="chat-list-item" data-chat='{"type":"group","id":"${g.id}"}'><div class="avatar group-avatar"><i class="fas fa-users"></i></div><div class="chat-info"><div class="chat-name"><span>${escapeHtml(g.name)}</span><span class="group-badge">Group</span></div><div class="chat-last-msg">${g.members.length} members</div></div></div>`;
+                }
+            }).join('');
+            document.querySelectorAll('[data-chat]').forEach(el => {
+                let chat = JSON.parse(el.dataset.chat);
+                el.onclick = () => { if (chat.type === 'user') openChat(users.find(u => u.id == chat.id)); else openGroupChat(groups.find(g => g.id == chat.id)); };
+            });
         }
-        else if (currentTab === 'status') {
-            container.innerHTML = `<div style="padding:16px;"><button id="addTextStatusBtn" style="width:32%; background:var(--primary); color:white; border:none; padding:12px; border-radius:30px; margin-right:2%;"><i class="fas fa-text-height"></i> Text</button><button id="addPhotoStatusBtn" style="width:32%; background:var(--primary-dark); color:white; border:none; padding:12px; border-radius:30px; margin-right:2%;"><i class="fas fa-camera"></i> Photo</button><button id="addVideoStatusBtn" style="width:32%; background:var(--primary-dark); color:white; border:none; padding:12px; border-radius:30px;"><i class="fas fa-video"></i> Video</button></div><div id="statusList"></div>`;
-            
-            document.getElementById('addTextStatusBtn').onclick = () => { let txt = prompt("What's happening?"); if(txt) addTextStatus(currentUser.id, txt); render(); };
-            document.getElementById('addPhotoStatusBtn').onclick = () => {
-                let input = document.createElement('input'); input.type = 'file'; input.accept = 'image/*';
-                input.onchange = (e) => {
-                    let file = e.target.files[0];
-                    if(file) {
-                        let reader = new FileReader();
-                        reader.onload = (ev) => { let caption = prompt("Caption (optional):"); addPhotoStatus(currentUser.id, ev.target.result, caption); render(); };
-                        reader.readAsDataURL(file);
-                    }
-                };
-                input.click();
-            };
-            document.getElementById('addVideoStatusBtn').onclick = () => {
-                let videoUrl = prompt("🎥 Enter video URL:", "https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4");
-                if(videoUrl) { let caption = prompt("Caption (optional):"); addVideoStatus(currentUser.id, videoUrl, caption); render(); }
-            };
-            
-            const statusDiv = document.getElementById('statusList');
-            if (myStatuses.length) {
-                statusDiv.innerHTML += `<h4 style="padding:12px;">📱 My Status (${myStatuses.length})</h4>`;
-                statusDiv.innerHTML += myStatuses.map(s => `<div class="status-card"><div class="avatar">${currentUser.avatarData ? `<img src="${currentUser.avatarData}" class="avatar-img">` : currentUser.avatar}</div><div style="flex:1;"><b>${currentUser.name}</b><br><small>${s.type === 'video' ? '🎥 Video: ' + (s.caption || '') : s.type === 'photo' ? '📷 Photo' : s.content.substring(0,40)}</small><br><small>👁️ ${s.views.length} views • ${new Date(s.timestamp).toLocaleTimeString()}</small></div><button onclick="event.stopPropagation(); deleteStatus('${s.id}'); render();" style="background:#f44336; color:white; border:none; border-radius:50%; width:30px; height:30px; cursor:pointer;"><i class="fas fa-trash"></i></button></div>`).join('');
-            }
-            if (followedStatuses.length) {
-                statusDiv.innerHTML += `<h4 style="padding:12px;">👥 Status Updates (Following)</h4>`;
-                statusDiv.innerHTML += followedStatuses.map(s => { let u = users.find(u=>u.id==s.userId); return `<div class="status-card" data-status="${s.id}" data-type="${s.type}" data-content="${s.content.replace(/"/g, '&quot;')}" data-caption="${s.caption || ''}"><div class="avatar">${u?.avatarData ? `<img src="${u?.avatarData}" class="avatar-img">` : u?.avatar}</div><div><b>${u?.name}</b><br><small>${s.type === 'video' ? '🎥 30s Video' : s.type === 'photo' ? '📷 Photo' : s.content.substring(0,40)}</small><span class="video-status-badge">${s.type === 'video' ? '30s' : s.type === 'photo' ? '📷' : ''}</span><br><small>👁️ ${s.views.length} views</small></div></div>`; }).join('');
-            }
-            if (followedStatuses.length === 0 && myStatuses.length === 0) statusDiv.innerHTML += `<div style="padding:40px; text-align:center; color:var(--text-light);">👤 Follow users using search to see their status!</div>`;
-            
-            document.querySelectorAll('[data-status]').forEach(el => { el.onclick = () => { viewStatus(el.dataset.status, currentUser.id); showStatusViewer(el.dataset.type, el.dataset.content, el.dataset.caption); }; });
+        else if (currentTab === 'groups') {
+            container.innerHTML = `<div id="groupsList"></div><button id="createGroupBtn" class="auth-btn" style="margin:16px;">➕ Create New Group</button>`;
+            const groupsDiv = document.getElementById('groupsList');
+            if (userGroups.length === 0) groupsDiv.innerHTML = '<div style="text-align:center; padding:40px; color:var(--text-light);">👥 No groups yet. Create one!</div>';
+            else groupsDiv.innerHTML = userGroups.map(g => `<div class="group-card" data-group="${g.id}"><div class="avatar group-avatar"><i class="fas fa-users"></i></div><div><b>${escapeHtml(g.name)}</b><br><small>${g.members.length} members • ${g.admins.includes(currentUser.id) ? 'Admin' : 'Member'}</small></div></div>`).join('');
+            document.querySelectorAll('[data-group]').forEach(el => { el.onclick = () => openGroupChat(groups.find(g => g.id == el.dataset.group)); });
+            document.getElementById('createGroupBtn').onclick = () => showCreateGroupModal();
         }
         else if (currentTab === 'calls') {
-            container.innerHTML = `<div style="padding:16px;"><div class="setting-row"><span><i class="fas fa-phone-alt"></i> Recent Calls</span><span class="call-badge">Audio/Video</span></div></div><div id="callsList"></div>`;
+            container.innerHTML = `<div id="callsList"></div>`;
             const callsDiv = document.getElementById('callsList');
-            if (callHistory.length === 0) callsDiv.innerHTML = '<div style="text-align:center; padding:40px; color:var(--text-light);">📞 No calls yet. Tap call button in chat!</div>';
-            else callsDiv.innerHTML = callHistory.map(c => { let other = users.find(u => u.id == (c.from === currentUser.id ? c.to : c.from)); return `<div class="chat-list-item"><div class="avatar"><i class="fas ${c.type === 'audio' ? 'fa-phone' : 'fa-video'}"></i></div><div><b>${other?.name}</b><br><small>${c.type === 'audio' ? '📞 Audio Call' : '🎥 Video Call'} • ${new Date(c.timestamp).toLocaleTimeString()}</small></div></div>`; }).join('');
+            if (callLogs.length === 0) callsDiv.innerHTML = '<div style="text-align:center; padding:40px; color:var(--text-light);">📞 No calls yet.</div>';
+            else callsDiv.innerHTML = callLogs.map(c => { let other = users.find(u => u.id == (c.from === currentUser.id ? c.to : c.from)); return `<div class="chat-list-item"><div class="avatar"><i class="fas ${c.type === 'audio' ? 'fa-phone' : 'fa-video'}"></i></div><div><b>${other?.name}</b><br><small>${c.type === 'audio' ? '📞 Audio Call' : '🎥 Video Call'} • ${new Date(c.timestamp).toLocaleTimeString()}</small></div></div>`; }).join('');
         }
         else if (currentTab === 'profile') {
-            container.innerHTML = `<div class="profile-header"><div class="avatar" style="width:100px; height:100px; margin:0 auto; font-size:3rem; cursor:pointer;" id="uploadPicTrigger">${currentUser.avatarData ? `<img src="${currentUser.avatarData}" class="avatar-img">` : currentUser.avatar}<input type="file" id="profilePicInput" accept="image/*" style="display:none;"></div><h3 style="margin-top:12px;">${currentUser.name}</h3><p style="opacity:0.9;">${currentUser.handle}</p><p style="margin-top:8px;">${currentUser.bio}</p><p style="font-size:0.8rem;">${currentUser.email}</p></div><div style="padding:16px;"><div class="chat-list-item" id="editBioBtn"><i class="fas fa-pen"></i> Edit Bio</div><div class="chat-list-item" id="showStats"><i class="fas fa-chart-line"></i> Followers: ${currentUser.followers?.length || 0} | Following: ${currentUser.following?.length || 0}</div><div class="chat-list-item" id="privacyBtn"><i class="fas fa-lock"></i> Privacy & Settings</div><div class="chat-list-item" id="myStatusHistoryBtn"><i class="fas fa-history"></i> My Status History (${getMyStatuses(currentUser.id).length})</div></div>`;
+            container.innerHTML = `<div style="background:var(--primary); padding:32px; text-align:center; color:white; border-radius:0 0 30px 30px;"><div class="avatar" style="width:100px; height:100px; margin:0 auto; font-size:3rem; cursor:pointer;" id="uploadPicTrigger">${currentUser.avatarData ? `<img src="${currentUser.avatarData}" class="avatar-img">` : currentUser.avatar}<input type="file" id="profilePicInput" accept="image/*" style="display:none;"></div><h3 style="margin-top:12px;">${currentUser.name}</h3><p style="opacity:0.9;">${currentUser.handle}</p><p style="margin-top:8px;">${currentUser.bio}</p><p style="font-size:0.8rem;">${currentUser.email}</p></div><div style="padding:16px;"><div class="chat-list-item" id="editBioBtn"><i class="fas fa-pen"></i> Edit Bio</div><div class="chat-list-item" id="friendsBtn"><i class="fas fa-user-friends"></i> Friends (${currentUser.friends?.length || 0})</div><div class="chat-list-item" id="groupsBtn"><i class="fas fa-users"></i> My Groups (${userGroups.length})</div><div class="chat-list-item" id="themeBtn"><i class="fas fa-palette"></i> Dark Mode</div></div>`;
             document.getElementById('uploadPicTrigger').onclick = () => document.getElementById('profilePicInput').click();
-            document.getElementById('profilePicInput').onchange = async (e) => { if(e.target.files[0]){ await updateProfilePicture(currentUser.id, e.target.files[0]); render(); } };
-            document.getElementById('editBioBtn').onclick = () => { let newBio = prompt("Bio:", currentUser.bio); if(newBio) updateBio(currentUser.id, newBio); render(); };
-            document.getElementById('showStats').onclick = () => alert(`👥 Followers: ${currentUser.followers.length}\n✅ Following: ${currentUser.following.length}`);
-            document.getElementById('privacyBtn').onclick = () => showProfessionalSettings();
-            document.getElementById('myStatusHistoryBtn').onclick = () => { let ms = getMyStatuses(currentUser.id); if(ms.length) alert(ms.map(s=>`${s.type}: ${s.type==='text'?s.content.substring(0,30):'Media'} (${s.views.length} views)`).join('\n')); else alert('No status history'); };
+            document.getElementById('profilePicInput').onchange = async (e) => { if(e.target.files[0]){ await updateProfilePicture(e.target.files[0]); render(); } };
+            document.getElementById('editBioBtn').onclick = () => { let newBio = prompt("Bio:", currentUser.bio); if(newBio) updateBio(newBio); render(); };
+            document.getElementById('friendsBtn').onclick = () => showFriendsModal();
+            document.getElementById('groupsBtn').onclick = () => { currentTab = 'groups'; render(); };
+            document.getElementById('themeBtn').onclick = () => { applyTheme(currentTheme === 'dark' ? 'default' : 'dark'); render(); };
         }
         applyTheme(currentTheme);
     }
     
-    function showStatusViewer(type, content, caption) {
+    function showCreateGroupModal() {
         let modal = document.createElement('div'); modal.className = 'modal-overlay';
-        if(type === 'text') {
-            modal.innerHTML = `<div class="modal-content" style="text-align:center;"><div style="background:var(--primary); color:white; padding:40px; border-radius:20px;"><i class="fas fa-quote-left fa-2x"></i><p style="margin-top:20px; font-size:1.2rem;">${escapeHtml(content)}</p>${caption ? `<p style="margin-top:15px; opacity:0.8;">${escapeHtml(caption)}</p>` : ''}</div><button class="auth-btn" style="margin-top:15px;" onclick="this.parentElement.parentElement.remove()">Close</button></div>`;
-        } else if(type === 'photo') {
-            modal.innerHTML = `<div class="modal-content" style="text-align:center;"><img src="${content}" style="max-width:100%; max-height:60vh; border-radius:20px;">${caption ? `<p style="margin-top:10px;">${escapeHtml(caption)}</p>` : ''}<button class="auth-btn" style="margin-top:15px;" onclick="this.parentElement.parentElement.remove()">Close</button></div>`;
-        } else if(type === 'video') {
-            modal.innerHTML = `<div class="modal-content" style="text-align:center;"><video src="${content}" style="max-width:100%; max-height:60vh; border-radius:20px;" controls autoplay muted></video>${caption ? `<p style="margin-top:10px;">${escapeHtml(caption)}</p>` : ''}<button class="auth-btn" style="margin-top:15px;" onclick="this.parentElement.parentElement.remove()">Close</button></div>`;
-        }
+        modal.innerHTML = `<div class="modal-content"><h3>Create New Group</h3><input type="text" id="groupName" class="auth-input" placeholder="Group Name"><div id="memberSelectList"></div><button id="createGroupConfirmBtn" class="auth-btn">Create Group</button><button id="closeModalBtn" class="auth-btn" style="margin-top:8px;">Cancel</button></div>`;
+        document.body.appendChild(modal);
+        
+        const membersDiv = document.getElementById('memberSelectList');
+        let otherUsers = users.filter(u => u.id !== currentUser.id);
+        let selectedMembers = [];
+        membersDiv.innerHTML = otherUsers.map(u => `<div style="padding:10px; border-bottom:1px solid var(--border);"><label><input type="checkbox" value="${u.id}" class="member-checkbox"> ${u.name} (${u.handle})</label></div>`).join('');
+        
+        document.getElementById('createGroupConfirmBtn').onclick = () => {
+            let groupName = document.getElementById('groupName').value.trim();
+            if (!groupName) { alert("Enter group name"); return; }
+            document.querySelectorAll('.member-checkbox:checked').forEach(cb => selectedMembers.push(cb.value));
+            createGroup(groupName, currentUser.id, selectedMembers);
+            modal.remove();
+            render();
+        };
+        document.getElementById('closeModalBtn').onclick = () => modal.remove();
+    }
+    
+    function showFriendsModal() {
+        let modal = document.createElement('div'); modal.className = 'modal-overlay';
+        let friends = users.filter(u => currentUser.friends.includes(u.id));
+        modal.innerHTML = `<div class="modal-content"><h3>👥 Friends</h3><div id="friendsList">${friends.map(f => `<div class="search-result-item"><div class="avatar">${f.avatarData ? `<img src="${f.avatarData}" class="avatar-img">` : f.avatar}</div><div><b>${f.name}</b><div class="handle-text">${f.handle}</div></div><button class="follow-btn" onclick="removeFriend('${f.id}'); this.parentElement.parentElement.remove();">Remove</button></div>`).join('')}</div><button class="auth-btn" onclick="this.parentElement.parentElement.remove()">Close</button></div>`;
         document.body.appendChild(modal);
     }
     
     function showSearchModal() {
         let modal = document.createElement('div'); modal.className = 'modal-overlay';
-        modal.innerHTML = `<div class="modal-content"><h3>🔍 Search Users</h3><input type="text" id="searchHandleInput" class="auth-input" placeholder="Search by @handle or name"><div id="searchResults"></div><button id="closeSearchBtn" class="auth-btn">Close</button></div>`;
+        modal.innerHTML = `<div class="modal-content"><h3>🔍 Search Users</h3><input type="text" id="searchInput" class="auth-input" placeholder="Search by @handle or name"><div id="searchResults"></div><button id="closeSearchBtn" class="auth-btn">Close</button></div>`;
         document.body.appendChild(modal);
         
-        const searchInput = document.getElementById('searchHandleInput');
+        const searchInput = document.getElementById('searchInput');
         const resultsDiv = document.getElementById('searchResults');
         
         const performSearch = () => {
             let query = searchInput.value.trim();
-            if(query.length < 2) { resultsDiv.innerHTML = '<p style="text-align:center; padding:20px; color:#999;">Type at least 2 characters</p>'; return; }
-            let results = searchByHandle(query);
-            if(results.length === 0) resultsDiv.innerHTML = '<p style="text-align:center; padding:20px; color:#999;">No users found</p>';
-            else resultsDiv.innerHTML = results.map(u => `<div class="search-result-item" data-user='${JSON.stringify(u)}'><div class="avatar">${u.avatarData ? `<img src="${u.avatarData}" class="avatar-img">` : u.avatar}</div><div><b>${u.name}</b><div class="handle-text">${u.handle}</div><div style="font-size:0.7rem;">${u.bio?.substring(0,30)}</div></div><button class="follow-btn" style="padding:4px 12px;">${isFollowing(currentUser.id, u.id) ? 'Following' : 'Follow'}</button></div>`).join('');
-            document.querySelectorAll('.search-result-item').forEach(el => {
-                let user = JSON.parse(el.dataset.user);
-                el.onclick = (e) => { if(e.target.tagName !== 'BUTTON') { modal.remove(); openChat(user); } };
-                el.querySelector('.follow-btn').onclick = (e) => { e.stopPropagation(); if(isFollowing(currentUser.id, user.id)) unfollowUser(currentUser.id, user.id); else followUser(currentUser.id, user.id); performSearch(); };
+            if (query.length < 2) { resultsDiv.innerHTML = '<p style="text-align:center; padding:20px;">Type at least 2 characters</p>'; return; }
+            let results = searchUsers(query);
+            if (results.length === 0) resultsDiv.innerHTML = '<p style="text-align:center; padding:20px;">No users found</p>';
+            else resultsDiv.innerHTML = results.map(u => `<div class="search-result-item"><div class="avatar">${u.avatarData ? `<img src="${u.avatarData}" class="avatar-img">` : u.avatar}</div><div><b>${u.name}</b><div class="handle-text">${u.handle}</div></div><button class="follow-btn" data-user='${JSON.stringify(u)}'>${isFriend(u.id) ? 'Friend' : 'Add Friend'}</button><button class="follow-btn" data-msg='${JSON.stringify(u)}' style="background:var(--secondary);">Message</button></div>`).join('');
+            
+            document.querySelectorAll('[data-user]').forEach(btn => {
+                let user = JSON.parse(btn.dataset.user);
+                btn.onclick = () => { addFriend(user.id); performSearch(); };
+            });
+            document.querySelectorAll('[data-msg]').forEach(btn => {
+                let user = JSON.parse(btn.dataset.user);
+                btn.onclick = () => { modal.remove(); openChat(user); };
             });
         };
         searchInput.oninput = performSearch;
@@ -459,58 +474,156 @@
         performSearch();
     }
     
-    function showProfessionalSettings() {
+    function showSettings() {
         let modal = document.createElement('div'); modal.className = 'modal-overlay';
-        modal.innerHTML = `<div class="modal-content"><h3>⚙️ Privacy Settings</h3><div class="setting-row"><span>Read Receipts</span><input type="checkbox" id="readReceiptsToggle" ${currentUser.settings.readReceipts ? 'checked' : ''}></div><div class="setting-row"><span>Show Last Seen</span><input type="checkbox" id="lastSeenToggle" ${currentUser.settings.lastSeenVisible ? 'checked' : ''}></div><div class="setting-row"><span>Video Status Duration</span><span>30 seconds (Fixed)</span></div><button id="saveSettingsBtn" class="auth-btn">Save Changes</button><button id="closeSettingsBtn" class="auth-btn" style="margin-top:8px;">Close</button></div>`;
+        modal.innerHTML = `<div class="modal-content"><h3>⚙️ Settings</h3><div class="setting-row"><span>Read Receipts</span><input type="checkbox" id="readReceiptsToggle" ${currentUser.settings.readReceipts ? 'checked' : ''}></div><div class="setting-row"><span>Show Last Seen</span><input type="checkbox" id="lastSeenToggle" ${currentUser.settings.lastSeenVisible ? 'checked' : ''}></div><button id="saveSettingsBtn" class="auth-btn">Save</button><button id="closeSettingsBtn" class="auth-btn" style="margin-top:8px;">Close</button></div>`;
         document.body.appendChild(modal);
         document.getElementById('saveSettingsBtn').onclick = () => {
             currentUser.settings.readReceipts = document.getElementById('readReceiptsToggle').checked;
             currentUser.settings.lastSeenVisible = document.getElementById('lastSeenToggle').checked;
-            saveData(); alert("Settings updated!"); modal.remove();
+            saveData(); alert("Saved!"); modal.remove();
         };
         document.getElementById('closeSettingsBtn').onclick = () => modal.remove();
     }
     
-    function showThemeSelector() {
-        const themes = ['theme-default','theme-dark','theme-forest','theme-ocean','theme-sunset','theme-lavender','theme-mint','theme-crimson','theme-coffee','theme-midnight','theme-rose','theme-gold','theme-teal','theme-grape','theme-lime','theme-inky','theme-peach','theme-azure','theme-amber','theme-slate','theme-cherry'];
-        let modal = document.createElement('div'); modal.className = 'modal-overlay';
-        modal.innerHTML = `<div class="modal-content"><h3>🎨 20+ Premium Themes</h3><div class="theme-selector" id="themeGrid"></div><button id="closeThemeBtn" class="auth-btn">Close</button></div>`;
-        document.body.appendChild(modal);
-        const grid = document.getElementById('themeGrid');
-        grid.innerHTML = themes.map(t => `<div class="theme-option ${currentTheme===t?'active':''}" data-theme="${t}" style="background:var(--surface);">${t.replace('theme-','')}</div>`).join('');
-        document.querySelectorAll('[data-theme]').forEach(opt => { opt.onclick = () => { applyTheme(opt.dataset.theme); render(); modal.remove(); }; });
-        document.getElementById('closeThemeBtn').onclick = () => modal.remove();
-    }
-    
     function openChat(user, skipRender = false) {
         currentChatUser = user;
-        const msgs = getChatMessages(currentUser.id, user.id);
+        currentGroup = null;
+        const msgs = getChatMessages(user.id);
+        
         if (!skipRender) {
-            root.innerHTML = `<div class="app-container ${currentTheme}"><div class="app-header" style="background:var(--primary);"><button id="backBtn" style="background:none;border:none;color:white;font-size:1.2rem;"><i class="fas fa-arrow-left"></i></button><div class="avatar" style="width:40px;height:40px;">${user.avatarData?`<img src="${user.avatarData}" style="width:40px;height:40px;border-radius:50%;">`:user.avatar}</div><div style="flex:1; margin-left:12px;"><div style="font-weight:600;">${user.name}</div><div style="font-size:0.7rem;">${user.handle} • ${user.online ? 'Online' : 'Offline'}</div></div><i class="fas fa-phone" id="audioCallBtn" style="margin:0 12px; cursor:pointer;"></i><i class="fas fa-video" id="videoCallBtn" style="cursor:pointer;"></i></div><div class="messages-area" id="messagesArea"></div><div class="chat-input-area"><input type="text" id="messageInput" class="chat-input" placeholder="Type a message..."><button class="send-btn" id="sendBtn"><i class="fas fa-paper-plane"></i></button></div></div>`;
+            root.innerHTML = `<div class="app-container ${currentTheme === 'dark' ? 'theme-dark' : ''}"><div class="app-header" style="background:var(--primary);"><button id="backBtn" style="background:none;border:none;color:white;font-size:1.2rem;"><i class="fas fa-arrow-left"></i></button><div class="avatar" style="width:40px;height:40px;">${user.avatarData?`<img src="${user.avatarData}" style="width:40px;height:40px;border-radius:50%;">`:user.avatar}</div><div style="flex:1; margin-left:12px;"><div style="font-weight:600;">${user.name}</div><div style="font-size:0.7rem;">${user.handle} • ${user.online ? 'Online' : 'Offline'}</div></div><i class="fas fa-phone" id="audioCallBtn" style="margin:0 12px; cursor:pointer;"></i><i class="fas fa-video" id="videoCallBtn" style="cursor:pointer;"></i></div><div class="messages-area" id="messagesArea"></div><div class="chat-input-area"><button class="plus-btn" id="plusBtn"><i class="fas fa-plus"></i></button><input type="text" id="messageInput" class="chat-input" placeholder="Type a message..."><button class="send-btn" id="sendBtn"><i class="fas fa-paper-plane"></i></button></div><div class="plus-menu" id="plusMenu"><div class="plus-menu-item" data-type="camera"><i class="fas fa-camera"></i><span>Camera</span></div><div class="plus-menu-item" data-type="gallery"><i class="fas fa-images"></i><span>Gallery</span></div><div class="plus-menu-item" data-type="video"><i class="fas fa-video"></i><span>Video</span></div><div class="plus-menu-item" data-type="voice"><i class="fas fa-microphone"></i><span>Voice</span></div><div class="plus-menu-item" data-type="contact"><i class="fas fa-address-card"></i><span>Contact</span></div><div class="plus-menu-item" data-type="location"><i class="fas fa-map-marker-alt"></i><span>Location</span></div></div></div>`;
+            
             document.getElementById('backBtn').onclick = () => { currentChatUser = null; render(); };
-            document.getElementById('audioCallBtn').onclick = () => { addCallLog(currentUser.id, user.id, 'audio', 45); alert(`📞 Audio call to ${user.name} (demo)`); render(); };
-            document.getElementById('videoCallBtn').onclick = () => { addCallLog(currentUser.id, user.id, 'video', 120); alert(`📹 Video call to ${user.name} (demo)`); render(); };
+            document.getElementById('audioCallBtn').onclick = () => { addCallLog(user.id, 'audio', 45); alert(`📞 Audio call to ${user.name}`); };
+            document.getElementById('videoCallBtn').onclick = () => { addCallLog(user.id, 'video', 120); alert(`📹 Video call to ${user.name}`); };
+            setupPlusMenu(user.id, false, null);
         }
+        
         const msgArea = document.getElementById('messagesArea');
-        function renderMessages() { 
-            let updated = getChatMessages(currentUser.id, user.id); 
-            msgArea.innerHTML = updated.map(m => `<div class="message ${m.from === currentUser.id ? 'sent' : 'received'}"><div class="bubble">${escapeHtml(m.text)}<span class="message-status">${m.from === currentUser.id ? (m.status === 'sent' ? '✓' : m.status === 'delivered' ? '✓✓' : m.status === 'read' ? '✓✓' : '') : ''}</span></div></div>`).join(''); 
-            msgArea.scrollTop = msgArea.scrollHeight; 
+        function renderMessages() {
+            let updated = getChatMessages(user.id);
+            msgArea.innerHTML = updated.map(m => `<div class="message ${m.from === currentUser.id ? 'sent' : 'received'}"><div class="bubble">${escapeHtml(m.text)}${m.media ? (m.type === 'photo' ? `<br><img src="${m.media}" class="message-media" onclick="window.open(this.src)">` : m.type === 'video' ? `<br><video src="${m.media}" class="message-media" controls></video>` : '') : ''}<div class="message-time">${new Date(m.timestamp).toLocaleTimeString()}</div><span class="message-status">${m.from === currentUser.id ? (m.status === 'sent' ? '✓' : m.status === 'delivered' ? '✓✓' : m.status === 'read' ? '✓✓' : '') : ''}</span></div></div>`).join('');
+            msgArea.scrollTop = msgArea.scrollHeight;
         }
         renderMessages();
+        
         const input = document.getElementById('messageInput');
-        const send = () => { let txt = input.value.trim(); if(txt){ sendMessage(currentUser.id, user.id, txt); input.value = ''; renderMessages(); } };
+        const send = () => { let txt = input.value.trim(); if(txt){ sendMessage(user.id, txt); input.value = ''; renderMessages(); } };
         document.getElementById('sendBtn').onclick = send;
         input.onkeypress = (e) => { if(e.key === 'Enter') send(); };
         applyTheme(currentTheme);
+    }
+    
+    function openGroupChat(group, skipRender = false) {
+        currentGroup = group;
+        currentChatUser = null;
+        const msgs = getGroupMessages(group.id);
+        
+        if (!skipRender) {
+            root.innerHTML = `<div class="app-container ${currentTheme === 'dark' ? 'theme-dark' : ''}"><div class="app-header" style="background:var(--primary);"><button id="backBtn" style="background:none;border:none;color:white;font-size:1.2rem;"><i class="fas fa-arrow-left"></i></button><div class="avatar group-avatar" style="width:40px;height:40px;"><i class="fas fa-users"></i></div><div style="flex:1; margin-left:12px;"><div style="font-weight:600;">${group.name}</div><div style="font-size:0.7rem;">${group.members.length} members</div></div><i class="fas fa-info-circle" id="groupInfoBtn" style="cursor:pointer;"></i></div><div class="messages-area" id="messagesArea"></div><div class="chat-input-area"><button class="plus-btn" id="plusBtn"><i class="fas fa-plus"></i></button><input type="text" id="messageInput" class="chat-input" placeholder="Type a message..."><button class="send-btn" id="sendBtn"><i class="fas fa-paper-plane"></i></button></div><div class="plus-menu" id="plusMenu"><div class="plus-menu-item" data-type="camera"><i class="fas fa-camera"></i><span>Camera</span></div><div class="plus-menu-item" data-type="gallery"><i class="fas fa-images"></i><span>Gallery</span></div><div class="plus-menu-item" data-type="video"><i class="fas fa-video"></i><span>Video</span></div><div class="plus-menu-item" data-type="voice"><i class="fas fa-microphone"></i><span>Voice</span></div><div class="plus-menu-item" data-type="contact"><i class="fas fa-address-card"></i><span>Contact</span></div><div class="plus-menu-item" data-type="location"><i class="fas fa-map-marker-alt"></i><span>Location</span></div></div></div>`;
+            
+            document.getElementById('backBtn').onclick = () => { currentGroup = null; render(); };
+            document.getElementById('groupInfoBtn').onclick = () => showGroupInfo(group);
+            setupPlusMenu(null, true, group.id);
+        }
+        
+        const msgArea = document.getElementById('messagesArea');
+        function renderMessages() {
+            let updated = getGroupMessages(group.id);
+            msgArea.innerHTML = updated.map(m => {
+                let sender = users.find(u => u.id == m.from);
+                return `<div class="message ${m.from === currentUser.id ? 'sent' : 'received'}"><div class="bubble"><strong style="font-size:0.7rem;">${sender?.name}</strong><br>${escapeHtml(m.text)}${m.media ? (m.type === 'photo' ? `<br><img src="${m.media}" class="message-media" onclick="window.open(this.src)">` : m.type === 'video' ? `<br><video src="${m.media}" class="message-media" controls></video>` : '') : ''}<div class="message-time">${new Date(m.timestamp).toLocaleTimeString()}</div></div></div>`;
+            }).join('');
+            msgArea.scrollTop = msgArea.scrollHeight;
+        }
+        renderMessages();
+        
+        const input = document.getElementById('messageInput');
+        const send = () => { let txt = input.value.trim(); if(txt){ sendMessage(null, txt, 'text', null, true, group.id); input.value = ''; renderMessages(); } };
+        document.getElementById('sendBtn').onclick = send;
+        input.onkeypress = (e) => { if(e.key === 'Enter') send(); };
+        applyTheme(currentTheme);
+    }
+    
+    function showGroupInfo(group) {
+        let members = group.members.map(mid => users.find(u => u.id == mid)).filter(u => u);
+        let isAdmin = group.admins.includes(currentUser.id);
+        let modal = document.createElement('div'); modal.className = 'modal-overlay';
+        modal.innerHTML = `<div class="modal-content"><h3><i class="fas fa-users"></i> ${escapeHtml(group.name)}</h3><div style="max-height:300px; overflow-y:auto;">${members.map(m => `<div class="member-item"><div class="avatar" style="width:35px;height:35px;">${m.avatarData ? `<img src="${m.avatarData}" class="avatar-img">` : m.avatar}</div><div><b>${m.name}</b>${group.admins.includes(m.id) ? '<span class="admin-badge">Admin</span>' : ''}<div class="handle-text">${m.handle}</div></div>${isAdmin && m.id !== group.createdBy ? `<button class="follow-btn" onclick="removeMemberFromGroup('${group.id}', '${m.id}', '${currentUser.id}'); alert('Removed'); this.parentElement.parentElement.remove();">Remove</button>` : ''}</div>`).join('')}</div>${isAdmin ? `<button class="auth-btn" id="addMemberBtn">Add Member</button>` : ''}<button class="auth-btn" id="closeGroupInfo">Close</button></div>`;
+        document.body.appendChild(modal);
+        
+        if (isAdmin) {
+            document.getElementById('addMemberBtn').onclick = () => {
+                let otherUsers = users.filter(u => !group.members.includes(u.id) && u.id !== currentUser.id);
+                if (otherUsers.length === 0) alert("No users to add");
+                else {
+                    let userList = otherUsers.map(u => `<option value="${u.id}">${u.name} (${u.handle})</option>`).join('');
+                    Swal.fire({ title: 'Add Member', input: 'select', inputOptions: Object.fromEntries(otherUsers.map(u => [u.id, `${u.name} (${u.handle})`])), inputPlaceholder: 'Select user', showCancelButton: true }).then(res => {
+                        if (res.value) { addMemberToGroup(group.id, res.value, currentUser.id); alert("Member added!"); modal.remove(); openGroupChat(group, true); }
+                    });
+                }
+            };
+        }
+        document.getElementById('closeGroupInfo').onclick = () => modal.remove();
+    }
+    
+    function setupPlusMenu(toId, isGroup, groupId) {
+        document.getElementById('plusBtn').onclick = () => togglePlusMenu();
+        
+        // Close menu when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.plus-menu') && !e.target.closest('#plusBtn')) closePlusMenu();
+        });
+        
+        document.querySelectorAll('.plus-menu-item').forEach(item => {
+            item.onclick = () => {
+                let type = item.dataset.type;
+                closePlusMenu();
+                
+                if (type === 'camera') {
+                    let input = document.createElement('input'); input.type = 'file'; input.accept = 'image/*'; input.capture = 'environment';
+                    input.onchange = (e) => { if(e.target.files[0]){ let reader = new FileReader(); reader.onload = (ev) => { if(isGroup) sendMessage(null, '📷 Photo', 'photo', ev.target.result, true, groupId); else sendMessage(toId, '📷 Photo', 'photo', ev.target.result); renderChatIfOpen(); }; reader.readAsDataURL(e.target.files[0]); } };
+                    input.click();
+                }
+                else if (type === 'gallery') {
+                    let input = document.createElement('input'); input.type = 'file'; input.accept = 'image/*';
+                    input.onchange = (e) => { if(e.target.files[0]){ let reader = new FileReader(); reader.onload = (ev) => { if(isGroup) sendMessage(null, '🖼️ Image', 'photo', ev.target.result, true, groupId); else sendMessage(toId, '🖼️ Image', 'photo', ev.target.result); renderChatIfOpen(); }; reader.readAsDataURL(e.target.files[0]); } };
+                    input.click();
+                }
+                else if (type === 'video') {
+                    let input = document.createElement('input'); input.type = 'file'; input.accept = 'video/*';
+                    input.onchange = (e) => { if(e.target.files[0]){ let reader = new FileReader(); reader.onload = (ev) => { if(isGroup) sendMessage(null, '🎥 Video', 'video', ev.target.result, true, groupId); else sendMessage(toId, '🎥 Video', 'video', ev.target.result); renderChatIfOpen(); }; reader.readAsDataURL(e.target.files[0]); } };
+                    input.click();
+                }
+                else if (type === 'voice') {
+                    alert("🎤 Voice recording feature - In demo, sending voice note placeholder");
+                    if(isGroup) sendMessage(null, '🎤 Voice note (30s)', 'voice', null, true, groupId);
+                    else sendMessage(toId, '🎤 Voice note (30s)', 'voice');
+                    renderChatIfOpen();
+                }
+                else if (type === 'contact') {
+                    let contacts = users.filter(u => u.id !== currentUser.id).slice(0, 5);
+                    let contactList = contacts.map(c => `${c.name} (${c.handle})`).join('\n');
+                    if(isGroup) sendMessage(null, `📇 Shared Contact:\n${contactList}`, 'text', null, true, groupId);
+                    else sendMessage(toId, `📇 Shared Contact:\n${contactList}`, 'text');
+                    renderChatIfOpen();
+                }
+                else if (type === 'location') {
+                    if(isGroup) sendMessage(null, `📍 Live Location: 24.8607° N, 67.0011° E (Karachi)`, 'text', null, true, groupId);
+                    else sendMessage(toId, `📍 Live Location: 24.8607° N, 67.0011° E (Karachi)`, 'text');
+                    renderChatIfOpen();
+                }
+            };
+        });
     }
     
     function escapeHtml(str) { if(!str) return ''; let d=document.createElement('div'); d.textContent=str; return d.innerHTML; }
     
     loadData();
     render();
-    setInterval(() => { if (currentUser) updateOnlineStatus(currentUser.id, true); }, 30000);
-    window.onbeforeunload = () => { if (currentUser) updateOnlineStatus(currentUser.id, false); };
+    setInterval(() => { if (currentUser) { currentUser.online = true; currentUser.lastSeen = Date.now(); saveData(); renderChatIfOpen(); } }, 30000);
+    window.onbeforeunload = () => { if (currentUser) { currentUser.online = false; saveData(); } };
 </script>
 </body>
 </html>
